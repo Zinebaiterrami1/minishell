@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-SRC = main.c
+SRC = main.c lexer.c 
 
 NAME= mini
 
@@ -10,17 +10,22 @@ OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
 	@echo "🚀 Building the project..."
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@make -s all -C libft
+	@make -s bonus -C libft
+	@$(CC) $(CFLAGS) $(OBJ) libft/libft.a -lreadline -o $(NAME)
 	@echo "✅ Build completed successfully!"
 
 all : $(NAME)
 
 fclean : clean
 	@rm -rf $(NAME)
+	@make -s fclean -C libft
 
 clean :
 	@echo "🧹 Cleaning up..."
 	@rm -rf $(OBJ)
+	@make -s clean -C libft
+	@make -s clean -C libft
 	@echo "🗑️  Cleanup done!"
 
 re : fclean all

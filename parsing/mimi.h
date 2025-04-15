@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "libft/libft.h"
 
 typedef enum s_token_type
 {
@@ -25,10 +26,10 @@ typedef enum s_token_type
 
 }t_token_type;
 
-typedef struct TOKEN
+typedef struct s_token
 {
     char *value;
-    t_token_type type;
+    int type;
     int num_d_cots;
     int num_s_cots;
     void *next;
@@ -48,6 +49,6 @@ int check_s(char *line, int i);
 char *handel_s_cots(char *line,int *i, t_token *tokens);
 t_token *lexer(char *line);
 void handel_pipe(t_token *tokens);
-
+void handel_else(char *line, int *i, t_token *tokens);
 
 #endif
