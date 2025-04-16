@@ -1,6 +1,7 @@
-#include <stdio.h>
+#include "includes/minishell.h"
+#include "includes/mini.h"
 
 int main()
 {
-	printf("hello !");
+	
 }
