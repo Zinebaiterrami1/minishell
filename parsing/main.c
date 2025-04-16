@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 18:28:05 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/15 19:39:53 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:49:15 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,12 +190,6 @@
 //     return(NULL);
 // }
 
-void handel_pipe(t_token *tokens)
-{
-    tokens->type = T_PIPE;
-    tokens->value = "|";
-    tokens->next = NULL;
-}
 
 void handel_else(char *line, int *i, t_token *tokens)
 {
@@ -222,17 +216,119 @@ void handel_else(char *line, int *i, t_token *tokens)
     str[u] = '\0';
     tokens->value = str;
 }
+
+void error_exit(char *s, int x, t_token *tokens, t_token *new)
+{
+    if(new)
+    {
+        if(new->value)
+            free(new->value);
+        free(new);
+    }
+    free(tokens);
+    printf("%s\n", s);
+    exit(x);
+}
+
+void check_if_closed(char *line, t_token *tokens, t_token *new)
+{
+    int singl_cots;
+    int double_cots;
+    int parth_g;
+    int parth_d;
+    
+    singl_cots = 0;
+    double_cots = 0;
+    parth_g = 0;
+    parth_d = 0;
+    while(*line)
+    {
+        if(*line == '\'')
+            singl_cots = !singl_cots;
+        if(*line == '"')
+            double_cots = !double_cots;
+        if(*line == '(')
+            parth_g++;
+        if(*line == ')')
+            parth_d++;
+        line++;
+    }
+    if(singl_cots || double_cots || (parth_d - parth_g) != 0)
+        error_exit("syntax error", 2, tokens, new);
+    else
+        return;  
+}
+
+int select_parenth(char *line, int i, t_token *tokens)
+{
+    char *str;
+    int u;
+    int len;
+    
+    len = 0;
+    u = i;
+    while(line[u + 1] && line[++u] != ')')
+        len++;
+    str = malloc(sizeof(char) * (len + 3));
+    if(!str)
+        return(1);
+    u = 0;
+    str[u] = '(';
+    while(++u <= len && line[++i])
+    {
+        str[u] = line[i];
+    }
+    str[u] = ')';
+    str[++u] = '\0';
+    tokens->value = str;
+    return(i + 1);
+}
+
+int check_p(char *line, int i)
+{
+    while(line[++i])
+    {
+        if(line[i] == ')')
+            return(1);
+    }
+    return(0);
+}
+
+char *handel_parenth(char *line,int *i, t_token *tokens)
+{
+    char *str;
+    int len;
+
+    len = 0;
+    tokens->type = T_PAR;
+    if(check_p(line, *i) == 1)
+    {
+        tokens->type = T_COMMD;
+        *i = select_parenth(line, *i, tokens);
+        return(NULL);
+    }
+    str = malloc(sizeof(char) * 2);
+    if(!str)
+        return(NULL);
+    str[0] = '(';////////////////////////////////////////////////
+    str[1] = '\0';
+    tokens->value = str;
+    return(NULL);
+}
+
+
 t_token *lexer(char *line)
 {
     int i;
     t_token *tokens;
     t_token *new;
-    //puting a big struct that hold the linked list to collect the number of cots
+
     new = NULL;
     tokens = NULL;
     i = 0;
     while(line[i])
     {
+        check_if_closed(line, tokens, new);
         skip_space(line, &i);
         new = malloc(sizeof(t_token));
         new->next = NULL;
@@ -246,19 +342,19 @@ t_token *lexer(char *line)
             handel_d_cots(line, &i, new);
         else if(line[i] == '\'')
             handel_s_cots(line, &i, new);        
-        // else if(line[i] == '(' || line[i] == ')')
-        //     handel_parenth(line, &i, new);
+        else if(line[i] == '(' || line[i] == ')')
+            handel_parenth(line, &i, new);
         else if(line[i])
             handel_else(line, &i, new);
-        printf("-------------> %s------> %d\n", new->value, new->num_d_cots);
+        printf("------------->%s\n", new->value);
         printf("i ======= %d\n", i);
-        //free(tokens -> value / tokens)
         
+        ft_lstadd_back(&tokens,new);
         if(!line[i])
             break;
         i++;
     }
-    ft_lstadd_back(&tokens,new);
+    free_tokens(tokens);
     return(NULL);
 }
 

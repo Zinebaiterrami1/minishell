@@ -6,16 +6,16 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 18:59:29 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/10 14:03:10 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:58:24 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_token **lst, void (*del)(void *))
 {
-	t_list	*curent;
-	t_list	*next;
+	t_token	*curent;
+	t_token	*next;
 
 	if (!lst || !del)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:13:02 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/15 19:35:34 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:33:22 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ void skip_space(char *line, int *i)
     {
         (*i)++;
     }    
+}
+
+void free_tokens(t_token *tokens)
+{
+    t_token *tmp;
+
+    while (tokens)
+    {
+        tmp = tokens->next;
+        if (tokens->value)
+            free(tokens->value);
+        free(tokens);       
+        tokens = tmp;
+    }
 }
 
 int redir_out(char *line, int i, t_token *tokens)
@@ -87,7 +101,6 @@ int select_d_cots(char *line, int i, t_token *tokens)
     str[u] = '"';
     str[++u] = '\0';
     tokens->value = str;
-    tokens->num_d_cots = tokens->num_d_cots + 2;
     return(i + 1);
 }
 
@@ -109,7 +122,6 @@ char *handel_d_cots(char *line,int *i, t_token *tokens)
 
     len = 0;
     u = *i;
-    tokens->num_d_cots = 0;
     tokens->type = T_D_COTS;
     if(check_d(line, *i) == 1)
     {
@@ -123,7 +135,6 @@ char *handel_d_cots(char *line,int *i, t_token *tokens)
     str[0] = '"';
     str[1] = '\0';
     tokens->value = str;
-    tokens->num_d_cots++;
     return(NULL);
 }
 
@@ -150,7 +161,6 @@ int select_s_cots(char *line, int i, t_token *tokens)
     str[u] = '\'';
     str[++u] = '\0';
     tokens->value = str;
-    tokens->num_s_cots = tokens->num_s_cots + 2;
     return(i + 1);
 }
 
@@ -172,7 +182,6 @@ char *handel_s_cots(char *line,int *i, t_token *tokens)
 
     len = 0;
     u = *i;
-    tokens->num_s_cots = 0;
     tokens->type = T_S_COTS;
     if(check_s(line, *i) == 1)
     {
@@ -186,6 +195,11 @@ char *handel_s_cots(char *line,int *i, t_token *tokens)
     str[0] = '\'';
     str[1] = '\0';
     tokens->value = str;
-    tokens->num_s_cots++;
     return(NULL);
+}
+
+void handel_pipe(t_token *tokens)
+{
+    tokens->type = T_PIPE;
+    tokens->value = "|";
 }

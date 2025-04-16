@@ -15,6 +15,7 @@ typedef enum s_token_type
     T_COTS,
     T_D_COTS,
     T_S_COTS,
+    T_PAR,
     T_PIPE,
     T_RED_IN,
     T_RED_OUT,
@@ -22,7 +23,7 @@ typedef enum s_token_type
     T_RED_OUT_APEND,
     T_APPEND,
     T_HERDOC,
-    T_EOF,
+    //T_EOF,
 
 }t_token_type;
 
@@ -30,8 +31,6 @@ typedef struct s_token
 {
     char *value;
     int type;
-    int num_d_cots;
-    int num_s_cots;
     void *next;
 }t_token;
 
@@ -39,8 +38,10 @@ typedef struct s_token
 
 
 
+void free_tokens(t_token *tokens);
 void skip_space(char *line, int *i);
 char *handel_redir(char *line, int (*i), t_token *tokens);
+void handel_pipe(t_token *tokens);
 int select_d_cots(char *line, int i, t_token *tokens);
 int check_d(char *line, int i);
 char *handel_d_cots(char *line,int *i, t_token *tokens);
