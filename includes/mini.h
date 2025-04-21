@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 typedef enum s_token_type
 {

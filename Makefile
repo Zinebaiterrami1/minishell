@@ -1,23 +1,33 @@
-NAME = minishell
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+SRC = built-ins/builtin_echo.c minishell.c
 
-SRCS = execution/built-ins.c\
-		minishell.c
+NAME= minishell
 
-OBJS = $(SRCS:.c=.o)
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+OBJ = $(SRC:.c=.o)
+
+$(NAME) : $(OBJ)
+	@echo "🚀 Building the project..."
+	@make -s all -C libft
+	@make -s bonus -C libft
+	@$(CC) $(CFLAGS) $(OBJ) libft/libft.a -lreadline -o $(NAME)
+	@echo "✅ Build completed successfully!"
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
-
-clean : 
-	rm -rf $(OBJS)
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@make -s fclean -C libft
 
-re : clean fclean all
+clean :
+	@echo "🧹 Cleaning up..."
+	@rm -rf $(OBJ)
+	@make -s clean -C libft
+	@make -s clean -C libft
+	@echo "🗑️  Cleanup done!"
 
-.PHONY : all clean fclean re
+re : fclean all
+
+.PHONY: all clean fclean re
