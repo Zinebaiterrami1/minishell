@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   lexerv2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 17:07:51 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/17 17:02:48 by nel-khad         ###   ########.fr       */
+/*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
+/*   Updated: 2025/04/22 15:23:47 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "mimi.h"
 
-void	ft_lstadd_back(t_token **token, t_token *new)
+
+int lexer(char *line)
 {
-	t_token	*ptr;
+    
+}
 
-	if (new == NULL || !token)
-		return ;
-	if (*token == NULL)
-	{
-		*token = new;
-		return ;
-	}
-	ptr = ft_lstlast(*token);
-	ptr->next = new;
-	// printf("node aded -> %s\n", ptr->value);
+
+
+
+
+int main()
+{
+    char *line;
+    while(1)
+    {
+        line = readline("$minishell V2 ");
+        if (!line)
+            break;
+        add_history(line);
+        lexer(line);
+        if(lexer(line) == 1)
+        {
+            free(line);
+            continue;
+        }
+        free(line);
+    }
+    
 }

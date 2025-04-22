@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 18:28:05 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/16 19:49:15 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:58:53 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void handel_else(char *line, int *i, t_token *tokens)
     int u;
     int len;
 
-    u = 0;
+    u = *i;
     len = 0;
     tokens->type = T_COMMD;
     while(line[u] && line[u] != ' ' && line[u] != '\t')
@@ -206,7 +206,7 @@ void handel_else(char *line, int *i, t_token *tokens)
         u++;
     }
     u = 0;
-    str = malloc(sizeof(char) * len + 1);
+    str = malloc(sizeof(char) * (len + 1));
     if(!str)
         return;
     while(line[*i] && u < len)
@@ -223,6 +223,7 @@ void error_exit(char *s, int x, t_token *tokens, t_token *new)
     {
         if(new->value)
             free(new->value);
+        new->value = NULL;
         free(new);
     }
     free(tokens);
@@ -230,99 +231,202 @@ void error_exit(char *s, int x, t_token *tokens, t_token *new)
     exit(x);
 }
 
-void check_if_closed(char *line, t_token *tokens, t_token *new)
+int help(t_check *check, char **line)
 {
-    int singl_cots;
-    int double_cots;
-    int parth_g;
-    int parth_d;
+    char quote_char;
+    int error;
     
-    singl_cots = 0;
-    double_cots = 0;
-    parth_g = 0;
-    parth_d = 0;
-    while(*line)
+    error = 0;
+    // check->quote_open = 0;
+
+    quote_char = **line;
+    check->quote_open = 1;
+    (*line)++;
+    while(**line && **line != quote_char)
+        (*line)++;
+    if (**line == quote_char)
     {
-        if(*line == '\'')
-            singl_cots = !singl_cots;
-        if(*line == '"')
-            double_cots = !double_cots;
-        if(*line == '(')
-            parth_g++;
-        if(*line == ')')
-            parth_d++;
-        line++;
+        check->quote_open = 0;
+        (*line)++;
     }
-    if(singl_cots || double_cots || (parth_d - parth_g) != 0)
-        error_exit("syntax error", 2, tokens, new);
     else
-        return;  
+        error = 1;
+
+
+    // if(**line == '\0')
+    //     error = 1;
+    // else
+    // {
+    //     check->quote_open = 0;
+    //     (*line)++;
+    // }
+    return(error);
 }
 
+int check_if_closed(char *line, t_token *tokens, t_token *new)
+{
+    t_check check;
+    
+    int error;
+
+    error = 0;
+    check.parth_d = 0;
+    check.parth_g = 0;
+    check.quote_open = 0;
+    while(*line)
+    {
+        if(*line == '\'' || *line == '"')
+            error = help(&check, &line);
+        if(*line == '(' && !check.quote_open)
+            check.parth_g++;
+        if(*line == ')'&& !check.quote_open)
+            check.parth_d++;
+        if(*line)
+            line++;
+    }
+    printf("closed \" = %d error = %d   pd = %d    pg = %d  ",check.quote_open, error, check.parth_d, check.parth_g);
+    if(error || (check.parth_d - check.parth_g) != 0)
+        error_exit("syntax error", 2, tokens, new);
+    return(0);
+}
 int select_parenth(char *line, int i, t_token *tokens)
 {
+    int start = i;
+    int end = -1;
+    char quote;
     char *str;
-    int u;
-    int len;
-    
-    len = 0;
-    u = i;
-    while(line[u + 1] && line[++u] != ')')
-        len++;
-    str = malloc(sizeof(char) * (len + 3));
-    if(!str)
-        return(1);
-    u = 0;
-    str[u] = '(';
-    while(++u <= len && line[++i])
+
+    while (line[++i])
     {
-        str[u] = line[i];
+        if (line[i] == '\'' || line[i] == '"')
+        {
+            quote = line[i++];
+            while (line[i] && line[i] != quote)
+                i++;
+            if (!line[i])
+                return (-1); // quote non fermée
+        }
+        if (line[i] == ')')
+        {
+            end = i;
+            break;
+        }
     }
-    str[u] = ')';
-    str[++u] = '\0';
+    if (end == -1)
+        return (-1); // pas de parenthèse fermante
+
+    int len = end - start + 1; // longueur à copier
+    str = malloc(len + 1);
+    if (!str)
+        return (1);
+
+    for (int j = 0; j < len; j++)
+        str[j] = line[start + j];
+    str[len] = '\0';
+
     tokens->value = str;
-    return(i + 1);
+    return (end + 1); // renvoie la nouvelle position dans line
 }
+
+// int select_parenth(char *line, int i, t_token *tokens)
+// {
+//     char *str;
+//     int u;
+//     int len;
+//     char c;
+    
+//     len = 0;
+//     u = i;
+//     while(line[++u])
+//     {
+//         if(line[u] == '"' || line[u] == '\'')
+//         {
+//             c = line[u];
+//             u++;
+//             while(line[u] && line[u] != c)
+//                 u++;
+//             if(line[u] != c)
+//                 return(-1);
+//         }
+//         if(line[u] == ')')
+//             len = u - i + 1;
+//     }
+//     str = malloc(sizeof(char) * (len + 3));
+//     if(!str)
+//         return(1);
+//     u = 0;
+//     str[u] = '(';
+//     while(++u < len && line[++i])
+//     {
+//         str[u] = line[i];
+//     }
+//     str[u] = ')';
+//     str[++u] = '\0';
+//     tokens->value = str;
+//     return(i + 1);
+// }
 
 int check_p(char *line, int i)
 {
+    char c;
     while(line[++i])
     {
+        if(line[i] == '"' || line[i] == '\'')
+        {
+            c = line[i];
+            i++;
+            while(line[i] != c)
+                i++;
+        }
         if(line[i] == ')')
             return(1);
     }
     return(0);
 }
 
-char *handel_parenth(char *line,int *i, t_token *tokens)
+int handel_parenth(char *line,int *i, t_token *tokens)
 {
     char *str;
-    int len;
+    // int len;
 
-    len = 0;
+    // len = 0;
     tokens->type = T_PAR;
     if(check_p(line, *i) == 1)
     {
         tokens->type = T_COMMD;
         *i = select_parenth(line, *i, tokens);
-        return(NULL);
+        if (*i == -1)
+            return(1);
+        return(0);
     }
     str = malloc(sizeof(char) * 2);
     if(!str)
-        return(NULL);
-    str[0] = '(';////////////////////////////////////////////////
+        return(0);
+    str[0] = line[*i];////////////////////////////////////////////////
     str[1] = '\0';
     tokens->value = str;
-    return(NULL);
+    return(0);
 }
 
+void print_list(t_token *list)
+{
+    while(list)
+    {
+        printf("%s ==> ", list->value);
+        list = list->next;
+    }
+    printf("\n");
+}
 
 t_token *lexer(char *line)
 {
     int i;
     t_token *tokens;
     t_token *new;
+    // int error;                                                                           should be returned by all functions 
+    // t_check check;
 
+    // check.quote_open = 0;
     new = NULL;
     tokens = NULL;
     i = 0;
@@ -331,7 +435,6 @@ t_token *lexer(char *line)
         check_if_closed(line, tokens, new);
         skip_space(line, &i);
         new = malloc(sizeof(t_token));
-        new->next = NULL;
         if(line[i] == '|')
         {
             handel_pipe(new);
@@ -346,14 +449,13 @@ t_token *lexer(char *line)
             handel_parenth(line, &i, new);
         else if(line[i])
             handel_else(line, &i, new);
-        printf("------------->%s\n", new->value);
-        printf("i ======= %d\n", i);
-        
+        new->next = NULL;
         ft_lstadd_back(&tokens,new);
         if(!line[i])
             break;
         i++;
     }
+    print_list(tokens);
     free_tokens(tokens);
     return(NULL);
 }

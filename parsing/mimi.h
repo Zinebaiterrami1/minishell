@@ -31,12 +31,27 @@ typedef struct s_token
 {
     char *value;
     int type;
-    void *next;
+    struct s_token *next;
 }t_token;
 
+typedef struct s_check
+{
+    int parth_g;
+    int parth_d;
+    int s_quotes;
+    int d_quotes;
+    int quote_open;
+}t_check;
 
+typedef struct s_cmd
+{
+    char *comd;
+    char *arg;
+    int type;
+    int outfile;
+    int infile;
 
-
+}t_cmd;
 
 void free_tokens(t_token *tokens);
 void skip_space(char *line, int *i);

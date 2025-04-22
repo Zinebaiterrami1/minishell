@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:13:02 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/16 19:33:22 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:34:34 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int check_d(char *line, int i)
 {
     while(line[++i])
     {
-        if(line[i] == '"')
+        if(line[i] == '"')//////////
             return(1);
     }
     return(0);
@@ -117,11 +117,11 @@ int check_d(char *line, int i)
 char *handel_d_cots(char *line,int *i, t_token *tokens)
 {
     char *str;
-    int u;
-    int len;
+    // int u;
+    // int len;
 
-    len = 0;
-    u = *i;
+    // len = 0;
+    // u = *i;
     tokens->type = T_D_COTS;
     if(check_d(line, *i) == 1)
     {
@@ -177,11 +177,11 @@ int check_s(char *line, int i)
 char *handel_s_cots(char *line,int *i, t_token *tokens)
 {
     char *str;
-    int u;
-    int len;
+    // int u;
+    // int len;
 
-    len = 0;
-    u = *i;
+    // len = 0;
+    // u = *i;
     tokens->type = T_S_COTS;
     if(check_s(line, *i) == 1)
     {
