@@ -1,11 +1,11 @@
 #include "../includes/minishell.h"
 #include "../includes/mini.h"
 
-void ft_echo(t_token *cmd)
+void ft_echo(t_cmd *cmd)
 {
     if(ft_strncmp("echo", cmd->value, ft_strlen("echo")) == 0)
     {
-        t_token *tmp;
+        t_cmd *tmp;
         tmp = cmd->next;
         if(tmp && ft_strncmp("-n", tmp->value, ft_strlen("-n")) == 0)
         {
@@ -18,7 +18,7 @@ void ft_echo(t_token *cmd)
                 tmp = tmp->next;
             }
         }
-        else 
+        else
         {
             while(tmp)
             {
@@ -36,6 +36,8 @@ void ft_echo(t_token *cmd)
 // {
 
 // }
+
+
 /*
 1. write(1, &cmd->args[i], 1); is wrong
 cmd->args[i] is a char * (a string).

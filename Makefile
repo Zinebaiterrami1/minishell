@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-SRC = built-ins/builtin_echo.c minishell.c built-ins/builtin_pwd.c
+SRC = built-ins/builtin_echo.c minishell.c built-ins/builtin_pwd.c built-ins/builtin_env.c
 
 NAME= minishell
 
