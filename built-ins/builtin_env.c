@@ -1,87 +1,57 @@
 #include "../includes/mini.h"
 #include "../includes/minishell.h"
 
-
-//char *init_env(char **envp); // to split "KEY=VALUE" into key and value
-char **init_env(char **envp)
-{
-    char **copy_env;
-    int i = 0;
-    while(envp[i])
-        i++;
-    copy_env = malloc(sizeof(char *) * (i + 1));
-    i = 0;
-    while(envp[i])
-    {
-        copy_env[i] = ft_strdup(envp[i]); //copy each string
-        i++;
-    }
-    copy_env[i] = NULL;
-    return (copy_env);
-}
-
-char* get_env(char **env,char *key)
+/* Initialize environment variables from system env */
+t_env *init_env(char **envp)
 {
     int i;
-    int len;
+    t_env *head;
+    t_env *tmp;
 
+    head = NULL;
+    tmp = NULL;
     i = 0;
-    len = ft_strlen(key);
-
-    while(env[i])
+    while(envp[i])
     {
-        if(ft_strncmp(env[i], key, len) == 0 && env[i][len] == '=')
-        {
-            return (env[i] + len + 1);
-        }
+        t_env *new_node = malloc(sizeof(t_env));
+        new_node->line = envp[i];
+        new_node->env_key = NULL;
+        new_node->env_value = NULL;
+        new_node->next = NULL;
+        if(!head)
+            head = new_node;
+        else
+            tmp->next = new_node;
+        tmp = new_node;
         i++;
     }
-    return (NULL);
+    return (head);
 }
 
-/*
-env[i] = "HOME=/Users/zineb"
-key = "HOME"
-len = 4
-
-Check:
-- Does it match "HOME" for the first 4 characters?
-- Is the next char '='?
-
-If yes → return pointer to env[i] + 5 → `"/Users/zineb"`
-*/
-
-void update_env(char *key, char *new_value, char **env)
+// /* Print all environment variables (env builtin) */
+void print_env(char **envp)
 {
-    int i = 0;
+    t_env *cmd;
+    t_env *tmp;
 
-    int len = ft_strlen(key);
-    while(env[i])
+    cmd = init_env(envp);
+    tmp = cmd;
+
+    if(!tmp)
     {
-        if(ft_strncmp(env[i], key, len) == 0 && env[i][len] == '=')
-        {
-            free(env[i]);
-            
-            int total_len = ft_strlen(key) + 1 + ft_strlen(new_value) + 1;
-            env[i] = malloc(total_len);
-            ft_strlcpy(env[i], key, total_len);
-            ft_strlcat(env[i], "=", total_len);
-            ft_strlcat(env[i], new_value, total_len);
-            return ;
-        }
-        i++;
+        printf("Failed to initialize environment\n");
+        return ;
     }
-    return ;
+    
+    while(tmp)
+    {
+        printf("%s\n", tmp->line);
+        tmp = tmp->next;
+    }
 }
 
-/*
-2. Implement helper functions:
-You’ll need:
+// /* Get the value of a specific environment variable */
+// char *get_env_value(t_env *env_list, const char *key);
 
-char *get_env_value(t_env *env, char *key);
-→ to fetch $HOME, $PWD, $OLDPWD, etc.
-
-void update_env(t_env *env, char *key, char *new_value);
-→ to update variables like PWD, OLDPWD.
-
-*/
+// /* Update existing or add new environment variable */
+// int set_env_value(t_env **env_list, const char *key, const char *value);

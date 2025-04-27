@@ -11,25 +11,28 @@ typedef struct s_cmd
     char cmd;
     char arg;
     int type;
+    char **copy_env;
     char *value;
     int outfile;
     int infile;
     void *next;
-}t_cmd;
+} t_cmd;
 
 typedef struct t_env
 {
-	char			*env_key;
-	char			*env_value;
-	struct t_env	*next;
-}					t_env;
+    char *line;
+    char *env_key;
+    char *env_value;
+    struct t_env *next;
+} t_env;
 
 /*----builtin----*/
 
 void ft_echo(t_cmd *cmd);
 void ft_pwd();
 void ft_cd();
-char **init_env(char **envp);
-char* get_env(char **env,char *key);
+t_env *init_env(char **envp);
+void print_env(char **envp);
+char *get_env(char **env, char *key);
 void update_env(char *key, char *new_value, char **env);
 #endif
