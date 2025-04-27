@@ -42,23 +42,25 @@ void print_env(char **envp)
     sp_env = split_env(tmp);
     tmp1 = sp_env;
 
+    char *path;
+    path = get_env_value(tmp, "PWD");
     if(!tmp)
     {
         printf("Failed to initialize environment\n");
         return ;
     }
-    
+    printf("PATH: %s\n", path);
     // while(tmp)
     // {
     //     printf("%s\n", tmp->line);
     //     tmp = tmp->next;
     // }
 
-    while(tmp1)
-    {
-        printf("key : %s ------- path : %s\n", tmp1->env_key, tmp1->env_value);
-        tmp1 = tmp1->next;
-    }
+    // while(tmp1)
+    // {
+    //     printf("key : %s ------- path : %s\n", tmp1->env_key, tmp1->env_value);
+    //     tmp1 = tmp1->next;
+    // }
 }
 //
 // t_env *split_env(t_env *lst, char **envp)
@@ -97,10 +99,22 @@ t_env *split_env(t_env *lst)
 }
 
 /* Get the value of a specific environment variable */
-// char *get_env_value(t_env *env_list, const char *key)
-// {
+char *get_env_value(t_env *env_list, const char *key)
+{
+    t_env *tmp;
+    char *path;
 
-// }
+    tmp = env_list;
+    while(tmp)
+    {
+        if(ft_strncmp(tmp->env_key, key, ft_strlen(key)) == 0)
+        {
+            path = tmp->env_value;
+        }
+        tmp = tmp->next;
+    }
+    return (path);
+}
 
 // /* Update existing or add new environment variable */
 // int set_env_value(t_env **env_list, const char *key, const char *value);
