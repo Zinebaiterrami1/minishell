@@ -7,6 +7,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
+#include "garbage_collector/gc.h"
 
 typedef enum s_token_type
 {
@@ -23,6 +24,9 @@ typedef enum s_token_type
     T_RED_OUT_APEND,
     T_APPEND,
     T_HERDOC,
+    T_WORD,
+    T_DOLLR,
+    T_EXP,
     //T_EOF,
 
 }t_token_type;
@@ -43,28 +47,39 @@ typedef struct s_check
     int quote_open;
 }t_check;
 
+typedef struct s_file
+{
+    int fd;
+    t_token_type type;
+    char *name;
+    char *limiter;
+    int expand;
+
+}t_file;
+
+
 typedef struct s_cmd
 {
     char *comd;
     char *arg;
     int type;
-    int outfile;
-    int infile;
+    t_file *outfile;
+    t_file *infile;
 
 }t_cmd;
 
-void free_tokens(t_token *tokens);
-void skip_space(char *line, int *i);
-char *handel_redir(char *line, int (*i), t_token *tokens);
-void handel_pipe(t_token *tokens);
-int select_d_cots(char *line, int i, t_token *tokens);
-int check_d(char *line, int i);
-char *handel_d_cots(char *line,int *i, t_token *tokens);
-int select_s_cots(char *line, int i, t_token *tokens);
-int check_s(char *line, int i);
-char *handel_s_cots(char *line,int *i, t_token *tokens);
-t_token *lexer(char *line);
-void handel_pipe(t_token *tokens);
-void handel_else(char *line, int *i, t_token *tokens);
+// void free_tokens(t_token *tokens);
+// void skip_space(char *line, int *i);
+// char *handel_redir(char *line, int (*i), t_token *tokens);
+// void handel_pipe(t_token *tokens);
+// int select_d_cots(char *line, int i, t_token *tokens);
+// int check_d(char *line, int i);
+// char *handel_d_cots(char *line,int *i, t_token *tokens);
+// int select_s_cots(char *line, int i, t_token *tokens);
+// int check_s(char *line, int i);
+// char *handel_s_cots(char *line,int *i, t_token *tokens);
+// t_token *lexer(char *line);
+// void handel_pipe(t_token *tokens);
+// void handel_else(char *line, int *i, t_token *tokens);
 
 #endif

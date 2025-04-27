@@ -6,13 +6,13 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:17:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/22 15:21:14 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:11:41 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gc.h"
 
-static t_garbage *get_last_node(t_garbage *list)
+t_garbage *get_last_node(t_garbage *list)
 {
     while(list->next)
     {
@@ -21,7 +21,7 @@ static t_garbage *get_last_node(t_garbage *list)
     return(list);
 }
 
-static void add_node(t_garbage **list, t_garbage *new)
+void add_node(t_garbage **list, t_garbage *new)
 {
     if(!list || !(*list))
     {
@@ -29,12 +29,12 @@ static void add_node(t_garbage **list, t_garbage *new)
         return;
     }
     new->next = *list;
-    new->prev = get_last_node(*list);
     *list = new;
     return;
 }
 
-void *ft_malloc(size_t size, t_garbage **list)
+
+void *gc_malloc(size_t size, t_garbage **list)
 {
     void *ptr;
     t_garbage *new;
@@ -48,7 +48,6 @@ void *ft_malloc(size_t size, t_garbage **list)
         return(NULL);
     }
     new->next = NULL;
-    new->prev = NULL;
     new->adress = ptr;
     add_node(list, new);
     return(ptr);
@@ -56,6 +55,7 @@ void *ft_malloc(size_t size, t_garbage **list)
 
 t_garbage **getter()
 {
+    static t_garbage *gc;
     return(&gc);
 }
 

@@ -1,8 +1,8 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-SRC = main.c lexer.c 
+SRC = lexer/lexer.c garbage_collector/gc.c
 
-NAME= mini
+NAME = mini
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

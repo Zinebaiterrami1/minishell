@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 18:28:05 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/22 14:58:53 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:25:03 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,19 +217,6 @@ void handel_else(char *line, int *i, t_token *tokens)
     tokens->value = str;
 }
 
-void error_exit(char *s, int x, t_token *tokens, t_token *new)
-{
-    if(new)
-    {
-        if(new->value)
-            free(new->value);
-        new->value = NULL;
-        free(new);
-    }
-    free(tokens);
-    printf("%s\n", s);
-    exit(x);
-}
 
 int help(t_check *check, char **line)
 {
@@ -251,15 +238,6 @@ int help(t_check *check, char **line)
     }
     else
         error = 1;
-
-
-    // if(**line == '\0')
-    //     error = 1;
-    // else
-    // {
-    //     check->quote_open = 0;
-    //     (*line)++;
-    // }
     return(error);
 }
 
@@ -284,7 +262,6 @@ int check_if_closed(char *line, t_token *tokens, t_token *new)
         if(*line)
             line++;
     }
-    printf("closed \" = %d error = %d   pd = %d    pg = %d  ",check.quote_open, error, check.parth_d, check.parth_g);
     if(error || (check.parth_d - check.parth_g) != 0)
         error_exit("syntax error", 2, tokens, new);
     return(0);

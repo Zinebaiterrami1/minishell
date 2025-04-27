@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:07:51 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/17 17:02:48 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:00:39 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_lstadd_back(t_token **token, t_token *new)
 		return ;
 	}
 	ptr = ft_lstlast(*token);
-	ptr->next = new;
+	if (ptr)
+		ptr->next = new;
+	return;
 	// printf("node aded -> %s\n", ptr->value);
 }
