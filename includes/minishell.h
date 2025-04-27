@@ -33,6 +33,7 @@ void ft_pwd();
 void ft_cd();
 t_env *init_env(char **envp);
 void print_env(char **envp);
+t_env *split_env(t_env *lst);
 char *get_env(char **env, char *key);
 void update_env(char *key, char *new_value, char **env);
 #endif
