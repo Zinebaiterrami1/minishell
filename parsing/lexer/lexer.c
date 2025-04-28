@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/27 19:23:17 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:10:08 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ t_token *handel_s_quotes(t_lexer *lexer)
     token = gc_malloc(sizeof(t_token), getter());
     while(lexer->line[i + 1] && lexer->line[++i] != '\'')
         len++;
-    s = gc_malloc(sizeof(char ) * (len + 3), getter());
-    ft_strlcpy(s, &lexer->line[lexer->i], len + 3);
+    s = gc_malloc(sizeof(char ) * (len + 1), getter());
+    ft_strlcpy(s, &lexer->line[++lexer->i], len + 1);
     lexer->i = i + 1;
     return(set_token(token, s, T_S_COTS));/////////////////needs check with freind and create handel d
 }
@@ -139,8 +139,8 @@ t_token *handel_d_quotes(t_lexer *lexer)
     token = gc_malloc(sizeof(t_token), getter());
     while(lexer->line[i + 1] && lexer->line[++i] != '"')
         len++;
-    s = gc_malloc(sizeof(char ) * (len + 3), getter());
-    ft_strlcpy(s, &lexer->line[lexer->i], len + 3);
+    s = gc_malloc(sizeof(char ) * (len + 1), getter());
+    ft_strlcpy(s, &lexer->line[++lexer->i], len + 1);
     lexer->i = i + 1;
     if(has_exp(s))
         return(set_token(token, s, T_EXP));
@@ -261,7 +261,9 @@ t_token *handel_dollar(t_lexer *lexer)
     token = gc_malloc(sizeof(t_token), getter());
     if(lexer->line[lexer->i + 1] == '\0')
         return(lexer->i++, set_token(token, "$", T_WORD));
-    else if(isalpha(lexer->line[lexer->i + 1]))
+    else if(isalpha(lexer->line[lexer->i + 1]) 
+     || lexer->line[lexer->i + 1] == '_' 
+     || lexer->line[lexer->i + 1] == '?')
         return(handel_expand(lexer, token));
     else if(lexer->line[lexer->i + 1] == '"')
         return(pick_dollar(lexer, token));
@@ -320,7 +322,17 @@ void print_list(t_token *token)
 {
     while(token)
     {
-        printf("%s === ", token->value);
+        printf("%s (%d) === ", token->value, token->type);
+        token = token->next;
+    }
+    printf("\n");
+}
+
+void print_listt(t_garbage *token)
+{
+    while(token)
+    {
+        printf("%p === ", token->adress);
         token = token->next;
     }
     printf("\n");
@@ -335,16 +347,17 @@ int help(char *line, int *i)
     exit = 0;
     quotes_char = line[*i];
     (*i)++;
-    quotes_open = 0;
+    quotes_open = 1;
     while(line[*i] && line[*i] != quotes_char)
         (*i)++;
     if(line[*i] == quotes_char)
     {
         quotes_open = 0;
-        (*i)++;
+        // (*i)++;
     }
     else 
         exit = 1;
+    printf("%d\n", *i);
     return(exit);
 }
 
@@ -390,6 +403,7 @@ int lexer(char *line)
         // printf("i mor skip white = %d\n", lexer->i);
     }
     print_list(lexer->head);
+    free_all(getter());
     return(0);
 }
 

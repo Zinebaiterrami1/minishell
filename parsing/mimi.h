@@ -10,23 +10,21 @@
 #include "garbage_collector/gc.h"
 
 typedef enum s_token_type
-{
-    T_COMMD,
-    T_ARG,
-    T_COTS,
-    T_D_COTS,
-    T_S_COTS,
-    T_PAR,
-    T_PIPE,
-    T_RED_IN,
-    T_RED_OUT,
-    T_RED_IN_APEND,
+{//1
+    T_ARG,//2//3
+    T_D_COTS,//4
+    T_S_COTS,//5
+    T_PAR,//6
+    T_PIPE,//7
+    T_RED_IN,//8
+    T_RED_OUT,//9
+    T_RED_IN_APEND, //10
     T_RED_OUT_APEND,
-    T_APPEND,
+    T_APPEND,//12
     T_HERDOC,
-    T_WORD,
+    T_WORD,//14
     T_DOLLR,
-    T_EXP,
+    T_EXP,//16
     //T_EOF,
 
 }t_token_type;
