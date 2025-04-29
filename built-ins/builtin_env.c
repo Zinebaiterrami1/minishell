@@ -33,8 +33,10 @@ void print_env(char **envp)
 {
     t_env *cmd;
     t_env *tmp;
+    t_env *tmp2;
     cmd = init_env(envp);
     tmp = cmd;
+    tmp2 = cmd;
 
     t_env *sp_env;
     t_env *tmp1;
@@ -44,40 +46,31 @@ void print_env(char **envp)
 
     char *path;
     path = get_env_value(tmp, "PWD");
+    
+
+    char *key;
+    key = get_env_key(tmp2, "unix:///run/user/102723/docker.sock");
     if(!tmp)
     {
         printf("Failed to initialize environment\n");
         return ;
     }
+    /*---get the value of a key giving in params---*/
     printf("PATH: %s\n", path);
+    printf("KEY: %s\n", key);
+    /*---init env---*/
     // while(tmp)
     // {
     //     printf("%s\n", tmp->line);
     //     tmp = tmp->next;
     // }
-
+    /*---split the env variables key=value---*/
     // while(tmp1)
     // {
     //     printf("key : %s ------- path : %s\n", tmp1->env_key, tmp1->env_value);
     //     tmp1 = tmp1->next;
     // }
 }
-//
-// t_env *split_env(t_env *lst, char **envp)
-// {
-//     t_env *tmp;
-//     char *key;
-
-//    lst = init_env(envp);
-//    tmp = lst;
-//    while(tmp)
-//    {    
-//         key = ft_strchr(tmp->line, '=');
-//         tmp->env_key = ft_strdup(key);
-//         tmp = tmp->next;
-//    }
-//     return (lst);
-// }
 
 t_env *split_env(t_env *lst)
 {
@@ -116,5 +109,28 @@ char *get_env_value(t_env *env_list, const char *key)
     return (path);
 }
 
+char *get_env_key(t_env *env_lst, const char *value)
+{
+    t_env *tmp;
+    char *key;
+    
+    tmp = env_lst;
+    while(tmp)
+    {
+        if(ft_strncmp(tmp->env_value, value, ft_strlen(tmp->env_value)) == 0)
+        {
+            key = tmp->env_key;
+        }
+        tmp = tmp->next;
+    }
+    return (key);
+}
 // /* Update existing or add new environment variable */
-// int set_env_value(t_env **env_list, const char *key, const char *value);
+char *set_env_value(t_env **env_list, const char *key, const char *value)
+{
+    t_env *tmp;
+    char *key;
+    char *value;
+
+    
+}

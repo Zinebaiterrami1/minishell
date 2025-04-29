@@ -15,3 +15,5 @@ void ft_cd(t_cmd *arg, char *path)
         }
     }
 }
+
+//void    cd_cmd(char *path, t_env **env)
