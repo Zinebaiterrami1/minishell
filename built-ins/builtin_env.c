@@ -56,14 +56,33 @@ void print_env(char **envp)
         return ;
     }
     /*---get the value of a key giving in params---*/
-    printf("PATH: %s\n", path);
-    printf("KEY: %s\n", key);
+    // printf("PATH: %s\n", path);
+    // printf("KEY: %s\n", key);
     /*---init env---*/
-    // while(tmp)
-    // {
-    //     printf("%s\n", tmp->line);
-    //     tmp = tmp->next;
-    // }
+    while(tmp)
+    {
+        printf("%s\n", tmp->line);
+        tmp = tmp->next;
+    }
+    printf("-------------------------------------------\n");
+    t_env *my_env = init_env(envp);
+    my_env = split_env(my_env);
+    t_env *current = my_env;
+    printf("Before update:\n");
+    while(my_env)
+    {
+        printf("key : %s ------- path : %s\n", my_env->env_key, my_env->env_value);
+        my_env = my_env->next;
+    }
+    printf("after update:\n");
+    set_env_value(&current, "USER", "zait-err");
+    set_env_value(&current, "NEW_VAR", "hello_world");
+    printf("current result:\n");
+    while(current)
+    {
+        printf("key : %s ------- path : %s\n", current->env_key, current->env_value);
+        current = current->next;
+    }
     /*---split the env variables key=value---*/
     // while(tmp1)
     // {
@@ -126,11 +145,29 @@ char *get_env_key(t_env *env_lst, const char *value)
     return (key);
 }
 // /* Update existing or add new environment variable */
-char *set_env_value(t_env **env_list, const char *key, const char *value)
+void set_env_value(t_env **env_list, const char *key, const char *value)
 {
     t_env *tmp;
-    char *key;
-    char *value;
-
-    
+    t_env *new_node;
+    tmp = *env_list;
+    if(!*env_list || !env_list || !tmp)
+        return;
+    while(tmp)
+    {   
+        if(ft_strncmp(tmp->env_key, key, ft_strlen(tmp->env_key)) == 0)
+        {
+            free(tmp->env_value);
+            tmp->env_value = ft_strdup(value);
+            return ;
+        }
+        if(tmp->next == NULL)
+            break;
+        tmp = tmp->next;
+    }
+    new_node = malloc(sizeof(t_env));
+    new_node->env_key = ft_strdup(key);
+    new_node->env_value = ft_strdup(value);
+    new_node->next = NULL;
+    tmp->next = new_node;
+    // ft_lstadd_back(tmp, new_node);
 }

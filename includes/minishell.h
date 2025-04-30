@@ -37,4 +37,5 @@ t_env *split_env(t_env *lst);
 char *get_env_value(t_env *env_list, const char *key);
 char *get_env_key(t_env *env_lst, const char *value);
 void update_env(char *key, char *new_value, char **env);
+void set_env_value(t_env **env_list, const char *key, const char *value);
 #endif
