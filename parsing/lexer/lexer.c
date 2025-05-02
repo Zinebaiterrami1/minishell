@@ -6,24 +6,11 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/28 22:10:08 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:04:28 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mimi.h"
-
-typedef struct s_lexer
-{
-    char c;
-    char *line;
-    int status_d;
-    int status_s;
-    int error;
-    unsigned int i;
-    t_token *head;
-    size_t line_size;
-    
-}t_lexer;
 
 t_lexer *init_lexer(char *line)
 {
@@ -37,6 +24,7 @@ t_lexer *init_lexer(char *line)
     lexer->error = 0;
     lexer->status_d = 0;
     lexer->status_s = 0;
+    // lexer->head->print_space = 0;
     return(lexer);
 }
 
@@ -106,6 +94,9 @@ t_token *handel_s_quotes(t_lexer *lexer)
     token = gc_malloc(sizeof(t_token), getter());
     while(lexer->line[i + 1] && lexer->line[++i] != '\'')
         len++;
+    if(lexer->line[i + 1] && lexer->line[i + 1] == '\t'
+        || lexer->line[i + 1] == ' ')
+        token->print_space = 1;
     s = gc_malloc(sizeof(char ) * (len + 1), getter());
     ft_strlcpy(s, &lexer->line[++lexer->i], len + 1);
     lexer->i = i + 1;
@@ -400,9 +391,9 @@ int lexer(char *line)
             adding_token(lexer, token);
         if(lexer->error)
             return(1);
-        // printf("i mor skip white = %d\n", lexer->i);
     }
     print_list(lexer->head);
+    parser(lexer->head);
     free_all(getter());
     return(0);
 }
@@ -423,5 +414,4 @@ int main()
         }
         free(line);
     }
-    
 }

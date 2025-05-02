@@ -10,29 +10,42 @@
 #include "garbage_collector/gc.h"
 
 typedef enum s_token_type
-{//1
-    T_ARG,//2//3
-    T_D_COTS,//4
-    T_S_COTS,//5
-    T_PAR,//6
-    T_PIPE,//7
-    T_RED_IN,//8
-    T_RED_OUT,//9
-    T_RED_IN_APEND, //10
+{
+    T_ARG,
+    T_D_COTS,
+    T_S_COTS,
+    T_PAR,
+    T_PIPE,
+    T_RED_IN,
+    T_RED_OUT,
     T_RED_OUT_APEND,
-    T_APPEND,//12
+    T_APPEND,
     T_HERDOC,
-    T_WORD,//14
+    T_WORD,
     T_DOLLR,
-    T_EXP,//16
+    T_EXP,
     //T_EOF,
 
 }t_token_type;
+
+typedef struct s_lexer
+{
+    char c;
+    char *line;
+    int status_d;
+    int status_s;
+    int error;
+    unsigned int i;
+    t_token *head;
+    size_t line_size;
+    
+}t_lexer;
 
 typedef struct s_token
 {
     char *value;
     int type;
+    int print_space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
     struct s_token *next;
 }t_token;
 
@@ -55,29 +68,20 @@ typedef struct s_file
 
 }t_file;
 
-
-typedef struct s_cmd
+typedef struct s_redir
 {
-    char *comd;
-    char *arg;
     int type;
-    t_file *outfile;
-    t_file *infile;
+    char *name;
+    struct s_redir *next;
+}t_redir;
 
-}t_cmd;
+typedef struct s_command
+{
+    char *cmd;
+    char **arg;
+    int type;
+    t_redir *redir;
+    struct t_command *next_com;
 
-// void free_tokens(t_token *tokens);
-// void skip_space(char *line, int *i);
-// char *handel_redir(char *line, int (*i), t_token *tokens);
-// void handel_pipe(t_token *tokens);
-// int select_d_cots(char *line, int i, t_token *tokens);
-// int check_d(char *line, int i);
-// char *handel_d_cots(char *line,int *i, t_token *tokens);
-// int select_s_cots(char *line, int i, t_token *tokens);
-// int check_s(char *line, int i);
-// char *handel_s_cots(char *line,int *i, t_token *tokens);
-// t_token *lexer(char *line);
-// void handel_pipe(t_token *tokens);
-// void handel_else(char *line, int *i, t_token *tokens);
-
+} t_command;
 #endif
