@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <linux/limits.h>
 #include "mini.h"
 #define BUFFER_SIZE 1024
 
@@ -26,16 +27,18 @@ typedef struct t_env
     struct t_env *next;
 } t_env;
 
+extern int g_last_status;
 /*----builtin----*/
 
 void ft_echo(t_cmd *cmd);
 void ft_pwd();
-void ft_cd();
 t_env *init_env(char **envp);
-void print_env(char **envp);
+void print_env(char **envp, char **args);
 t_env *split_env(t_env *lst);
 char *get_env_value(t_env *env_list, const char *key);
 char *get_env_key(t_env *env_lst, const char *value);
-void update_env(char *key, char *new_value, char **env);
 void set_env_value(t_env **env_list, const char *key, const char *value);
+int    ft_cd(char **args, t_env **env);
+int	ft_exit(char **args);
+
 #endif

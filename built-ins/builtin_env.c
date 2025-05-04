@@ -29,7 +29,7 @@ t_env *init_env(char **envp)
 }
 
 // /* Print all environment variables (env builtin) */
-void print_env(char **envp)
+void print_env(char **envp, char **args)
 {
     t_env *cmd;
     t_env *tmp;
@@ -89,6 +89,23 @@ void print_env(char **envp)
     //     printf("key : %s ------- path : %s\n", tmp1->env_key, tmp1->env_value);
     //     tmp1 = tmp1->next;
     // }
+    /*cd*/
+    //   t_env *mmy_env = init_env(envp);
+    // int argc = 2;
+
+    // if (argc == 1)
+    //     ft_cd(NULL, &mmy_env); // No args → go to HOME
+    // else
+    //     ft_cd(&args[1], &mmy_env); // Use argv[1] as target directory
+
+    // // Show updated PWD and OLDPWD
+    // t_env *tmpp = mmy_env;
+    // while (tmpp) {
+    //     if (strcmp(tmpp->env_key, "PWD") == 0 || strcmp(tmpp->env_key, "OLDPWD") == 0)
+    //         printf("%s = %s\n", tmpp->env_key, tmpp->env_value);
+    //     tmpp = tmpp->next;
+    // }
+    ft_exit(args);
 }
 
 t_env *split_env(t_env *lst)

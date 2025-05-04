@@ -1,6 +1,7 @@
 #include "includes/minishell.h"
 #include "includes/mini.h"
 
+int g_last_status = 0;
 int main(int ac, char **argv, char **env)
 {
     (void)ac;
@@ -32,9 +33,8 @@ int main(int ac, char **argv, char **env)
     // {
     //     printf("PATH not found\n");
     // }
-
-    print_env(env);
-    
+   
+    print_env(env, argv);
 }
 
 // int main(int argc, char **argv)
