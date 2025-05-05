@@ -1,7 +1,6 @@
 #include "../includes/minishell.h"
 #include "../includes/mini.h"
 
-
 static int	ft_is_numeric(char *str)
 {
 	int	i = 0;

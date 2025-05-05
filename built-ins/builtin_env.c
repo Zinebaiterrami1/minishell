@@ -29,7 +29,7 @@ t_env *init_env(char **envp)
 }
 
 // /* Print all environment variables (env builtin) */
-void print_env(char **envp, char **args)
+void print_env(char **envp, char **args, int argc)
 {
     t_env *cmd;
     t_env *tmp;
@@ -90,14 +90,13 @@ void print_env(char **envp, char **args)
     //     tmp1 = tmp1->next;
     // }
     /*cd*/
-    //   t_env *mmy_env = init_env(envp);
-    // int argc = 2;
+    t_env *mmy_env = init_env(envp);
 
-    // if (argc == 1)
-    //     ft_cd(NULL, &mmy_env); // No args → go to HOME
-    // else
-    //     ft_cd(&args[1], &mmy_env); // Use argv[1] as target directory
-
+    if (argc == 1)
+        ft_cd(NULL, &mmy_env); // No args → go to HOME
+    else
+        ft_cd(&args[1], &mmy_env); // Use argv[1] as target directory
+printf("Now in: %s\n", get_env_value(mmy_env, "PWD"));
     // // Show updated PWD and OLDPWD
     // t_env *tmpp = mmy_env;
     // while (tmpp) {
@@ -131,18 +130,15 @@ t_env *split_env(t_env *lst)
 char *get_env_value(t_env *env_list, const char *key)
 {
     t_env *tmp;
-    char *path;
 
     tmp = env_list;
     while(tmp)
     {
-        if(ft_strncmp(tmp->env_key, key, ft_strlen(key)) == 0)
-        {
-            path = tmp->env_value;
-        }
+        if(ft_strcmp(tmp->env_key, key) == 0)
+            return (tmp->env_value);
         tmp = tmp->next;
     }
-    return (path);
+    return (NULL);
 }
 
 char *get_env_key(t_env *env_lst, const char *value)
@@ -161,30 +157,33 @@ char *get_env_key(t_env *env_lst, const char *value)
     }
     return (key);
 }
+
 // /* Update existing or add new environment variable */
 void set_env_value(t_env **env_list, const char *key, const char *value)
 {
     t_env *tmp;
     t_env *new_node;
+    
     tmp = *env_list;
     if(!*env_list || !env_list || !tmp)
         return;
     while(tmp)
     {   
-        if(ft_strncmp(tmp->env_key, key, ft_strlen(tmp->env_key)) == 0)
+        if(ft_strcmp(tmp->env_key, key) == 0)
         {
             free(tmp->env_value);
             tmp->env_value = ft_strdup(value);
             return ;
         }
-        if(tmp->next == NULL)
+        if(!tmp->next )
             break;
         tmp = tmp->next;
     }
     new_node = malloc(sizeof(t_env));
+    if(!new_node)
+        return ;
     new_node->env_key = ft_strdup(key);
     new_node->env_value = ft_strdup(value);
     new_node->next = NULL;
     tmp->next = new_node;
-    // ft_lstadd_back(tmp, new_node);
 }

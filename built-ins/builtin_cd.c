@@ -1,92 +1,44 @@
 #include "../includes/minishell.h"
 #include "../includes/mini.h"
 
-static int  change_home(t_env *env)
+static void cd_update_env(char *old_pwd, t_env **env)
 {
-    int is_foud;
+    char *new_pwd;
 
-    is_foud = 0;
-    while(env)
-    {
-        if(ft_strncmp(env->env_key, "HOME", ft_strlen(env->env_key)) == 0)
-        {
-            if(chdir(env->env_value) == -1)
-            {
-                perror("cd");
-                return (-1);
-            }
-            is_foud++;
-            break;
-        }
-        env = env->next;
-    }
-    if(is_foud == 0)
-    {
-        printf("cd: HOME not set\n");
-        return (-1);
-    }
-    return (0);
+    new_pwd = getcwd(NULL, 0);
+    if(!new_pwd)
+        return ;
+    set_env_value(env,"OLDPWD", old_pwd);
+    set_env_value(env,"PWD", new_pwd);
+    free(new_pwd);
 }
 
-
-static void    update_pwd(t_env **env, char *path, char hint)
+static int cd_change_directory(char *path, t_env **env)
 {
-    t_env   *lst;
+    char *old_pwd;
 
-    lst = *env;
-    while(lst)
-    {
-        if(hint == 'P' && (ft_strncmp(lst->env_key, "PWD", ft_strlen(lst->env_key)) == 0))
-            {
-                free(lst->env_value);
-                lst->env_value = ft_strdup(path);
-                break;
-            }
-        else if(hint == 'O' && (ft_strncmp(lst->env_key, "OLDPWD", ft_strlen(lst->env_key)) == 0))
-            {
-                free(lst->env_value);
-                lst->env_value = ft_strdup(path);
-                break;
-            }
-        lst = lst->next;
-    }
-}
-
-static int    update_pwd2(t_env **env, char **old)
-{
-        update_pwd(env, *old, 'O');
-            free(*old);
-        *old = getcwd(NULL, 0);
-        update_pwd(env, *old, 'P');
-        free(*old);
-        return (0);
-}
-
-int    ft_cd(char **args, t_env **env)
-{
-    char    *old;
-
-    old = getcwd(NULL, 0);
-    if((!args || !args[0]) || (ft_strncmp(args[0], "~", ft_strlen(args[0])) == 0 && !args[1]))
-    {
-        if(change_home(*env) == -1)
-        {
-                free(old);
-                return (-1);
-        }
-    }
-    else if(args[1])
-    {
-        printf("cd: too many arguments\n");
-        free(old);
-        return (-1);
-    }
-    else if(chdir(*args) == -1)
+    old_pwd = getcwd(NULL, 0);
+    if(!old_pwd)
+        return (perror("cd"), 1);
+    if(chdir(path) != 0)
     {
         perror("cd");
-        free(old);
-        return (-1);
+        free(old_pwd);
+        return (1);
     }
-    if(update_pwd2(env, &old) == -1) return (-1); 
+    cd_update_env(old_pwd, env);
+    free(old_pwd);
     return (0);
+}
+
+int ft_cd(char **args, t_env **env)
+{
+    if (!args[1])
+	{
+		char *home = get_env_value(*env, "HOME");
+		if (!home)
+			return (printf("cd: HOME not set\n"), 1);
+		return (cd_change_directory(home, env));
+	}
+	return (cd_change_directory(args[1], env));
 }

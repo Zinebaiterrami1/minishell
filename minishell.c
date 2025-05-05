@@ -33,8 +33,7 @@ int main(int ac, char **argv, char **env)
     // {
     //     printf("PATH not found\n");
     // }
-   
-    print_env(env, argv);
+    print_env(env, argv, ac);
 }
 
 // int main(int argc, char **argv)
