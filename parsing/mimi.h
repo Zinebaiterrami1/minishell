@@ -14,7 +14,6 @@ typedef enum s_token_type
     T_ARG,
     T_D_COTS,
     T_S_COTS,
-    T_PAR,
     T_PIPE,
     T_RED_IN,
     T_RED_OUT,
@@ -77,11 +76,8 @@ typedef struct s_redir
 
 typedef struct s_command
 {
-    char *cmd;
     char **arg;
-    int type;
     t_redir *redir;
     struct t_command *next_com;
-
 } t_command;
 #endif
