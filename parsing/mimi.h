@@ -27,6 +27,14 @@ typedef enum s_token_type
 
 }t_token_type;
 
+typedef struct s_token
+{
+    char *value;
+    int type;
+    int print_space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
+    struct s_token *next;
+}t_token;
+
 typedef struct s_lexer
 {
     char c;
@@ -40,13 +48,6 @@ typedef struct s_lexer
     
 }t_lexer;
 
-typedef struct s_token
-{
-    char *value;
-    int type;
-    int print_space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
-    struct s_token *next;
-}t_token;
 
 typedef struct s_check
 {
@@ -78,6 +79,13 @@ typedef struct s_command
 {
     char **arg;
     t_redir *redir;
-    struct t_command *next_com;
+    struct s_command *next_com;
 } t_command;
+
+
+t_command *parser(t_lexer *lexer);
+
+
+
+
 #endif

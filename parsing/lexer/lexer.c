@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/30 14:04:28 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:55:06 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ t_token *handel_s_quotes(t_lexer *lexer)
     token = gc_malloc(sizeof(t_token), getter());
     while(lexer->line[i + 1] && lexer->line[++i] != '\'')
         len++;
-    if(lexer->line[i + 1] && lexer->line[i + 1] == '\t'
-        || lexer->line[i + 1] == ' ')
+    if(lexer->line[i + 1] && (lexer->line[i + 1] == '\t'
+        || lexer->line[i + 1] == ' '))
         token->print_space = 1;
     s = gc_malloc(sizeof(char ) * (len + 1), getter());
     ft_strlcpy(s, &lexer->line[++lexer->i], len + 1);
@@ -393,7 +393,7 @@ int lexer(char *line)
             return(1);
     }
     print_list(lexer->head);
-    parser(lexer->head);
+    parser(lexer);
     free_all(getter());
     return(0);
 }
