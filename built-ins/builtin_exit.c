@@ -18,23 +18,49 @@ static int	ft_is_numeric(char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
-{
-	long	code;
+// int	ft_exit(char **args)
+// {
+// 	long	code;
 
+// 	write(2, "exit\n", 5);
+// 	if (!args[1])
+// 		exit(0);
+// 	if (!ft_is_numeric(args[1]))
+// 	{
+// 		printf("minishell: exit: %s: numeric argument required\n", args[1]);
+// 		exit(255);
+// 	}
+// 	if (args[2])
+// 	{
+// 		printf("minishell: exit: too many arguments\n");
+// 		return (1);
+// 	}
+// 	code = ft_atoi(args[1]);
+// 	exit((unsigned char)code);
+// }
+
+
+int ft_exit(char **args)
+{
+	int code;
+	int arg_count;
+
+	arg_count = 0;
 	write(2, "exit\n", 5);
-	if (!args[1])
-		exit(g_last_status);
-	if (!ft_is_numeric(args[1]))
+	while(args[arg_count])
+		arg_count++;
+	if(arg_count == 1)
+		exit(0);
+	if(!ft_is_numeric(args[1]))
 	{
-		printf("minishell: exit: %s: numeric argument required\n", args[1]);
-		exit(255);
+			printf("Error: numeric argument required\n");
+			exit(255);
 	}
-	if (args[2])
+	if(arg_count > 2) 
 	{
-		printf("minishell: exit: too many arguments\n");
+		printf("Error:too many arguments\n");
 		return (1);
 	}
 	code = ft_atoi(args[1]);
-	exit((unsigned char)code);
+	exit(code % 256);
 }

@@ -31,6 +31,7 @@ t_env *init_env(char **envp)
 // /* Print all environment variables (env builtin) */
 void print_env(char **envp, char **args, int argc)
 {
+    (void)argc;
     t_env *cmd;
     t_env *tmp;
     t_env *tmp2;
@@ -96,7 +97,7 @@ void print_env(char **envp, char **args, int argc)
         ft_cd(NULL, &mmy_env); // No args → go to HOME
     else
         ft_cd(&args[1], &mmy_env); // Use argv[1] as target directory
-printf("Now in: %s\n", get_env_value(mmy_env, "PWD"));
+    printf("Now in: %s\n", get_env_value(mmy_env, "PWD"));
     // // Show updated PWD and OLDPWD
     // t_env *tmpp = mmy_env;
     // while (tmpp) {
@@ -104,7 +105,7 @@ printf("Now in: %s\n", get_env_value(mmy_env, "PWD"));
     //         printf("%s = %s\n", tmpp->env_key, tmpp->env_value);
     //     tmpp = tmpp->next;
     // }
-    ft_exit(args);
+    // ft_exit(args);
 }
 
 t_env *split_env(t_env *lst)
@@ -186,4 +187,14 @@ void set_env_value(t_env **env_list, const char *key, const char *value)
     new_node->env_value = ft_strdup(value);
     new_node->next = NULL;
     tmp->next = new_node;
+}
+
+void ft_display_env(t_env *env, char **envp)
+{
+    env = init_env(envp);
+    while(env)
+    {
+        printf("%s\n", env->line);
+        env = env->next;
+    }
 }

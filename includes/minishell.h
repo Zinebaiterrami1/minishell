@@ -12,7 +12,6 @@ typedef struct s_cmd
     char cmd;
     char arg;
     int type;
-    char **copy_env;
     char *value;
     int outfile;
     int infile;
@@ -41,5 +40,6 @@ void set_env_value(t_env **env_list, const char *key, const char *value);
 int    ft_cd(char **args, t_env **env);
 int	ft_exit(char **args);
 void print_env(char **envp, char **args, int argc);
-
+int ft_export(char **args, t_env **env);
+void ft_display_env(t_env *env, char **envp);
 #endif
