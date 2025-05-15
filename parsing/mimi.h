@@ -11,17 +11,14 @@
 
 typedef enum s_token_type
 {
-    T_ARG,
     T_D_COTS,
     T_S_COTS,
     T_PIPE,
     T_RED_IN,
     T_RED_OUT,
     T_RED_OUT_APEND,
-    T_APPEND,
     T_HERDOC,
     T_WORD,
-    T_DOLLR,
     T_EXP,
     //T_EOF,
 

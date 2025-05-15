@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:02:09 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/11 10:00:54 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:04:29 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (start > ft_strlen(s))
 	{
-		return (ft_strdup(""));
+		return (gc_strdup(""));
 	}
 	if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);

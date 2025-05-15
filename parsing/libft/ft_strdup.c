@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:52:14 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/12 19:59:59 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:05:17 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 
-char	*gc_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
 	int		l;
 	int		i;
@@ -27,7 +27,7 @@ char	*gc_strdup(const char *s1)
 	{
 		l++;
 	}
-	c = (char *)gc_malloc((l + 1) * sizeof(char), getter());
+	c = (char *)malloc((l + 1) * sizeof(char));
 	if (!c)
 		return (NULL);
 	while (s1[i])

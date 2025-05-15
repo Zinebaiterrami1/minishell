@@ -6,12 +6,21 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/13 13:06:56 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:18:34 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mimi.h"
 //"$$$HOME"
+
+int is_word(t_token_type type)
+{
+    if(type == T_WORD || type == T_D_COTS
+        || type == T_EXP || type == T_S_COTS)
+        return(1);
+    return(0);
+}
+
 int parser_check(t_token *token)
 {
     if(token->type == T_PIPE)
@@ -24,9 +33,7 @@ int parser_check(t_token *token)
         if(token->type == T_RED_IN || token->type == T_RED_OUT 
         || token->type == T_RED_IN || token->type == T_HERDOC)
         {
-            if (token->next == NULL || token->next->type == T_RED_IN || token->next->type == T_RED_OUT 
-            || token->next->type == T_RED_IN || token->next->type == T_HERDOC 
-            || token->next->type == T_PIPE)
+            if (token->next == NULL || !is_word(token->next->type))
             return(EXIT_FAILURE);
         }
         token = token->next;
@@ -40,13 +47,6 @@ void *parser_error()
     return(NULL);
 }
 
-int is_word(t_token_type type)
-{
-    if(type == T_WORD || type == T_D_COTS
-        || type == T_EXP || type == T_S_COTS)
-        return(1);
-    return(0);
-}
 int is_red(t_token_type type)
 {
     if (type == T_RED_OUT || type == T_RED_IN 
@@ -129,7 +129,7 @@ t_command *new_comd(t_command **list, t_token *token)
     count = 0;
     cur = token;
     comd = gc_malloc(sizeof(t_command) , getter());
-    while (cur && cur->type != T_PIPE && !is_red(cur->type))
+    while (cur && is_word(cur->type))
     {
         count++;
         cur = cur->next;
@@ -141,7 +141,6 @@ t_command *new_comd(t_command **list, t_token *token)
     if(comd)
         return(comd);
     return(NULL);
-    
 }
 
 
@@ -185,35 +184,46 @@ void creat_red(t_redir **red_list, int var, t_token *token)
 
 void print_listtt(t_command *token)
 {
-    int i;
-    
-    i = 0;
-    while(token)
+    while (token)
     {
-        printf("  %s = ", token->arg[i]);
+        int i = 0;
+        printf("cmd: ");
+        while (token->arg[i])
+        {
+            printf("[%s] ", token->arg[0]);
+            i++;
+        }
         token = token->next_com;
-        i++;
     }
     printf("\n");
+}
+
+int is_invalid(t_token *token)
+{
+    if(!ft_strncmp(token->value, "", 1))
+        return(1);
+    return(0);
 }
 
 t_command *creat_comand_list(t_token *token)
 {
     t_command *list;
     t_command *cur_comd;
-    static int f;
+    int f;
     int red_type;
-    
     f = 0;
+    
     cur_comd = NULL;
     list = NULL;
     while(token)
     {
         if (cur_comd == NULL)
-        cur_comd = new_comd(&list, token);//allocate and append command
-        
-        else if(is_word(token->type))
+            cur_comd = new_comd(&list, token);//allocate and append command
+        if(is_invalid(token))
+            return(parser_error());
+        if(is_word(token->type))
         {
+            printf("is_word = %d\n", is_word(token->type));
             printf("token  = %s\n", token->value);
             fill_arg(cur_comd, f++, token);
         }
@@ -221,9 +231,9 @@ t_command *creat_comand_list(t_token *token)
         {
             red_type = token->type;
             token = token->next;
-            creat_red(&cur_comd->redir, red_type, token);//allocate and append;
+            creat_red(&cur_comd->redir, red_type, token);//allocate and append;//check if token->next is word
         }
-        else if (token->type == T_PIPE)
+        else if (token == NULL || token->type == T_PIPE)
         {
             cur_comd->arg[f] = NULL;
             cur_comd = NULL;
@@ -235,6 +245,14 @@ t_command *creat_comand_list(t_token *token)
     return(list);
 }
 
+
+// t_command *creat_comand_list(t_token **token)
+// {
+//     t_command *list;
+//     t_command *cur_comd;
+    
+    
+// }
 t_command *parser(t_lexer *lexer)
 {
     if(parser_check(lexer->head))

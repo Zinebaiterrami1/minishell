@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:17:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/24 16:11:41 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:07:45 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,28 @@ t_garbage *get_adress(void *adress, t_garbage *list)
         list = list->next;
     }
     return(list);
+}
+
+char	*gc_strdup(const char *s1)
+{
+	int		l;
+	int		i;
+	char	*c;
+
+	l = 0;
+	i = 0;
+	while (s1[l] != '\0')
+	{
+		l++;
+	}
+	c = (char *)gc_malloc((l + 1) * sizeof(char), getter());
+	if (!c)
+		return (NULL);
+	while (s1[i])
+	{
+		c[i] = s1[i];
+		i++;
+	}
+	c[i] = '\0';
+	return (c);
 }

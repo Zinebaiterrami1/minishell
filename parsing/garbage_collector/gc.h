@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:57:29 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/24 15:54:34 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:17:54 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_garbage
 }t_garbage;
 
 t_garbage **getter();
+char	*gc_strdup(const char *s1);
 void free_all(t_garbage **list);
 void *gc_malloc(size_t size, t_garbage **list);
 // static t_garbage *get_last_node(t_garbage *list);
