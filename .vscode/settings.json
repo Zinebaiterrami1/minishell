@@ -11,6 +11,8 @@
         "utility": "c",
         "variant": "c",
         "libft.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "mimi.h": "c",
+        "mini.h": "c"
     }
 }

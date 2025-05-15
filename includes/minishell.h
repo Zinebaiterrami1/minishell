@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
+/*   Updated: 2025/05/15 21:53:41 by zait-err         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
 #include <unistd.h>
 #include <stdio.h>
 #include <linux/limits.h>
-#include "mini.h"
+#include "../libft/libft.h"
+#include "../parsing/mimi.h"
 #define BUFFER_SIZE 1024
 
 typedef struct s_cmd
@@ -29,7 +42,7 @@ typedef struct t_env
 extern int g_last_status;
 /*----builtin----*/
 
-void ft_echo(t_cmd *cmd);
+void ft_echo(t_command *cmd);
 void ft_pwd();
 t_env *init_env(char **envp);
 // void print_env(char **envp, char **args);

@@ -1,28 +1,25 @@
-#ifndef MINI_H
-#define MINI_H
+#ifndef MIMI_H
+#define MIMI_H
 
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "../libft/libft.h"
+#include "libft/libft.h"
+#include "garbage_collector/gc.h"
 
 typedef enum s_token_type
 {
-    T_COMMD,
-    T_ARG,
-    T_COTS,
     T_D_COTS,
     T_S_COTS,
-    T_PAR,
     T_PIPE,
     T_RED_IN,
     T_RED_OUT,
-    T_RED_IN_APEND,
     T_RED_OUT_APEND,
-    T_APPEND,
     T_HERDOC,
+    T_WORD,
+    T_EXP,
     //T_EOF,
 
 }t_token_type;
@@ -31,25 +28,61 @@ typedef struct s_token
 {
     char *value;
     int type;
-    void *next;
+    int print_space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
+    struct s_token *next;
 }t_token;
 
+typedef struct s_lexer
+{
+    char c;
+    char *line;
+    int status_d;
+    int status_s;
+    int error;
+    unsigned int i;
+    t_token *head;
+    size_t line_size;
+    
+}t_lexer;
+
+
+typedef struct s_check
+{
+    int parth_g;
+    int parth_d;
+    int s_quotes;
+    int d_quotes;
+    int quote_open;
+}t_check;
+
+typedef struct s_file
+{
+    int fd;
+    t_token_type type;
+    char *name;
+    char *limiter;
+    int expand;
+
+}t_file;
+
+typedef struct s_redir
+{
+    int type;
+    char *name;
+    struct s_redir *next;
+}t_redir;
+
+typedef struct s_command
+{
+    char **arg;
+    t_redir *redir;
+    struct s_command *next_com;
+} t_command;
+
+
+t_command *parser(t_lexer *lexer);
 
 
 
-
-void free_tokens(t_token *tokens);
-void skip_space(char *line, int *i);
-char *handel_redir(char *line, int (*i), t_token *tokens);
-void handel_pipe(t_token *tokens);
-int select_d_cots(char *line, int i, t_token *tokens);
-int check_d(char *line, int i);
-char *handel_d_cots(char *line,int *i, t_token *tokens);
-int select_s_cots(char *line, int i, t_token *tokens);
-int check_s(char *line, int i);
-char *handel_s_cots(char *line,int *i, t_token *tokens);
-t_token *lexer(char *line);
-void handel_pipe(t_token *tokens);
-void handel_else(char *line, int *i, t_token *tokens);
 
 #endif

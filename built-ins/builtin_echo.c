@@ -1,31 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
+/*   Updated: 2025/05/15 22:29:17 by zait-err         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include "../includes/mini.h"
 
-void ft_echo(t_cmd *cmd)
+void ft_echo(t_command *cmd)
 {
-    if(ft_strncmp("echo", cmd->value, ft_strlen("echo")) == 0)
-    {
-        t_cmd *tmp;
-        tmp = cmd->next;
-        if(tmp && ft_strncmp("-n", tmp->value, ft_strlen("-n")) == 0)
+    int i;
+    t_command *tmp;
+
+    i = 1;
+    tmp = cmd;
+    while(tmp){
+        
+        if(tmp && ft_strncmp("-n", tmp->arg[i], ft_strlen("-n")) == 0)
         {
-            tmp = tmp->next;
+            i++;
             while(tmp)
             {
-                write(1, tmp->value, ft_strlen(tmp->value));
-                if(tmp->next != NULL)
+                write(1, tmp->arg[i], ft_strlen(tmp->arg[i]));
+                if(tmp->next_com != NULL)
                     write(1, " ", 1);
-                tmp = tmp->next;
+                i++;
+                tmp = tmp->next_com;
             }
         }
         else
         {
             while(tmp)
             {
-                write(1, tmp->value, ft_strlen(tmp->value));
-                if(tmp->next != NULL)
+                write(1, tmp->arg[i], ft_strlen(tmp->arg[i]));
+                if(tmp->next_com != NULL)
                     write(1, " ", 1);
-                tmp = tmp->next;
+                i++;
+                tmp = tmp->next_com;
             }
             write(1, "\n", 1);
         }

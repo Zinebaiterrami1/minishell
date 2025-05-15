@@ -1,4 +1,15 @@
-#include "../includes/mini.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
+/*   Updated: 2025/05/15 22:31:44 by zait-err         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 /* Initialize environment variables from system env */
@@ -28,10 +39,22 @@ t_env *init_env(char **envp)
     return (head);
 }
 
+static void ft_exec_command(t_command *cmd)
+{
+    while(cmd)
+    {
+        if(ft_strncmp(cmd->arg[0], "echo", ft_strlen("echo")) == 0)
+            ft_echo(cmd);
+        else
+            printf("Error: command not found %s\n", cmd->arg[0]);
+        cmd = cmd->next_com;
+    }
+}
+
 // /* Print all environment variables (env builtin) */
 void print_env(char **envp, char **args, int argc)
 {
-    (void)argc;
+    (void)argc;    
     t_env *cmd;
     t_env *tmp;
     t_env *tmp2;
@@ -39,6 +62,24 @@ void print_env(char **envp, char **args, int argc)
     tmp = cmd;
     tmp2 = cmd;
 
+    t_command *head;
+    t_command *cur;
+    
+    cur = malloc(sizeof(t_command));
+    head = cur;
+    cur->arg[0] = "echo";
+    cur->arg[1] = "hi";
+    cur->arg[2] = NULL;
+    cur->next_com = malloc(sizeof(t_command));
+    cur->next_com->arg[0] = "echo";
+    cur->next_com->arg[1] = "hello";
+    cur->next_com->redir = malloc(sizeof(t_redir));
+    cur->next_com->redir->name = "file";
+    cur->next_com->redir->type = T_RED_OUT_APEND;
+    cur->next_com->next_com = NULL;
+    //
+
+    ft_exec_command(cur);
     t_env *sp_env;
     t_env *tmp1;
 

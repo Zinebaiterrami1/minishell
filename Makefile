@@ -1,18 +1,18 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 SRC = built-ins/builtin_echo.c minishell.c built-ins/builtin_pwd.c built-ins/builtin_env.c built-ins/builtin_cd.c built-ins/builtin_exit.c
-
+#lexer/lexer.c garbage_collector/gc.c parser/parser.c
 NAME= minishell
 
 %.o: %.c
-	@$(CC) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
 	@echo "🚀 Building the project..."
 	@make -s all -C libft
 	@make -s bonus -C libft
-	@$(CC) $(OBJ) libft/libft.a -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) libft/libft.a -lreadline -o $(NAME)
 	@echo "✅ Build completed successfully!"
 
 all : $(NAME)
