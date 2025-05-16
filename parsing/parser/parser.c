@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/15 19:18:34 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:44:35 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int parser_check(t_token *token)
     while(token)
     {
         if (token->type == T_PIPE 
-        && (token->next->type == T_PIPE || token->next == NULL))
+        && (token->next == NULL || token->next->type == T_PIPE  || *(token->next->value) == '('  || *(token->next->value) == ')' ))
             return(EXIT_FAILURE);
         if(token->type == T_RED_IN || token->type == T_RED_OUT 
         || token->type == T_RED_IN || token->type == T_HERDOC)
@@ -44,6 +44,7 @@ int parser_check(t_token *token)
 void *parser_error()
 {
     printf("syntax error\n");
+    // g_ext_status = 2;
     return(NULL);
 }
 
@@ -134,6 +135,7 @@ t_command *new_comd(t_command **list, t_token *token)
         count++;
         cur = cur->next;
     }
+    printf("count = %d\n", count);
     comd->arg = gc_malloc(sizeof(char *) * (count + 1), getter());
     comd->next_com = NULL;
     comd->redir = NULL;
@@ -190,7 +192,7 @@ void print_listtt(t_command *token)
         printf("cmd: ");
         while (token->arg[i])
         {
-            printf("[%s] ", token->arg[0]);
+            printf("[%s] ", token->arg[i]);
             i++;
         }
         token = token->next_com;
@@ -230,15 +232,21 @@ t_command *creat_comand_list(t_token *token)
         else if(is_red(token->type))
         {
             red_type = token->type;
-            token = token->next;
-            creat_red(&cur_comd->redir, red_type, token);//allocate and append;//check if token->next is word
+            if(token->next && is_word(token->next->type))
+            {
+                token = token->next;
+                creat_red(&cur_comd->redir, red_type, token);//allocate and append;//check if token->next is word
+            }
+            else
+                return(parser_error());
         }
-        else if (token == NULL || token->type == T_PIPE)
+        if(token->next == NULL || token->type == T_PIPE)
         {
             cur_comd->arg[f] = NULL;
             cur_comd = NULL;
             f = 0;
         }
+        printf("f -----------------> %d\n", f);
         token = token->next;
     }
     print_listtt(list);

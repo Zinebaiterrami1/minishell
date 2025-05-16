@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/12 19:55:06 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:05:13 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,8 +287,8 @@ t_token *get_next_token(t_lexer *lexer)
 {
     while(lexer->i < lexer->line_size && lexer->line[lexer->i])///////////////
     {
-        if(lexer->i == lexer->line_size)
-            return(NULL);
+        // if(lexer->i == lexer->line_size)
+        //     return(NULL);
         lexer_skip_white(lexer);
         if(lexer->line[lexer->i] == '|')
             return(handel_pipe(lexer));
@@ -371,6 +371,7 @@ int check(char *line)
 int syntax_error()
 {
     printf("syntax error \n");
+    //g_exit_status;
     return(1);
 }
 
