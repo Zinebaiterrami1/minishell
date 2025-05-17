@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/15 21:08:24 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/17 16:39:29 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ static int	ft_is_numeric(char *str)
 // }
 
 
-int ft_exit(char **args)
+int ft_exit(t_command *args)
 {
 	int code;
 	int arg_count;
 
 	arg_count = 0;
 	write(2, "exit\n", 5);
-	while(args[arg_count])
+	while(args->arg[arg_count]) 
 		arg_count++;
 	if(arg_count == 1)
 		exit(0);
-	if(!ft_is_numeric(args[1]))
+	if(!ft_is_numeric(args->arg[1]))
 	{
 			printf("Error: numeric argument required\n");
 			exit(255);
@@ -73,6 +73,6 @@ int ft_exit(char **args)
 		printf("Error:too many arguments\n");
 		return (1);
 	}
-	code = ft_atoi(args[1]);
+	code = ft_atoi(args->arg[1]);
 	exit(code % 256);
 }

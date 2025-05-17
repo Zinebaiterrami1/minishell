@@ -1396,9 +1396,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 778.8466880746872,
-			"y": 2796.850692301301,
-			"lastActivityTimestamp": 1747328038253,
+			"x": -640.8419706825034,
+			"y": 2719.075654614293,
+			"lastActivityTimestamp": 1747496662698,
 			"meta": {}
 		},
 		{
@@ -3011,8 +3011,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 583.1533119253128,
-			"y": -2472.850692301301,
+			"x": 928.8419706825034,
+			"y": -2523.075654614293,
 			"z": 0.5,
 			"meta": {},
 			"id": "camera:page:page",
@@ -6600,7 +6600,7 @@
 			"editingShapeId": null,
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:TXZ7Un-jUj_yBJj63Cb0p"
+				"shape:YIom91jgV3HBpQM6xsQRl"
 			],
 			"hoveredShapeId": null,
 			"erasingShapeIds": [],
@@ -11171,8 +11171,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -224.2391944758674,
-			"y": 2581.830996728587,
+			"x": -772.2391944758674,
+			"y": 2601.830996728587,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -14177,8 +14177,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -210.9813819758674,
-			"y": 3313.737246728587,
+			"x": -306.9813819758674,
+			"y": 3329.737246728587,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -14707,13 +14707,11 @@
 		{
 			"followingUserId": null,
 			"opacityForNextShape": 1,
-			"stylesForNextShape": {
-				"tldraw:color": "light-red"
-			},
+			"stylesForNextShape": {},
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "default",
+				"type": "move",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -14723,8 +14721,8 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 851,
-				"h": 589
+				"w": 984,
+				"h": 620
 			},
 			"insets": [
 				false,
@@ -14741,9 +14739,9 @@
 			"isFocused": true,
 			"devicePixelRatio": 1,
 			"isCoarsePointer": false,
-			"isHoveringCanvas": false,
+			"isHoveringCanvas": true,
 			"openMenus": [],
-			"isChangingStyle": true,
+			"isChangingStyle": false,
 			"isReadonly": false,
 			"meta": {},
 			"duplicateProps": null,
