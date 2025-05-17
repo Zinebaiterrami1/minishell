@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/15 22:31:44 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:17:48 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void ft_exec_command(t_command *cmd)
 void print_env(char **envp, char **args, int argc)
 {
     (void)argc;    
+    (void)args;    
     t_env *cmd;
     t_env *tmp;
     t_env *tmp2;
@@ -67,12 +68,16 @@ void print_env(char **envp, char **args, int argc)
     
     cur = malloc(sizeof(t_command));
     head = cur;
+    cur->arg = malloc(sizeof(char *) * 3);
     cur->arg[0] = "echo";
+    // cur->arg[1] = "-n";
     cur->arg[1] = "hi";
     cur->arg[2] = NULL;
     cur->next_com = malloc(sizeof(t_command));
+    cur->next_com->arg = malloc(sizeof(char *)*3);
     cur->next_com->arg[0] = "echo";
     cur->next_com->arg[1] = "hello";
+    cur->next_com->arg[2] = NULL;
     cur->next_com->redir = malloc(sizeof(t_redir));
     cur->next_com->redir->name = "file";
     cur->next_com->redir->type = T_RED_OUT_APEND;
@@ -80,51 +85,51 @@ void print_env(char **envp, char **args, int argc)
     //
 
     ft_exec_command(cur);
-    t_env *sp_env;
-    t_env *tmp1;
+    // t_env *sp_env;
+    // t_env *tmp1;
 
-    sp_env = split_env(tmp);
-    tmp1 = sp_env;
+    // sp_env = split_env(tmp);
+    // tmp1 = sp_env;
 
-    char *path;
-    path = get_env_value(tmp, "PWD");
+    // char *path;
+    // path = get_env_value(tmp, "PWD");
     
 
-    char *key;
-    key = get_env_key(tmp2, "unix:///run/user/102723/docker.sock");
-    if(!tmp)
-    {
-        printf("Failed to initialize environment\n");
-        return ;
-    }
-    /*---get the value of a key giving in params---*/
-    // printf("PATH: %s\n", path);
-    // printf("KEY: %s\n", key);
-    /*---init env---*/
-    while(tmp)
-    {
-        printf("%s\n", tmp->line);
-        tmp = tmp->next;
-    }
+    // char *key;
+    // key = get_env_key(tmp2, "unix:///run/user/102723/docker.sock");
+    // if(!tmp)
+    // {
+    //     printf("Failed to initialize environment\n");
+    //     return ;
+    // }
+    // /*---get the value of a key giving in params---*/
+    // // printf("PATH: %s\n", path);
+    // // printf("KEY: %s\n", key);
+    // /*---init env---*/
+    // while(tmp)
+    // {
+    //     printf("%s\n", tmp->line);
+    //     tmp = tmp->next;
+    // }
     printf("-------------------------------------------\n");
-    t_env *my_env = init_env(envp);
-    my_env = split_env(my_env);
-    t_env *current = my_env;
-    printf("Before update:\n");
-    while(my_env)
-    {
-        printf("key : %s ------- path : %s\n", my_env->env_key, my_env->env_value);
-        my_env = my_env->next;
-    }
-    printf("after update:\n");
-    set_env_value(&current, "USER", "zait-err");
-    set_env_value(&current, "NEW_VAR", "hello_world");
-    printf("current result:\n");
-    while(current)
-    {
-        printf("key : %s ------- path : %s\n", current->env_key, current->env_value);
-        current = current->next;
-    }
+    // t_env *my_env = init_env(envp);
+    // my_env = split_env(my_env);
+    // t_env *current = my_env;
+    // printf("Before update:\n");
+    // while(my_env)
+    // {
+    //     printf("key : %s ------- path : %s\n", my_env->env_key, my_env->env_value);
+    //     my_env = my_env->next;
+    // }
+    // printf("after update:\n");
+    // set_env_value(&current, "USER", "zait-err");
+    // set_env_value(&current, "NEW_VAR", "hello_world");
+    // printf("current result:\n");
+    // while(current)
+    // {
+    //     printf("key : %s ------- path : %s\n", current->env_key, current->env_value);
+    //     current = current->next;
+    // }
     /*---split the env variables key=value---*/
     // while(tmp1)
     // {
@@ -132,13 +137,13 @@ void print_env(char **envp, char **args, int argc)
     //     tmp1 = tmp1->next;
     // }
     /*cd*/
-    t_env *mmy_env = init_env(envp);
+    // t_env *mmy_env = init_env(envp);
 
-    if (argc == 1)
-        ft_cd(NULL, &mmy_env); // No args → go to HOME
-    else
-        ft_cd(&args[1], &mmy_env); // Use argv[1] as target directory
-    printf("Now in: %s\n", get_env_value(mmy_env, "PWD"));
+    // if (argc == 1)
+    //     ft_cd(NULL, &mmy_env); // No args → go to HOME
+    // else
+    //     ft_cd(&args[1], &mmy_env); // Use argv[1] as target directory
+    // printf("Now in: %s\n", get_env_value(mmy_env, "PWD"));
     // // Show updated PWD and OLDPWD
     // t_env *tmpp = mmy_env;
     // while (tmpp) {

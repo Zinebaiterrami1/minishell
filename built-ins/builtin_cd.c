@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/15 21:07:58 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/16 09:52:57 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 
 //cd
 
-int ft_cd(char **args, t_env **env)
+int ft_cd(t_command *cmd, t_env **env)
 {
     char *path;
     char buffer[BUFFER_SIZE];
@@ -65,25 +65,25 @@ int ft_cd(char **args, t_env **env)
     //getting the cwd to take it as oldpwd, and when i do cd path i will do
     //getcwd to take it as pwd
     cwd = getcwd(buffer, BUFFER_SIZE);
-    if(args[4])
+    if(cmd->arg[4])
     {
         printf("Error: too many arguments\n");
         return (1);
     }
-    if(!args[2])
+    if(!cmd->arg[2])
     {   
         set_env_value(env, "OLDPWD", cwd);
         path = get_env_value(*env, "HOME");
         chdir(path); //go to home
     }
-    if(args[2])
+    if(cmd->arg[2])
     {
         set_env_value(env, "OLDPWD", cwd);
-        path = get_env_value(*env, args[2]);
+        path = get_env_value(*env, cmd->arg[2]);
         chdir(path); //if one arg passed to cd, i will take it as key and go to its value(path)
     }
-    if(chdir(args[2]) != 0)
-        printf("cd: no such file or directory: %s\n", args[2]);
+    if(chdir(cmd->arg[2]) != 0)
+        printf("cd: no such file or directory: %s\n", cmd->arg[2]);
     set_env_value(env, "PWD", path);
     return (0);
 }

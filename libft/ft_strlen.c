@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 10:38:10 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/08 09:30:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:12:47 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if(!str)
+		return (-1);
 	i = 0;
 	while (str[i] != '\0')
 	{

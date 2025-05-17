@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/15 22:29:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:32:53 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void ft_echo(t_command *cmd)
 
     i = 1;
     tmp = cmd;
-    while(tmp){
-        
+
         if(tmp && ft_strncmp("-n", tmp->arg[i], ft_strlen("-n")) == 0)
         {
             i++;
             while(tmp)
             {
-                write(1, tmp->arg[i], ft_strlen(tmp->arg[i]));
+                if(tmp->arg[i])
+                    write(1, tmp->arg[i], ft_strlen(tmp->arg[i]));
                 if(tmp->next_com != NULL)
                     write(1, " ", 1);
                 i++;
@@ -37,8 +37,11 @@ void ft_echo(t_command *cmd)
         else
         {
             while(tmp)
-            {
-                write(1, tmp->arg[i], ft_strlen(tmp->arg[i]));
+            {   
+                if(tmp && tmp->redir && tmp->redir->name)    
+                    printf("%s\n", tmp->redir->name);
+                if(tmp->arg[i])
+                    write(1, tmp->arg[i], ft_strlen(tmp->arg[i]));
                 if(tmp->next_com != NULL)
                     write(1, " ", 1);
                 i++;
@@ -46,7 +49,6 @@ void ft_echo(t_command *cmd)
             }
             write(1, "\n", 1);
         }
-    }
 }
 
 // void ft_echo_in_file(int fd)
