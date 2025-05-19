@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/16 10:44:35 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/17 13:27:04 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,8 @@ t_command *creat_comand_list(t_token *token)
     {
         if (cur_comd == NULL)
             cur_comd = new_comd(&list, token);//allocate and append command
-        if(is_invalid(token))
-            return(parser_error());
+        if(is_invalid(token) && token->next)
+            token = token->next;
         if(is_word(token->type))
         {
             printf("is_word = %d\n", is_word(token->type));

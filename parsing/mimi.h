@@ -28,7 +28,7 @@ typedef struct s_token
 {
     char *value;
     int type;
-    int print_space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
+    int space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
     struct s_token *next;
 }t_token;
 
@@ -41,6 +41,7 @@ typedef struct s_lexer
     int error;
     unsigned int i;
     t_token *head;
+    t_token *reel_head;
     size_t line_size;
     
 }t_lexer;
@@ -81,8 +82,9 @@ typedef struct s_command
 
 
 t_command *parser(t_lexer *lexer);
-
-
+void print_listt(t_garbage *token);
+int check(char *line);
+int syntax_error();
 
 
 #endif
