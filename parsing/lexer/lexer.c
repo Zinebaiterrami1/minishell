@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/19 18:08:50 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:01:44 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,6 @@ t_token *handel_expand(t_lexer *lexer, t_token *token)
     s = gc_malloc(sizeof(char ) * (len + 1), getter());
     ft_strlcpy(s, &lexer->line[lexer->i], len + 1);
     lexer->i = i;
-    printf("i == %d lexer->i == %d \n", i, lexer->i);
     return(set_token(token, s, T_EXP));
 }
 
@@ -304,7 +303,6 @@ t_token *handel_dollar(t_lexer *lexer)
 
 t_token *handel_word(t_lexer *lexer)
 {
-    printf("ana f handel_word\n");
     if(lexer->line[lexer->i] == '\'')
         return(handel_s_quotes(lexer));
     else if(lexer->line[lexer->i] == '"')
@@ -355,6 +353,26 @@ t_token *skip_tokens(t_token *token)
 
 void creat_token_exp(t_lexer *lexer, t_token *token)
 {
+    char *s;
+
+    s = token->value;
+    while(s)
+    {
+        if(*s == '$')
+        {
+            while(*s == '$')
+                s++;
+            if(isalnum(*s))
+                {
+                    s++;
+                    creat_new_token(lexer, token);//join with prev if space = 0 / add to the list;
+                }
+            else if(isalpha(*s) || *s == '_')
+            {
+                
+            }
+        }
+    }
     
 }
 int reel_head(t_lexer *lexer)
@@ -376,9 +394,10 @@ int reel_head(t_lexer *lexer)
 
 void print_list(t_token *token)
 {
+    printf("token list : ");
     while(token)
     {
-        printf("%s (%d) [%d] ===> ", token->value, token->type, token->space);
+        printf("%s (%d) [%d] --> ", token->value, token->type, token->space);
         token = token->next;
     }
     printf("\n");
@@ -396,14 +415,14 @@ int lexer(char *line)
     {
         lexer_skip_white(lexer);
         if(lexer->line[lexer->i] == '\n' || lexer->line[lexer->i] == '\0')
-            return(0);
+            break;
         token = get_next_token(lexer);
         if(token)
             adding_token(lexer, token);
         if(lexer->error)
             return(1);
     }
-    reel_list(lexer->head);
+    // reel_list(lexer->head);
     print_list(lexer->head);
     parser(lexer);
     free_all(getter());

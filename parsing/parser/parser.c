@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/17 13:27:04 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:22:52 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ t_command *new_comd(t_command **list, t_token *token)
 void fill_arg(t_command *comd, int f, t_token *token)
 {
     comd->arg[f] = gc_strdup(token->value);
-    printf(" f == %d arg = %s\n", f, comd->arg[f]);
 }
 
 void add_redir(t_redir **list, t_redir *new)
@@ -225,8 +224,6 @@ t_command *creat_comand_list(t_token *token)
             token = token->next;
         if(is_word(token->type))
         {
-            printf("is_word = %d\n", is_word(token->type));
-            printf("token  = %s\n", token->value);
             fill_arg(cur_comd, f++, token);
         }
         else if(is_red(token->type))
@@ -246,7 +243,6 @@ t_command *creat_comand_list(t_token *token)
             cur_comd = NULL;
             f = 0;
         }
-        printf("f -----------------> %d\n", f);
         token = token->next;
     }
     print_listtt(list);
