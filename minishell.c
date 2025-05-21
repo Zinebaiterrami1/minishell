@@ -1,40 +1,40 @@
 #include "includes/minishell.h"
 #include "includes/mini.h"
 
-int g_last_status = 0;
-int main(int ac, char **argv, char **env)
-{
-    (void)ac;
-    (void)argv;
+// int g_last_status = 0;
+// int main(int ac, char **argv, char **env)
+// {
+//     (void)ac;
+//     (void)argv;
     
-    // t_token cmd = {argv[1], T_COMMD, NULL};
-    // t_token option = {argv[2], T_COMMD, NULL};
-    // t_token arg1 = {argv[3], T_ARG, NULL};
-    // t_token arg2 = {argv[4], T_ARG, NULL};
-    // cmd.next = &option;
-    // option.next = &arg1;
-    // arg1.next = &arg2;
-    // // cmd.next = &arg1;
-    // // arg1.next = &arg2;
-	// ft_echo(&cmd);
-    // ft_pwd();
-    // char **envp = init_env(env);
-    // // int i = 0;
+//     // t_token cmd = {argv[1], T_COMMD, NULL};
+//     // t_token option = {argv[2], T_COMMD, NULL};
+//     // t_token arg1 = {argv[3], T_ARG, NULL};
+//     // t_token arg2 = {argv[4], T_ARG, NULL};
+//     // cmd.next = &option;
+//     // option.next = &arg1;
+//     // arg1.next = &arg2;
+//     // // cmd.next = &arg1;
+//     // // arg1.next = &arg2;
+// 	// ft_echo(&cmd);
+//     // ft_pwd();
+//     // char **envp = init_env(env);
+//     // // int i = 0;
 
-    // // while(envp[i])
-    // //     printf("%s\n", envp[i++]);
-    // char *path = get_env(envp, "HOME");
-    // if (path)
-    // {
-    //     // Print the entire value of the "PATH" environment variable
-    //     printf("PATH: %s\n", path);  // Print the full string (value of PATH)
-    // }
-    // else
-    // {
-    //     printf("PATH not found\n");
-    // }
-    print_env(env, argv, ac);
-}
+//     // // while(envp[i])
+//     // //     printf("%s\n", envp[i++]);
+//     // char *path = get_env(envp, "HOME");
+//     // if (path)
+//     // {
+//     //     // Print the entire value of the "PATH" environment variable
+//     //     printf("PATH: %s\n", path);  // Print the full string (value of PATH)
+//     // }
+//     // else
+//     // {
+//     //     printf("PATH not found\n");
+//     // }
+//     print_env(env, argv, ac);
+// }
 
 // int main(int argc, char **argv)
 // {
@@ -78,17 +78,22 @@ int main(int ac, char **argv, char **env)
 //     return 0;
 // }
 
+
 // int main()
 // {
 //     char *line;
 //     while(1)
 //     {
-//         line = readline("minishell$ ");
-//         if(!line)
-//             break;
+//         line = readline("$minishell V3 ");
+//         if (line[0] == '\0')
+//             continue;
 //         add_history(line);
-//         t_token *cmd = (t_token *)line;
-//         ft_echo(cmd);
+//         if(lexer(line) == 1)
+//         {
+//             free(line);
+//             syntax_error();
+//             continue;
+//         }
 //         free(line);
 //     }
 // }

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/16 20:16:56 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:52:22 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ char *get_env_value(t_env *env_list, const char *key);
 char *get_env_key(t_env *env_lst, const char *value);
 void set_env_value(t_env **env_list, const char *key, const char *value);
 int ft_cd(t_command *cmd, t_env **env);
-int	ft_exit(char **args);
+int	ft_exit(t_command *args);
 void print_env(char **envp, char **args, int argc);
-int ft_export(char **args, t_env **env);
+int ft_export(t_command **cmd, t_env **env);
+void split_and_set(char *arg, t_env **splited_env_list);
 void ft_display_env(t_env *env, char **envp);
 #endif

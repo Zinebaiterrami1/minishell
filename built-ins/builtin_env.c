@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/16 20:17:48 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:43:48 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,27 @@ t_env *split_env(t_env *lst)
         tmp = tmp->next;
     }
     return (lst);
+}
+
+void split_and_set(char *arg, t_env **splited_env_list)
+{
+    char *equal_env;
+    int key_len;
+    char *key;
+    char *value;
+
+    equal_env = ft_strchr(arg, '=');
+    if(!equal_env)
+        return ;
+    key_len = equal_env - arg;
+    key = ft_substr(arg, 0, key_len);
+    value = ft_strdup(equal_env + 1);
+    if(!value)
+        set_env_value(splited_env_list, key, NULL);
+    else
+        set_env_value(splited_env_list, key, value);
+    free(key);
+    free(value);
 }
 
 /* Get the value of a specific environment variable */

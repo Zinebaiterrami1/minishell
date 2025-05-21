@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:29 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/17 17:16:55 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:59:20 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int ft_export(t_command **cmd, t_env **env)
     int i;
     int j;
     
-    i = 1;
+    i = 2;
     j = 0;
     tmp = *env;
     tmp1 = *cmd;
@@ -68,14 +68,49 @@ int ft_export(t_command **cmd, t_env **env)
             printf("declare -x %s\n", tmp->line);
             tmp = tmp->next;
         }
+        return (0);
     }
     //case if args is present
     //we will start if i put one or more args with export
-    while(tmp1->arg[i][j])
+    while(tmp1->arg[i])
     {
-        if(tmp1->arg[i][j] )
+        while(tmp1->arg[i][j])
+        {
+            if(!isalpha(tmp1->arg[i][j]) && tmp1->arg[i][j] != '_') // =
+            {
+                printf("export: '%s': not a valid identifier\n", tmp1->arg[i]);
+                return(-1);
+            }
+           j++; 
+        }
         //hna ghangolih ila l9a chi charachers mn ghir _ ola letters
-        //i3tabro invalid identifier 
-        
+        //i3tabro invalid identifier
+        i++;
     }
+    //export arg1 ..... arg2 ..... argn
+    i = 2;
+    j = 0;
+    while(tmp1->arg[i])
+    {
+        if(ft_strchr(tmp1->arg, '='))
+        {
+            //It's something like VAR=value
+            split_and_set(tmp1->arg[i], env); //kifach nchd dak arg n splitih
+        }
+        else
+        {
+            //It's just VAR — declare it if not already in env
+            /*
+            check if the key is already exits:
+            --->if yes, do nothing
+            --->if no, add the key with an empty string as its value
+            */ //kifach n compari dak arg b env_key kamlin bach nchofo wash deja exists
+            if (!get_env_value(*env, tmp1->arg[i]))
+                set_env_value(env, tmp1->arg[i], "");
+        }
+        i++;
+    }
+    return (0);
 }
+
+//ila knt dkhlt key already exits, and 9damo value khasni n asayniha lih tani 
