@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/21 11:52:22 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:42:27 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <linux/limits.h>
+#include <signal.h>
 #include "../libft/libft.h"
 #include "../parsing/mimi.h"
 #define BUFFER_SIZE 1024
@@ -56,4 +57,6 @@ void print_env(char **envp, char **args, int argc);
 int ft_export(t_command **cmd, t_env **env);
 void split_and_set(char *arg, t_env **splited_env_list);
 void ft_display_env(t_env *env, char **envp);
+//signals
+void signal_handler(int signal_num);
 #endif

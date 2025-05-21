@@ -10,22 +10,22 @@ OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
 	@echo "🚀 Building the project..."
-	@make -s all -C libft
-	@make -s bonus -C libft
-	@$(CC) $(CFLAGS) $(OBJ) libft/libft.a -lreadline -o $(NAME)
+	@make -s all -C libft_nouss
+	@make -s bonus -C libft_nouss
+	@$(CC) $(CFLAGS) $(OBJ) libft_nouss/libft.a -lreadline -o $(NAME)
 	@echo "✅ Build completed successfully!"
 
 all : $(NAME)
 
 fclean : clean
 	@rm -rf $(NAME)
-	@make -s fclean -C libft
+	@make -s fclean -C libft_nouss
 
 clean :
 	@echo "🧹 Cleaning up..."
 	@rm -rf $(OBJ)
-	@make -s clean -C libft
-	@make -s clean -C libft
+	@make -s clean -C libft_nouss
+	@make -s clean -C libft_nouss
 	@echo "🗑️  Cleanup done!"
 
 re : fclean all

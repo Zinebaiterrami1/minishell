@@ -13,6 +13,7 @@
         "libft.h": "c",
         "cstdlib": "c",
         "mimi.h": "c",
-        "mini.h": "c"
+        "mini.h": "c",
+        "minishell.h": "c"
     }
 }

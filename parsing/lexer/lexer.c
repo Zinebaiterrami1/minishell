@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/21 11:51:31 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:29:24 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -409,21 +409,21 @@ int lexer(char *line)
     return(0);
 }
 
-int main()
-{
-    char *line;
-    while(1)
-    {
-        line = readline("$minishell V2 ");
-        if (line[0] == '\0')
-            continue;
-        add_history(line);
-        if(lexer(line) == 1)
-        {
-            free(line);
-            syntax_error();
-            continue;
-        }
-        free(line);
-    }
-}
+// int main()
+// {
+//     char *line;
+//     while(1)
+//     {
+//         line = readline("$minishell V2 ");
+//         if (line[0] == '\0')
+//             continue;
+//         add_history(line);
+//         if(lexer(line) == 1)
+//         {
+//             free(line);
+//             syntax_error();
+//             continue;
+//         }
+//         free(line);
+//     }
+// }

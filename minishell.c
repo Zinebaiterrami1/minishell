@@ -78,22 +78,40 @@
 //     return 0;
 // }
 
+void signal_handler(int signal_num)
+{
+    if(signal_num == SIGINT)
+    {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+}
 
-// int main()
-// {
-//     char *line;
-//     while(1)
-//     {
-//         line = readline("$minishell V3 ");
-//         if (line[0] == '\0')
-//             continue;
-//         add_history(line);
-//         if(lexer(line) == 1)
-//         {
-//             free(line);
-//             syntax_error();
-//             continue;
-//         }
-//         free(line);
-//     }
-// }
+int main()
+{
+    char *line;
+
+    signal(SIGQUIT, SIG_IGN);
+    signal(SIGINT, signal_handler);
+    while(1)
+    {
+        line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
+        if(line == NULL)
+        {
+            printf("exit with ctrl+d\n");//for ctrl+d, detect EOF
+            break;
+        }
+        if (line[0] == '\0')
+            continue;
+        add_history(line);
+        if(lexer(line) == 1)
+        {
+            free(line);
+            syntax_error();
+            continue;
+        }
+        free(line);
+    }
+}
