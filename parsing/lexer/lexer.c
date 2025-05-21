@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/20 19:01:44 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:12:19 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -351,31 +351,70 @@ t_token *skip_tokens(t_token *token)
     return(token);
 }
 
-void creat_token_exp(t_lexer *lexer, t_token *token)
+int len_count(char *s, char c)
+{
+    int i;
+    int len;
+    
+    len = 0;
+    i = 0;
+    while(s[i] && s[i])
+    {
+        if(s[i] != c && !isalpha(s[i]))
+            return(len);
+        len++;
+        i++;
+    }
+    return(len);
+}
+
+void creat_new_token(t_lexer *lexer, t_token *token)
+{
+    (void) lexer;
+    (void) token;
+    printf("ana create new token\n");
+    return;
+}
+void creat_new_token_exp(t_lexer *lexer, t_token *token)
 {
     char *s;
+    char *val;
+    // char *pre_s;
+    int len;
 
+    printf("ana create new token exp\n");
     s = token->value;
-    while(s)
+    if(*s == '$')
     {
-        if(*s == '$')
+        while(*s == '$')
+            s++;
+        if(!ft_isalnum(*s))
         {
-            while(*s == '$')
-                s++;
-            if(isalnum(*s))
-                {
-                    s++;
-                    creat_new_token(lexer, token);//join with prev if space = 0 / add to the list;
-                }
-            else if(isalpha(*s) || *s == '_')
-            {
-                
-            }
+            s++;
+            // pre_s = fill_pre_s(s);
+            // creat_new_token(lexer, token);//join with prev if space = 0 / add to the list;
         }
+        else if(ft_isalpha(*s) || *s == '_')
+        {
+            //len
+            len = len_count(s,'_');
+            
+            //fill
+            val = gc_malloc(sizeof(char) * (len + 1), getter());
+            ft_strlcpy(val, s, len + 1);
+            printf("val = %s\n", val);
+            // expand new_token->value = expand
+            if(s[len] != '\0')
+                // new_token->value = join_strings(new_token->v, s[len]);
+        }
+        else
+            creat_new_token(lexer, token);
     }
+    // else
+    //     pre_s = fill_pre_s(s);
     
 }
-int reel_head(t_lexer *lexer)
+int reel_list(t_lexer *lexer)
 {
     t_token *token;
 
@@ -386,8 +425,20 @@ int reel_head(t_lexer *lexer)
             creat_new_token_exp(lexer, token);
         else
             creat_new_token(lexer, token);
-        token = skip_tokens(token);
+        token = token->next;
+
+
+
+
+
+
+
+
+
+
+        
     }
+    return(0);
 }
 
 
@@ -422,7 +473,7 @@ int lexer(char *line)
         if(lexer->error)
             return(1);
     }
-    // reel_list(lexer->head);
+    reel_list(lexer);
     print_list(lexer->head);
     parser(lexer);
     free_all(getter());
