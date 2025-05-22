@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/20 15:22:52 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:55:52 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,9 @@ void print_listtt(t_command *token)
         printf("cmd: ");
         while (token->arg[i])
         {
-            printf("[%s] ", token->arg[i]);
+            printf("arg = [%s] \n", token->arg[i]);
+            if(token->redir && token->redir->name)
+                printf("file name : %s\n",token->redir->name);
             i++;
         }
         token = token->next_com;
@@ -257,6 +259,7 @@ t_command *creat_comand_list(t_token *token)
     
     
 // }
+
 t_command *parser(t_lexer *lexer)
 {
     if(parser_check(lexer->head))

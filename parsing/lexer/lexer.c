@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/21 15:29:24 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:02:48 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,10 +383,11 @@ void print_list(t_token *token)
     printf("\n");
 }
 
-int lexer(char *line)
+t_command *lexer(char *line)
 {
     t_lexer *lexer;
     t_token *token;
+    t_command *cmd;
     
     if(check(line))
         return(syntax_error());
@@ -400,13 +401,13 @@ int lexer(char *line)
         if(token)
             adding_token(lexer, token);
         if(lexer->error)
-            return(1);
+            return(NULL);
     }
     // reel_list(lexer->head);
     print_list(lexer->head);
-    parser(lexer);
-    free_all(getter());
-    return(0);
+    cmd = parser(lexer);
+    // free_all(getter());
+    return(cmd);
 }
 
 // int main()

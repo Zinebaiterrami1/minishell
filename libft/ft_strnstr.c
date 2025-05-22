@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 10:36:53 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/12 14:21:47 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/24 09:06:32 by nel-khad          #+#    #+#             */
+/*   Updated: 2024/11/11 13:00:47 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
 
-char	*ft_strnstr(const char *str, const char *substr, size_t len)
+char	*ft_strnstr(const char *str, const char *word, size_t len)
 {
 	size_t	i;
-	size_t	j;
+	int		j;
+	char	*s;
 
 	i = 0;
-	if (!*substr)
+	s = (char *)str;
+	if (word[0] == 0)
 		return ((char *)str);
-	if (!str && len == 0)
+	if (!str && !len)
 		return (NULL);
-	while (str[i] != '\0' && i < len)
+	while (s[i] != '\0' && i < len)
 	{
 		j = 0;
-		while (substr[j] == str[i + j] && (i + j) < len && str[i + j])
-		{
+		while (s[i + j] == word[j] && s[i + j] && (i + j) < len)
 			j++;
-		}
-		if (substr[j] == '\0')
+		if (word[j] == '\0')
 			return ((char *)str + i);
 		i++;
 	}

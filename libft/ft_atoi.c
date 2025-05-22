@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 10:37:07 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/15 10:48:38 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/23 09:38:52 by nel-khad          #+#    #+#             */
+/*   Updated: 2024/11/11 11:35:20 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,23 @@
 
 int	ft_atoi(const char *str)
 {
-	int			i;
-	long int	result;
-	int			sign;
+	int		sign;
+	int		nb;
 
-	i = 0;
+	nb = 0;
 	sign = 1;
-	result = 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+	while (*str == 32 || (*str <= 13 && *str >= 9))
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		i++;
+		if (*str == '-')
+			sign = -sign;
+		str++;
 	}
-	if (str[i] == '-' || str[i] == '+')
+	while (*str >= '0' && *str <= '9')
 	{
-		if (str[i++] == '-')
-			sign = sign * -1;
+		nb = nb * 10 + *str - '0';
+		str++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + (str[i] - 48);
-		i ++;
-	}
-	return (result * sign);
+	return (nb * sign);
 }

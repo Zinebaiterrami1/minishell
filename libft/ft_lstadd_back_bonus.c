@@ -3,24 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 08:26:52 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/10 12:47:21 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/28 17:07:51 by nel-khad          #+#    #+#             */
+/*   Updated: 2025/04/24 17:00:39 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_token **token, t_token *new)
 {
-	t_list	*last;
+	t_token	*ptr;
 
-	if (!new || !lst)
+	if (new == NULL || !token)
 		return ;
-	last = ft_lstlast(*lst);
-	if (!last)
-		*lst = new;
-	else
-		last->next = new;
+	if (*token == NULL)
+	{
+		*token = new;
+		return ;
+	}
+	ptr = ft_lstlast(*token);
+	if (ptr)
+		ptr->next = new;
+	return;
+	// printf("node aded -> %s\n", ptr->value);
 }

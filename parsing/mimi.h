@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
-#include <readline/history.h>
-#include "libft_nouss/libft.h"
+#include <readline/history.h> 
+#include "../libft/libft.h"
 #include "garbage_collector/gc.h"
 
 typedef enum s_token_type
@@ -84,7 +84,7 @@ typedef struct s_command
 t_command *parser(t_lexer *lexer);
 void print_listt(t_garbage *token);
 int check(char *line);
-int syntax_error();
-int lexer(char *line);
+void *syntax_error();
+t_command *lexer(char *line);
 
 #endif

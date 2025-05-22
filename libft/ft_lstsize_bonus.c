@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 08:22:56 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/08 10:44:34 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/28 13:37:52 by nel-khad          #+#    #+#             */
+/*   Updated: 2024/11/10 14:06:15 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	t_list	*tmp;
-	int		count;
+	int	count;
 
+	count = 0;
 	if (!lst)
 		return (0);
-	count = 0;
-	tmp = lst;
-	while (tmp != NULL)
+	while (lst != NULL)
 	{
 		count++;
-		tmp = tmp->next;
+		lst = lst->next;
 	}
 	return (count);
 }

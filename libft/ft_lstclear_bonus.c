@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 08:27:42 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/10 11:41:51 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/28 18:59:29 by nel-khad          #+#    #+#             */
+/*   Updated: 2025/04/16 15:58:24 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_token **lst, void (*del)(void *))
 {
-	t_list	*current;
-	t_list	*next_node;
+	t_token	*curent;
+	t_token	*next;
 
 	if (!lst || !del)
 		return ;
-	current = *lst;
-	while (current)
+	curent = *lst;
+	while (curent != NULL)
 	{
-		next_node = current->next;
-		ft_lstdelone(current, del);
-		current = next_node;
+		next = curent->next;
+		ft_lstdelone(curent, del);
+		curent = next;
 	}
 	*lst = NULL;
 }

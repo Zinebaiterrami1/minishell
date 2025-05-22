@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:29 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/20 14:59:20 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:52:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int ft_export(t_command **cmd, t_env **env)
     j = 0;
     while(tmp1->arg[i])
     {
-        if(ft_strchr(tmp1->arg, '='))
+        if(ft_strchr(tmp1->arg[i], '='))
         {
             //It's something like VAR=value
             split_and_set(tmp1->arg[i], env); //kifach nchd dak arg n splitih

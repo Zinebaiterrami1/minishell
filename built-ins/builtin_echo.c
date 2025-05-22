@@ -6,12 +6,29 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/16 20:32:53 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:10:22 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/mini.h"
+
+// t_command **init_cmd(char **args)
+// {
+//     int i;
+//     t_command *head;
+//     t_command *tmp;
+    
+//     i = 1;
+//     head = NULL;
+//     tmp = NULL;
+//     while(args[i])
+//     {
+//         t_command *new_node = malloc(sizeof(t_command));
+//         new_node->arg = args[i];
+//         new_node->
+//     }
+// }
 
 void ft_echo(t_command *cmd)
 {

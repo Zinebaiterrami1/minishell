@@ -3,33 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 10:38:20 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/15 10:56:11 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/23 17:00:57 by nel-khad          #+#    #+#             */
+/*   Updated: 2024/11/09 14:52:26 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <string.h>
 
-char	*ft_strrchr(const char *str, int c)
+char	*ft_strrchr(const char *s, int c)
 {
-	int		len;
-	int		i;
-	char	cc;
-	char	*s;
+	unsigned char		cc;
+	unsigned int		i;
+	const char			*res;
 
-	cc = (char)c;
-	s = (char *)str;
-	len = ft_strlen((char *)str);
-	i = len - 1;
-	if (cc == '\0')
-		return (s + len);
-	while (i >= 0)
+	res = NULL;
+	i = 0;
+	cc = (unsigned char)c;
+	while (s[i] != '\0')
 	{
 		if (s[i] == cc)
-			return ((char *)s + i);
-		i--;
+			res = &s[i];
+		i++;
 	}
-	return (NULL);
+	if (s[i] == cc)
+		res = &s[i];
+	return ((char *)res);
 }

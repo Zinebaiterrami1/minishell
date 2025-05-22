@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/20 14:43:48 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:19:25 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,52 +39,52 @@ t_env *init_env(char **envp)
     return (head);
 }
 
-static void ft_exec_command(t_command *cmd)
-{
-    while(cmd)
-    {
-        if(ft_strncmp(cmd->arg[0], "echo", ft_strlen("echo")) == 0)
-            ft_echo(cmd);
-        else
-            printf("Error: command not found %s\n", cmd->arg[0]);
-        cmd = cmd->next_com;
-    }
-}
+// static void ft_exec_command(t_command *cmd)
+// {
+//     while(cmd)
+//     {
+//         if(ft_strncmp(cmd->arg[0], "echo", ft_strlen("echo")) == 0)
+//             ft_echo(cmd);
+//         else
+//             printf("Error: command not found %s\n", cmd->arg[0]);
+//         cmd = cmd->next_com;
+//     }
+// }
 
 // /* Print all environment variables (env builtin) */
 void print_env(char **envp, char **args, int argc)
 {
     (void)argc;    
     (void)args;    
-    t_env *cmd;
-    t_env *tmp;
-    t_env *tmp2;
-    cmd = init_env(envp);
-    tmp = cmd;
-    tmp2 = cmd;
+    // t_env *cmd;
+    // t_env *tmp;
+    // t_env *tmp2;
+    // cmd = init_env(envp);
+    // tmp = cmd;
+    // tmp2 = cmd;
 
-    t_command *head;
-    t_command *cur;
+    // t_command *head;
+    // t_command *cur;
     
-    cur = malloc(sizeof(t_command));
-    head = cur;
-    cur->arg = malloc(sizeof(char *) * 3);
-    cur->arg[0] = "echo";
-    // cur->arg[1] = "-n";
-    cur->arg[1] = "hi";
-    cur->arg[2] = NULL;
-    cur->next_com = malloc(sizeof(t_command));
-    cur->next_com->arg = malloc(sizeof(char *)*3);
-    cur->next_com->arg[0] = "echo";
-    cur->next_com->arg[1] = "hello";
-    cur->next_com->arg[2] = NULL;
-    cur->next_com->redir = malloc(sizeof(t_redir));
-    cur->next_com->redir->name = "file";
-    cur->next_com->redir->type = T_RED_OUT_APEND;
-    cur->next_com->next_com = NULL;
-    //
+    // cur = malloc(sizeof(t_command));
+    // head = cur;
+    // cur->arg = malloc(sizeof(char *) * 3);
+    // cur->arg[0] = "echo";
+    // // cur->arg[1] = "-n";
+    // cur->arg[1] = "hi";
+    // cur->arg[2] = NULL;
+    // cur->next_com = malloc(sizeof(t_command));
+    // cur->next_com->arg = malloc(sizeof(char *)*3);
+    // cur->next_com->arg[0] = "echo";
+    // cur->next_com->arg[1] = "hello";
+    // cur->next_com->arg[2] = NULL;
+    // cur->next_com->redir = malloc(sizeof(t_redir));
+    // cur->next_com->redir->name = "file";
+    // cur->next_com->redir->type = T_RED_OUT_APEND;
+    // cur->next_com->next_com = NULL;
+    // //
 
-    ft_exec_command(cur);
+    // ft_exec_command(cur);
     // t_env *sp_env;
     // t_env *tmp1;
 
@@ -112,15 +112,15 @@ void print_env(char **envp, char **args, int argc)
     //     tmp = tmp->next;
     // }
     printf("-------------------------------------------\n");
-    // t_env *my_env = init_env(envp);
-    // my_env = split_env(my_env);
+    t_env *my_env = init_env(envp);
+    my_env = split_env(my_env);
     // t_env *current = my_env;
-    // printf("Before update:\n");
-    // while(my_env)
-    // {
-    //     printf("key : %s ------- path : %s\n", my_env->env_key, my_env->env_value);
-    //     my_env = my_env->next;
-    // }
+    printf("Before update:\n");
+    while(my_env)
+    {
+        printf("key : %s ------- path : %s ---------- line : %s\n", my_env->env_key, my_env->env_value, my_env->line);
+        my_env = my_env->next;
+    }
     // printf("after update:\n");
     // set_env_value(&current, "USER", "zait-err");
     // set_env_value(&current, "NEW_VAR", "hello_world");
@@ -256,9 +256,10 @@ void set_env_value(t_env **env_list, const char *key, const char *value)
     tmp->next = new_node;
 }
 
-void ft_display_env(t_env *env, char **envp)
+void ft_display_env(t_env *env)
 {
-    env = init_env(envp);
+    printf("am here\n");
+    printf("%s\n", env->line);
     while(env)
     {
         printf("%s\n", env->line);

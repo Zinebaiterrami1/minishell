@@ -12,7 +12,7 @@ $(NAME) : $(OBJ)
 	@echo "🚀 Building the project..."
 	@make -s all -C libft_nouss
 	@make -s bonus -C libft_nouss
-	@$(CC) $(CFLAGS) $(OBJ) libft_nouss/libft.a -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) parsing/libft_nouss/libft.a -lreadline -o $(NAME)
 	@echo "✅ Build completed successfully!"
 
 all : $(NAME)

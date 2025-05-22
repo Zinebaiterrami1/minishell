@@ -3,24 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:53:24 by zait-err          #+#    #+#             */
-/*   Updated: 2024/11/09 16:18:47 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/24 16:52:14 by nel-khad          #+#    #+#             */
+/*   Updated: 2025/05/14 12:05:17 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *s1)
 {
-	size_t	len_src;
-	char	*arr;
+	int		l;
+	int		i;
+	char	*c;
 
-	len_src = ft_strlen(src);
-	arr = (char *)malloc((len_src + 1) * sizeof(char));
-	if (arr == NULL)
+	l = 0;
+	i = 0;
+	while (s1[l] != '\0')
+	{
+		l++;
+	}
+	c = (char *)malloc((l + 1) * sizeof(char));
+	if (!c)
 		return (NULL);
-	ft_memcpy(arr, src, len_src + 1);
-	return (arr);
+	while (s1[i])
+	{
+		c[i] = s1[i];
+		i++;
+	}
+	c[i] = '\0';
+	return (c);
 }

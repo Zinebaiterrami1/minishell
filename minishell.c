@@ -2,39 +2,39 @@
 #include "includes/mini.h"
 
 // int g_last_status = 0;
-// int main(int ac, char **argv, char **env)
-// {
-//     (void)ac;
-//     (void)argv;
+int main(int ac, char **argv, char **env)
+{
+    (void)ac;
+    (void)argv;
     
-//     // t_token cmd = {argv[1], T_COMMD, NULL};
-//     // t_token option = {argv[2], T_COMMD, NULL};
-//     // t_token arg1 = {argv[3], T_ARG, NULL};
-//     // t_token arg2 = {argv[4], T_ARG, NULL};
-//     // cmd.next = &option;
-//     // option.next = &arg1;
-//     // arg1.next = &arg2;
-//     // // cmd.next = &arg1;
-//     // // arg1.next = &arg2;
-// 	// ft_echo(&cmd);
-//     // ft_pwd();
-//     // char **envp = init_env(env);
-//     // // int i = 0;
+    // t_token cmd = {argv[1], T_COMMD, NULL};
+    // t_token option = {argv[2], T_COMMD, NULL};
+    // t_token arg1 = {argv[3], T_ARG, NULL};
+    // t_token arg2 = {argv[4], T_ARG, NULL};
+    // cmd.next = &option;
+    // option.next = &arg1;
+    // arg1.next = &arg2;
+    // // cmd.next = &arg1;
+    // // arg1.next = &arg2;
+	// ft_echo(&cmd);
+    // ft_pwd();
+    // char **envp = init_env(env);
+    // // int i = 0;
 
-//     // // while(envp[i])
-//     // //     printf("%s\n", envp[i++]);
-//     // char *path = get_env(envp, "HOME");
-//     // if (path)
-//     // {
-//     //     // Print the entire value of the "PATH" environment variable
-//     //     printf("PATH: %s\n", path);  // Print the full string (value of PATH)
-//     // }
-//     // else
-//     // {
-//     //     printf("PATH not found\n");
-//     // }
-//     print_env(env, argv, ac);
-// }
+    // // while(envp[i])
+    // //     printf("%s\n", envp[i++]);
+    // char *path = get_env(envp, "HOME");
+    // if (path)
+    // {
+    //     // Print the entire value of the "PATH" environment variable
+    //     printf("PATH: %s\n", path);  // Print the full string (value of PATH)
+    // }
+    // else
+    // {
+    //     printf("PATH not found\n");
+    // }
+    print_env(env, argv, ac);
+}
 
 // int main(int argc, char **argv)
 // {
@@ -78,6 +78,33 @@
 //     return 0;
 // }
 
+int is_buitins(char *cmd)
+{
+    return(!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "env")
+            || !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "unset"));
+}
+
+void execute_buitlins(t_env *m_env, t_command *cmd)
+{
+    printf("salam\n");
+    if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
+        ft_echo(cmd);
+    else if(ft_strcmp(cmd->arg[0], "cd") == 0)//SEGV
+        ft_cd(cmd, &m_env);
+    else if(ft_strcmp(cmd->arg[0], "env") == 0)//khdama
+        ft_display_env(m_env);
+    else if(ft_strcmp(cmd->arg[0], "pwd") == 0) //khdama
+        ft_pwd();
+    else if(ft_strcmp(cmd->arg[0], "export") == 0)//SEGV
+        ft_export(&cmd, &m_env);
+    else if(ft_strcmp(cmd->arg[0], "exit") == 0)//SEGV
+        ft_exit(cmd);
+    else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
+        ft_unset(&cmd, &m_env);
+    else
+        printf("builtin not found!\n");
+}   
+
 void signal_handler(int signal_num)
 {
     if(signal_num == SIGINT)
@@ -89,29 +116,36 @@ void signal_handler(int signal_num)
     }
 }
 
-int main()
-{
-    char *line;
+// int main(int argc, char **argv, char **envp)
+// {
+//     char *line;
+//     t_env *env_lst;
 
-    signal(SIGQUIT, SIG_IGN);
-    signal(SIGINT, signal_handler);
-    while(1)
-    {
-        line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
-        if(line == NULL)
-        {
-            printf("exit with ctrl+d\n");//for ctrl+d, detect EOF
-            break;
-        }
-        if (line[0] == '\0')
-            continue;
-        add_history(line);
-        if(lexer(line) == 1)
-        {
-            free(line);
-            syntax_error();
-            continue;
-        }
-        free(line);
-    }
-}
+//     (void)argc;
+//     env_lst = init_env(envp);
+//     signal(SIGQUIT, SIG_IGN);
+//     signal(SIGINT, signal_handler);
+//     while(1)
+//     {
+//         line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
+//         if(line == NULL)
+//         {
+//             printf("exit with ctrl+d\n");//for ctrl+d, detect EOF
+//             break;
+//         }
+//         if (line[0] == '\0')
+//             continue;
+//         add_history(line);
+//         argv = ft_split(line, ' ');
+        
+//         if(is_buitins(argv[0]))
+//             execute_buitlins(env_lst, lexer(line));
+//         if(lexer(line) == NULL)
+//         {
+//             free(line);
+//             syntax_error();
+//             continue;
+//         }
+//         free(line);
+//     }
+// }

@@ -3,63 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 14:44:20 by zait-err          #+#    #+#             */
-/*   Updated: 2025/03/27 06:45:37 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/27 09:11:47 by nel-khad          #+#    #+#             */
+/*   Updated: 2024/11/11 11:35:59 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	len_nbr(long nbr)
+static int	len_(long nb)
 {
 	int	len;
 
 	len = 0;
-	if (nbr == 0)
-		return (1);
-	if (nbr < 0)
-		len++;
-	while (nbr)
+	if (nb < 0)
 	{
-		nbr /= 10;
+		nb = -nb;
+		len++;
+	}
+	if (nb == 0)
+		return (1);
+	while (nb > 0)
+	{
+		nb = nb / 10;
 		len++;
 	}
 	return (len);
 }
 
-static char	*fill_str(char *str, long nbr, int len)
+static char	*conv_str(long nb, int len, char *s)
 {
-	if (nbr < 0)
+	if (nb < 0)
 	{
-		str[0] = '-';
-		nbr = -nbr;
+		nb = -nb;
+		s[0] = '-';
 	}
-	str[len] = '\0';
-	len--;
-	if (nbr == 0)
+	s[len--] = '\0';
+	if (nb == 0)
 	{
-		str[0] = '0';
-		return (str);
+		s[0] = '0';
+		return (s);
 	}
-	while (nbr > 0)
+	while (nb > 0)
 	{
-		str[len--] = (nbr % 10) + '0';
-		nbr /= 10;
+		s[len] = '0' + (nb % 10);
+		nb = nb / 10;
+		len--;
 	}
-	return (str);
+	return (s);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int nbr)
 {
+	char	*s;
+	long	nb;
 	int		len;
-	char	*str;
 
-	len = len_nbr(n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
+	nb = nbr;
+	len = len_(nb);
+	s = (char *)malloc(sizeof(char) * (len + 1));
+	if (!s)
 		return (NULL);
-	fill_str(str, n, len);
-	return (str);
+	s = conv_str(nb, len, s);
+	return (s);
 }

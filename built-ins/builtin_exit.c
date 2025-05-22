@@ -6,29 +6,29 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/17 16:39:29 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:03:39 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/mini.h"
 
-static int	ft_is_numeric(char *str)
-{
-	int	i = 0;
+// static int	ft_is_numeric(char *str)
+// {
+// 	int	i = 0;
 
-	if (!str || !str[0])
-		return (0);
-	if (str[i] == '+' || str[i] == '-')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
+// 	if (!str || !str[0])
+// 		return (0);
+// 	if (str[i] == '+' || str[i] == '-')
+// 		i++;
+// 	while (str[i])
+// 	{
+// 		if (!ft_isdigit(str[i]))
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 // int	ft_exit(char **args)
 // {
@@ -52,27 +52,32 @@ static int	ft_is_numeric(char *str)
 // }
 
 
-int ft_exit(t_command *args)
-{
-	int code;
-	int arg_count;
+// int ft_exit(t_command *args)
+// {
+// 	int code;
+// 	int arg_count;
 
-	arg_count = 0;
-	write(2, "exit\n", 5);
-	while(args->arg[arg_count]) 
-		arg_count++;
-	if(arg_count == 1)
-		exit(0);
-	if(!ft_is_numeric(args->arg[1]))
-	{
-			printf("Error: numeric argument required\n");
-			exit(255);
-	}
-	if(arg_count > 2) 
-	{
-		printf("Error:too many arguments\n");
-		return (1);
-	}
-	code = ft_atoi(args->arg[1]);
-	exit(code % 256);
+// 	arg_count = 0;
+// 	write(2, "exit\n", 5);
+// 	while(args->arg[arg_count]) 
+// 		arg_count++;
+// 	if(arg_count == 1)
+// 		exit(0);
+// 	if(!ft_is_numeric(args->arg[1]))
+// 	{
+// 			printf("Error: numeric argument required\n");
+// 			exit(255);
+// 	}
+// 	if(arg_count > 2) 
+// 	{
+// 		printf("Error:too many arguments\n");
+// 		return (1);
+// 	}
+// 	code = ft_atoi(args->arg[1]);
+// 	exit(code % 256);
+// }
+
+void ft_exit()
+{
+	exit(0);
 }
