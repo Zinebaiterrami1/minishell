@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:52:14 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/14 12:05:17 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:05:20 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strdup(const char *s1)
 	{
 		l++;
 	}
-	c = (char *)malloc((l + 1) * sizeof(char));
+	c = (char *)gc_malloc((l + 1) * sizeof(char), getter());
 	if (!c)
 		return (NULL);
 	while (s1[i])
