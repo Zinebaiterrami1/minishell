@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/22 19:19:25 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:17:17 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ void set_env_value(t_env **env_list, const char *key, const char *value)
             tmp->env_value = ft_strdup(value);
             return ;
         }
-        if(!tmp->next )
+        if(!tmp->next)
             break;
         tmp = tmp->next;
     }
@@ -258,7 +258,6 @@ void set_env_value(t_env **env_list, const char *key, const char *value)
 
 void ft_display_env(t_env *env)
 {
-    printf("am here\n");
     printf("%s\n", env->line);
     while(env)
     {

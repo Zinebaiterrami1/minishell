@@ -1396,9 +1396,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": -640.8419706825034,
-			"y": 2719.075654614293,
-			"lastActivityTimestamp": 1747496662698,
+			"x": -89.68181443250387,
+			"y": 3819.3164031374135,
+			"lastActivityTimestamp": 1747998534619,
 			"meta": {}
 		},
 		{
@@ -3011,8 +3011,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 928.8419706825034,
-			"y": -2523.075654614293,
+			"x": 861.6818144325039,
+			"y": -2775.3164031374135,
 			"z": 0.5,
 			"meta": {},
 			"id": "camera:page:page",
@@ -6597,12 +6597,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:YnrnBRHfDytJGTk-J4IG2",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:YIom91jgV3HBpQM6xsQRl"
+				"shape:YnrnBRHfDytJGTk-J4IG2"
 			],
-			"hoveredShapeId": null,
+			"hoveredShapeId": "shape:YnrnBRHfDytJGTk-J4IG2",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -14177,6 +14177,75 @@
 			"typeName": "shape"
 		},
 		{
+			"x": -575.6818144325039,
+			"y": 3783.1132781374135,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:YnrnBRHfDytJGTk-J4IG2",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 1251.59375,
+				"font": "draw",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1,
+				"richText": {
+					"type": "doc",
+					"content": [
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "mni ghandir export zineb nouss=nel-khad ,"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "w ndir env , env ghadzad fiha ghir hadik lifiha key=value, ama export kaykono fiha keys, w lakhrin"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "hta homaa"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						}
+					]
+				}
+			},
+			"parentId": "page:page",
+			"index": "b1HAB6",
+			"typeName": "shape"
+		},
+		{
 			"x": -306.9813819758674,
 			"y": 3329.737246728587,
 			"rotation": 0,
@@ -14711,7 +14780,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "move",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -14721,8 +14790,8 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 984,
-				"h": 620
+				"w": 777,
+				"h": 751
 			},
 			"insets": [
 				false,
