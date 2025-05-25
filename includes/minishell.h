@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/23 18:23:49 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:30:52 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <linux/limits.h>
 #include <signal.h>
+#include <fcntl.h>
 #include "../libft/libft.h"
 #include "../parsing/mimi.h"
 #define BUFFER_SIZE 1024
@@ -55,10 +56,13 @@ int ft_cd(t_command *cmd, t_env **env);
 // int ft_exit(t_command *args);
 void ft_exit();
 void print_env(char **envp, char **args, int argc);
-int ft_export(t_command **cmd, t_env **export);
+void ft_export(t_env **env, t_command **args);
 void split_and_set(char *arg, t_env **splited_env_list);
 void ft_display_env(t_env *env);
-int ft_unset(t_command **cmd, t_env **env);
+// int ft_unset(t_command **cmd, t_env **env);
+int is_valid_identifier(const char *str);
 //signals
 void signal_handler(int signal_num);
+void ft_unset(t_command **args, t_env **env);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/22 13:10:22 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:44:30 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void ft_echo(t_command *cmd)
 {
     int i;
     t_command *tmp;
+    int fd;
 
+    fd = 1;
     i = 1;
     tmp = cmd;
 
@@ -66,6 +68,25 @@ void ft_echo(t_command *cmd)
             }
             write(1, "\n", 1);
         }
+        //Handle redirection if present
+        if(tmp && tmp->redir && tmp->redir->name)
+        {
+            if(tmp->redir->type == T_RED_OUT) // >
+                fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+            else if(tmp->redir->type == T_RED_OUT_APEND) // >>
+                fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+            if(fd < 0)
+                printf("error fd\n");
+        }
+        while(tmp && tmp->arg[i])
+        {
+            write(fd, tmp->arg[i], ft_strlen(tmp->arg[i]));
+            if(tmp->arg[i + 1])
+                write(fd, " ", 1);
+            i++;
+        }
+        if(fd != 1)
+            close(fd);
 }
 
 // void ft_echo_in_file(int fd)

@@ -95,11 +95,11 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
     else if(ft_strcmp(cmd->arg[0], "pwd") == 0) //khdama
         ft_pwd();
     else if(ft_strcmp(cmd->arg[0], "export") == 0)//SEGV
-        ft_export(&cmd, &m_env);
+        ft_export(&m_env, &cmd);
     else if(ft_strcmp(cmd->arg[0], "exit") == 0)//SEGV
         ft_exit(cmd);
     else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
-        ft_unset(&cmd, &m_env);
+        printf("unset\n");// ft_unset(&cmd, &m_env);
     else
         printf("builtin not found!\n");
 }   
