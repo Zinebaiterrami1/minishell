@@ -28,7 +28,8 @@ typedef struct s_token
 {
     char *value;
     int type;
-    int space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
+    int space;
+    int d_quotes;
     struct s_token *next;
 }t_token;
 
@@ -63,8 +64,15 @@ typedef struct s_file
     char *name;
     char *limiter;
     int expand;
-
 }t_file;
+
+typedef struct t_env
+{
+    char *line;
+    char *env_key;
+    char *env_value;
+    struct t_env *next;
+} t_env;
 
 typedef struct s_redir
 {
@@ -81,6 +89,8 @@ typedef struct s_command
 } t_command;
 
 
+char *get_env_value(t_env *env_list, const char *key);
+t_env *split_env(t_env *lst);
 t_command *parser(t_lexer *lexer);
 void print_listt(t_garbage *token);
 int check(char *line);

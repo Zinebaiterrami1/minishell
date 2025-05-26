@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/22 22:49:10 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:58:02 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ t_token *handel_d_quotes(t_lexer *lexer)
     lexer->status_s = 1;
     token = gc_malloc(sizeof(t_token), getter());
     token->space = 0;
+    token->d_quotes = 1;
     while(lexer->line[i + 1] && lexer->line[++i] != '"')
         len++;
     if(lexer->line[i] && lexer->line[i + 1] && is_space(lexer->line[i + 1]))
@@ -358,7 +359,7 @@ int len_count(char *s, char c)
     
     len = 0;
     i = 0;
-    while(s[i] && s[i])
+    while(s[i] && s[i] != c)
     {
         if(s[i] != c && !isalpha(s[i]))
             return(len);
@@ -367,7 +368,14 @@ int len_count(char *s, char c)
     }
     return(len);
 }
+char *create_string(char c)
+{
+    char tmp[2];
 
+    tmp[0] = c;
+    tmp[1] = '\0';
+    return(tmp);
+}
 void creat_new_token(t_lexer *lexer, t_token *token)
 {
     (void) lexer;
@@ -377,83 +385,133 @@ void creat_new_token(t_lexer *lexer, t_token *token)
 }
 void *adding_new_token(t_lexer *lexer, t_token *token)
 {
+    t_token *last;
     if (!token)
         return(NULL);
-    ft_lstadd_back(&lexer->reel_head, token);
+    if(last->space)
+        ft_lstadd_back(&lexer->reel_head, token);
+    else
+    {
+        last->value = ft_strjoin(last->value, token->value);
+        token = token->next;   
+    }
     return(NULL);
 }
 
-char *get_exp_value()
+int has_space(char *s)
 {
-    
+    int i;
+
+    i = 0;
+    while(s[i++])
+    {
+        if(s[i] == ' ' || s[i] == '\t')
+            return(1);
+    }
+    return(0);
 }
 
-char *is_exp(char **val)
+char *get_exp(char *var, char **env)
 {
+    t_env *env;
     char *s;
     
-    while(*val)
+    env = split_env(init_env(env));
+    return(get_env_value(env, var));
+}
+
+char *is_exp(char **val, char **env)
+{
+    char *s;
+
+    s = ft_strdup("");
+    while(**val == '$')
+        (*val)++;
+    if(!ft_isalnum(**val))
     {
-        while(**val == '$')
-            (*val)++;
-        if(!ft_isalnum(**val))
-        {
-            (*val)++;
-            return(ft_strdup(""));
-        }
-        else if(ft_isalpha(**val) || **val == '_')
-        {
-            while(ft_isalpha(**val) || **val == '_' || ft_isalnum(**val))
-            {
-                s = ft_strjoin(s, &(**val));
-                (*val)++;
-            }
-            s = get_exp_value(s);
-        }
+        (*val)++;
+        return(s);
     }
+    else if(ft_isalpha(**val) || **val == '_')
+    {
+        while(ft_isalpha(**val) || **val == '_' || ft_isalnum(**val))
+        {
+            s = ft_strjoin(s, create_string(**val));
+            (*val)++;
+        }
+        return(get_exp(s, env));
+    }
+    else
+        return("$");
 }
 
 void append_token(char *val, int type, t_lexer *lexer)
 {
     t_token *token;
-
-    if(!token)
-        token = gc_malloc(sizeof(t_token), getter());
+    
+    token = gc_malloc(sizeof(t_token), getter());
     set_token(token, val, type);
     adding_new_token(lexer, token);
 }
 
-void creat_new_token_exp(t_lexer *lexer, t_token *token)
+char *befor_space(char *s)
+{
+    int i;
+    char *str;
+
+    i = 0;
+    while(s[i] && s[i] != ' ' && s[i] != '\t')
+    {
+        str = ft_strjoin(str, create_string(s[i]));
+        i++;
+    }
+    return(str);
+}
+char *after_space(char *s, t_token *token)
+{
+    int i;
+    char *str;
+
+    i = 0;
+    while(s[i] && s[i] != ' ' && s[i] != '\t')
+        i++;
+    if(!token->d_quotes)
+        while(s[i] == ' ' || s[i] == '\t')
+            i++;
+    while(s[i])
+    {
+        str[i] = ft_strjoin(str, create_string(s[i]));
+        i++;
+    }
+    return(str);
+}
+
+void creat_new_token_exp(t_lexer *lexer, t_token *token,char **env)
 {
     char *s;
     char *val;
-    t_token *new_token;
 
-    new_token = gc_malloc(sizeof(t_token), getter());
     while(token->value)
     {
         if(*token->value == '$')
         {
-            val = is_exp(&token->value);
+            val = is_exp(&token->value, env);
             if(!has_space(val))
                 s = ft_strjoin(s, val);
             else
             {
                 s = ft_strjoin(s, befor_space(val));
                 append_token(s, T_WORD, lexer);
-                s = ft_strdup(after_space(val));
+                s = ft_strdup(after_space(val, token));
             }
         }
         else
         {
-            s = ft_strjoin(s, &(*token->value));
+            s = ft_strjoin(s, create_string(*token->value));
             token->value++;
         }
     }
     append_token(s, T_WORD, lexer);
-    // new_token->value = s;
-    // set_token(new_token, s, T_WORD);
-    // adding_new_token(lexer, new_token);
 }
 
 
@@ -472,49 +530,56 @@ void creat_new_token_exp(t_lexer *lexer, t_token *token)
 
 
 
-void creat_new_token_exp(t_lexer *lexer, t_token *token)
-{
-    char *s;
-    char *val;
-    // char *pre_s;
-    int len;
+// void creat_new_token_exp(t_lexer *lexer, t_token *token)
+// {
+//     char *s;
+//     char *val;
+//     // char *pre_s;
+//     int len;
 
-    printf("ana create new token exp\n");
-    s = token->value;
-    if(*s == '$')
-    {
-        while(*s == '$')
-            s++;
-        if(!ft_isalnum(*s))
-        {
-            s++;
-            // pre_s = fill_pre_s(s);
-            // creat_new_token(lexer, token);//join with prev if space = 0 / add to the list;
-        }
-        else if(ft_isalpha(*s) || *s == '_' && valid_exp(s))
-        {
-            //len
-            len = len_count(s,'_');
+//     printf("ana create new token exp\n");
+//     s = token->value;
+//     if(*s == '$')
+//     {
+//         while(*s == '$')
+//             s++;
+//         if(!ft_isalnum(*s))
+//         {
+//             s++;
+//             // pre_s = fill_pre_s(s);
+//             // creat_new_token(lexer, token);//join with prev if space = 0 / add to the list;
+//         }
+//         else if(ft_isalpha(*s) || *s == '_' && valid_exp(s))
+//         {
+//             //len
+//             len = len_count(s,'_');
             
-            //fill
-            val = gc_malloc(sizeof(char) * (len + 1), getter());
-            ft_strlcpy(val, s, len + 1);
-            printf("val = %s\n", val);
-            // expand new_token->value = expand
-            if(s[len] != '\0')
-                // new_token->value = join_strings(new_token->v, s[len]);
-        }
-        else
-            creat_new_token(lexer, token);
-    }
-    // else
-    //     pre_s = fill_pre_s(s);
+//             //fill
+//             val = gc_malloc(sizeof(char) * (len + 1), getter());
+//             ft_strlcpy(val, s, len + 1);
+//             printf("val = %s\n", val);
+//             // expand new_token->value = expand
+//             if(s[len] != '\0')
+//                 // new_token->value = join_strings(new_token->v, s[len]);
+//         }
+//         else
+//             creat_new_token(lexer, token);
+//     }
+//     // else
+//     //     pre_s = fill_pre_s(s);
+    
+// }
+
+void create_new_token(t_lexer *lexer, t_token *token)
+{
+    t_token *new;
+
+    new = gc_malloc(sizeof(t_token), getter());
+    adding_new_token(lexer, set_token(new, token->value, token->type));
     
 }
 
-
-
-int reel_list(t_lexer *lexer)
+int reel_list(t_lexer *lexer, char **env)
 {
     t_token *token;
 
@@ -522,10 +587,10 @@ int reel_list(t_lexer *lexer)
     while(token)
     {
         if(token->type == T_EXP)
-            creat_new_token_exp(lexer, token);
+            creat_new_token_exp(lexer, token, env);
         else
             creat_new_token(lexer, token);
-        token = token->next;    
+        token = token->next;
     }
     return(0);
 }
@@ -543,7 +608,7 @@ void print_list(t_token *token)
     printf("\n");
 }
 
-int lexer(char *line)
+int parsing(char *line, char **env)
 {
     t_lexer *lexer;
     t_token *token;
@@ -562,14 +627,22 @@ int lexer(char *line)
         if(lexer->error)
             return(1);
     }
-    reel_list(lexer);
+    reel_list(lexer, env);
     print_list(lexer->head);
     parser(lexer);
     free_all(getter());
     return(0);
 }
 
-int main()
+
+int minishell(char *line, char **env)
+{
+    if(parsing(line, env))
+        return(syntax_error());
+    
+}
+
+int main(int argc, char **argv, char **env)
 {
     char *line;
     while(1)
@@ -578,12 +651,17 @@ int main()
         if (line[0] == '\0')
             continue;
         add_history(line);
-        if(lexer(line) == 1)
+        if(minishll(line, env))
         {
             free(line);
-            syntax_error();
             continue;
         }
         free(line);
+        // if(lexer(line) == 1)
+        // {
+        //     free(line);
+        //     syntax_error();
+        //     continue;
+        // }
     }
 }

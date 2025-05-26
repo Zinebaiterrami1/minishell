@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:39:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/09 11:01:35 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:43:00 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	c = (char *)malloc(sizeof(char) * (len((char *)s1) + len((char *)s2) + 1));
+	c = (char *)gc_malloc(sizeof(char) * (len((char *)s1) + len((char *)s2) + 1), getter());
 	if (!c)
 		return (NULL);
 	while (s1[i])
