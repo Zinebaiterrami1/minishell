@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/25 17:32:26 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:10:43 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void update_or_add_env(t_env **env, char *key, char *value)
 
 	while (tmp)
 	{
+		printf("allo\n");
 		if (ft_strcmp(tmp->env_key, key) == 0)
 		{
 			free(tmp->env_value);
@@ -60,6 +61,9 @@ static void print_export(t_env *env)
 {
 	while (env)
 	{
+		printf("-----\n");
+		if(!env)
+			printf("the line is null\n");
 		printf("declare -x %s\n", env->line);
 		// if (env->env_value)
 		// 	printf("=\"%s\"", env->env_value);
@@ -80,7 +84,7 @@ void ft_export(t_env **env, t_command **args)
 	if (!tmp->arg[1])
 		return print_export(*env);
 	while (tmp->arg[i])
-	{
+	{	printf("hello \n");
 		if (!is_valid_identifier(tmp->arg[i]))
 			printf("export: `%s`: not a valid identifier\n", tmp->arg[i]);
 		else
@@ -93,6 +97,7 @@ void ft_export(t_env **env, t_command **args)
 			}
 			else
 			{
+				printf("here\n");
 				key = ft_strdup(tmp->arg[i]);
 				value = NULL;
 			}
