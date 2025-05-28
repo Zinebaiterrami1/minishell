@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/25 18:30:52 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:56:48 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#include "structs.h"
+#include "../parsing/mimi.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <linux/limits.h>
 #include <signal.h>
 #include <fcntl.h>
 #include "../libft/libft.h"
-#include "../parsing/mimi.h"
 #define BUFFER_SIZE 1024
 
 typedef struct s_cmd
@@ -33,13 +34,7 @@ typedef struct s_cmd
     void *next;
 } t_cmd;
 
-typedef struct t_env
-{
-    char *line;
-    char *env_key;
-    char *env_value;
-    struct t_env *next;
-} t_env;
+
 
 extern int g_last_status;
 /*----builtin----*/

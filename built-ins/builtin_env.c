@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/23 12:17:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:55:17 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,35 +226,39 @@ char *get_env_key(t_env *env_lst, const char *value)
     return (key);
 }
 
-// /* Update existing or add new environment variable */
-void set_env_value(t_env **env_list, const char *key, const char *value)
-{
-    t_env *tmp;
-    t_env *new_node;
+// // /* Update existing or add new environment variable */
+// void set_env_value(t_env **env_list, const char *key, const char *value)
+// {
+//     t_env *tmp;
+//     t_env *new_node;
     
-    tmp = *env_list;
-    if(!*env_list || !env_list || !tmp)
-        return;
-    while(tmp)
-    {   
-        if(ft_strcmp(tmp->env_key, key) == 0)
-        {
-            free(tmp->env_value);
-            tmp->env_value = ft_strdup(value);
-            return ;
-        }
-        if(!tmp->next)
-            break;
-        tmp = tmp->next;
-    }
-    new_node = malloc(sizeof(t_env));
-    if(!new_node)
-        return ;
-    new_node->env_key = ft_strdup(key);
-    new_node->env_value = ft_strdup(value);
-    new_node->next = NULL;
-    tmp->next = new_node;
-}
+//     tmp = *env_list;
+//     if(!*env_list || !env_list || !tmp)
+//         return;
+//     printf("check if the list itself is empty===> key: %s, value: %s\n", (*env_list)->env_key, (*env_list)->env_value);
+//     printf("key: %s\n, value: %s\n", tmp->env_key, tmp->env_value);
+//     while(tmp)
+//     {   
+//         if(ft_strcmp(tmp->env_key, key) == 0)
+//         {
+//             printf("ana wst loop\n");
+//             free(tmp->env_value);
+//             tmp->env_value = ft_strdup(value);
+//             printf("new value of env: %s\n", tmp->env_value);
+//             return ;
+//         }
+//         // if(!tmp->next)
+//         //     break;
+//         tmp = tmp->next;
+//     }
+//     new_node = malloc(sizeof(t_env));
+//     if(!new_node)
+//         return ;
+//     new_node->env_key = ft_strdup(key);
+//     new_node->env_value = ft_strdup(value);
+//     new_node->next = NULL;
+//     ft_lstadd_backk(&tmp, new_node);
+// }
 
 void ft_display_env(t_env *env)
 {

@@ -1,6 +1,7 @@
 #ifndef MIMI_H
 #define MIMI_H
 
+#include "../includes/structs.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,19 +67,6 @@ typedef struct s_file
 
 }t_file;
 
-typedef struct s_redir
-{
-    int type;
-    char *name;
-    struct s_redir *next;
-}t_redir;
-
-typedef struct s_command
-{
-    char **arg;
-    t_redir *redir;
-    struct s_command *next_com;
-} t_command;
 
 
 t_command *parser(t_lexer *lexer);

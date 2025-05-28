@@ -6,12 +6,11 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/16 09:52:57 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:46:34 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/mini.h"
 
 // static void cd_update_env(char *old_pwd, t_env **env)
 // {

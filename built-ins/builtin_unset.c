@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:40 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/25 17:33:50 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:49:00 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 //chno kadir katchd ay env var kat deletih hadchi li kadir
 /*
 unset zineb=allo

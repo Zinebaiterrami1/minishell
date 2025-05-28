@@ -6,21 +6,24 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:39:46 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/21 18:11:54 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:19:59 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+#include "../parsing/mimi.h"
+#include "../includes/minishell.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include "../parsing/mimi.h"
 
 
 typedef struct s_token t_token;
-
+typedef struct t_env t_env;
+// typedef struct s_command t_command;
+// typedef struct s_redir t_redir;
 
 int		ft_tolower(int C);
 int		ft_toupper(int c);
@@ -73,5 +76,6 @@ void	ft_lstdelone(t_token *lst, void (*del)(void *));
 void	ft_lstclear(t_token **lst, void (*del)(void *));
 void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstadd_back(t_token **lst, t_token *new);
-
+void	ft_lstadd_backk(t_env **env, t_env *new);
+t_env	*ft_lstlastt(t_env *lst);
 #endif

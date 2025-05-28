@@ -86,6 +86,8 @@ int is_buitins(char *cmd)
 
 void execute_buitlins(t_env *m_env, t_command *cmd)
 {
+    if(!m_env->env_key || !m_env->env_value || !m_env->line)
+        return;
     if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
         ft_echo(cmd);
     else if(ft_strcmp(cmd->arg[0], "cd") == 0)//SEGV
@@ -100,8 +102,6 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
         ft_exit(cmd);
     else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
         printf("unset\n");// ft_unset(&cmd, &m_env);
-    else
-        printf("builtin not found!\n");
 }   
 
 void signal_handler(int signal_num)
@@ -122,6 +122,7 @@ int main(int argc, char **argv, char **envp)
 
     (void)argc;
     env_lst = init_env(envp);
+    env_lst = split_env(env_lst);
     signal(SIGQUIT, SIG_IGN);
     signal(SIGINT, signal_handler);
     while(1)
