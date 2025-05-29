@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/28 20:55:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:52:42 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,36 @@ t_env *split_env(t_env *lst)
         tmp = tmp->next;
     }
     return (lst);
+}
+
+// /* Update existing or add new environment variable */
+void set_env_value(t_env **env_list, const char *key, const char *value)
+{
+    t_env *tmp;
+    t_env *new_node;
+    
+    tmp = *env_list;
+    if(!*env_list || !env_list || !tmp)
+        return;
+    while(tmp)
+    {   
+        if(ft_strcmp(tmp->env_key, key) == 0)
+        {
+            free(tmp->env_value);
+            tmp->env_value = ft_strdup(value);
+            return ;
+        }
+        if(!tmp->next)
+            break;
+        tmp = tmp->next;
+    }
+    new_node = malloc(sizeof(t_env));
+    if(!new_node)
+        return ;
+    new_node->env_key = ft_strdup(key);
+    new_node->env_value = ft_strdup(value);
+    new_node->next = NULL;
+    tmp->next = new_node;
 }
 
 void split_and_set(char *arg, t_env **splited_env_list)

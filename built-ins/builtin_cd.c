@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/28 15:46:34 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/29 20:02:52 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // static int cd_change_directory(char *path, t_env **env)
 // {
 //     char *old_pwd;
-
+ 
 //     old_pwd = getcwd(NULL, 0);
 //     if(!old_pwd)
 //         return (perror("cd"), 1);

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/28 22:24:16 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:31:05 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char* search_cmd(t_command *cmd, char **sp)
     while(sp[i])
     {
         joinpath =  ft_strjoin(sp[i], join); // path/cmd;
-        if(access(joinpath, F_OK | X_OK))
+        if(access(joinpath, F_OK | X_OK) == 0)
             return(joinpath);
         i++;        
     }
@@ -63,9 +63,10 @@ char* search_cmd(t_command *cmd, char **sp)
 
 int ft_dup(char *pathcmd, t_command *cmd)
 {
-    dup2(cmd->fd_out, 1);
-    dup2(cmd->fd_in, 0);
-    close(cmd->fd_in); //check if fd == 0, if yes no close else close
-    close(cmd->fd_out);
-    // execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+
+    dup2(cmd->redir->fd_out, 1);
+    dup2(cmd->redir->fd_in, 0);
+    close(cmd->redir->fd_in); //check if fd == 0, if yes no close else close
+    close(cmd->redir->fd_out);
+   execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
 }

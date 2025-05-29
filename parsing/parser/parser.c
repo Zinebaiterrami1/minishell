@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/22 18:55:52 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:30:21 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ void creat_red(t_redir **red_list, int var, t_token *token)
     redir = gc_malloc(sizeof(t_redir), getter());
     redir->name = token->value;
     redir->type = var;
+    redir->fd_in = 0;
+    redir->fd_out = 1;
     redir->next = NULL;
     add_redir(red_list, redir);
 }
