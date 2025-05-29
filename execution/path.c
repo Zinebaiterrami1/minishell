@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/29 19:31:05 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:35:02 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,39 @@ char* search_cmd(t_command *cmd, char **sp)
     return (NULL);
 }
 
-int ft_dup(char *pathcmd, t_command *cmd)
+void ft_dup(char *pathcmd, t_command *cmd, t_env *env)
 {
+    char **envp;
+    int f;
+    
+    envp = get_envp(env);
+    f = open_file(&cmd);
+    if(f == -1)
+        return;
+    if (cmd->redir->fd_in != 0)
+        close(cmd->redir->fd_in);
+    if (cmd->redir->fd_out != 1)
+        close(cmd->redir->fd_out);
+    execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+}
 
-    dup2(cmd->redir->fd_out, 1);
-    dup2(cmd->redir->fd_in, 0);
-    close(cmd->redir->fd_in); //check if fd == 0, if yes no close else close
-    close(cmd->redir->fd_out);
-   execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+char** get_envp(t_env *lst)
+{
+    int i;
+    char **envp;
+    int size;
+
+    size = ft_lstsize(lst);
+    envp = malloc(sizeof(char *) * (size + 1));
+    if(!envp)
+        return ;
+    i = 0;
+    while(lst)
+    {
+        envp[i] = lst->line;
+        i++;
+        lst = lst->next;
+    }
+    envp[i] = NULL;
+    return (envp);
 }

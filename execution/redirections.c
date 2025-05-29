@@ -6,40 +6,50 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/29 21:50:26 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:46:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void open_file(t_command **args)
+int open_file(t_command *cmd)
 {
     //fct that open file based on the type of redirections
-    t_command *tmp;
+    t_redir *r;
     
-    tmp = *args;
-    while(tmp)
+    r = cmd->redir;
+    while(r)
     {
-        if(tmp->redir->type == T_RED_IN) // if type here is redir in > 
+        if(r->name)
         {
-            tmp->redir->fd_out = open(tmp->redir->name, O_CREAT | O_WRONLY | O_TRUNC, 7777);
-            dup2(tmp->redir->fd_out, 1);
-            close(tmp->redir->fd_out);
+            if(r->type == T_RED_IN) // if type here is redir in > 
+            {
+                r->fd_in = open(r->name, O_RDONLY, 0644);
+                dup2(r->fd_in, 0);
+                close(r->fd_in);
+            }
+            else if(r->type == T_RED_OUT)
+            {
+                r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+                dup2(r->fd_out, 1);
+                close(r->fd_out);
+            }
+            else if(r->type == T_RED_OUT_APEND)
+            {
+                r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+                dup2(r->fd_out, 1);
+                close(r->fd_out);
+            }
+            if(r->fd_out == -1 || r->fd_in == -1)
+            {
+                printf("error in fd\n");
+                perror(r->name);
+                return (-1);
+            }    
         }
-        else if(tmp->redir->type == T_RED_OUT)
-        {
-            tmp->redir->fd_in = open(tmp->redir->name, O_CREAT | O_WRONLY, 7777);
-            dup2(tmp->redir->fd_in, 1);
-            close(tmp->redir->fd_in);
-        }
-        else if(tmp->redir->type == T_RED_OUT_APEND)
-        {
-            tmp->redir->fd_in = open(tmp->redir->name, O_CREAT | O_WRONLY | O_APPEND, 7777);
-            dup2(tmp->redir->fd_in, 1);
-            close(tmp->redir->fd_in);
-        }
-        tmp = tmp->redir->next;
+        r = r->next;
     }
+    return (0);
 }
 
 
