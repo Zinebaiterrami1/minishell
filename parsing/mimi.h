@@ -95,6 +95,8 @@ t_command *parser(t_lexer *lexer);
 void print_listt(t_garbage *token);
 int check(char *line);
 int syntax_error();
-
+char *get_env_value(t_env *env_list, const char *key);
+t_env *split_env(t_env *lst);
+t_env *init_env(char **envp);
 
 #endif

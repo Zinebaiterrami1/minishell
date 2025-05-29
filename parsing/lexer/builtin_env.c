@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/26 10:49:48 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:42:07 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,26 +173,26 @@ t_env *split_env(t_env *lst)
     return (lst);
 }
 
-void split_and_set(char *arg, t_env **splited_env_list)
-{
-    char *equal_env;
-    int key_len;
-    char *key;
-    char *value;
+// void split_and_set(char *arg, t_env **splited_env_list)
+// {
+//     char *equal_env;
+//     int key_len;
+//     char *key;
+//     char *value;
 
-    equal_env = ft_strchr(arg, '=');
-    if(!equal_env)
-        return ;
-    key_len = equal_env - arg;
-    key = ft_substr(arg, 0, key_len);
-    value = ft_strdup(equal_env + 1);
-    if(!value)
-        set_env_value(splited_env_list, key, NULL);
-    else
-        set_env_value(splited_env_list, key, value);
-    free(key);
-    free(value);
-}
+//     equal_env = ft_strchr(arg, '=');
+//     if(!equal_env)
+//         return ;
+//     key_len = equal_env - arg;
+//     key = ft_substr(arg, 0, key_len);
+//     value = ft_strdup(equal_env + 1);
+//     if(!value)
+//         set_env_value(splited_env_list, key, NULL);
+//     else
+//         set_env_value(splited_env_list, key, value);
+//     free(key);
+//     free(value);
+// }
 
 /* Get the value of a specific environment variable */
 char *get_env_value(t_env *env_list, const char *key)
@@ -227,34 +227,34 @@ char *get_env_key(t_env *env_lst, const char *value)
 }
 
 // /* Update existing or add new environment variable */
-void set_env_value(t_env **env_list, const char *key, const char *value)
-{
-    t_env *tmp;
-    t_env *new_node;
+// void set_env_value(t_env **env_list, const char *key, const char *value)
+// {
+//     t_env *tmp;
+//     t_env *new_node;
     
-    tmp = *env_list;
-    if(!*env_list || !env_list || !tmp)
-        return;
-    while(tmp)
-    {   
-        if(ft_strcmp(tmp->env_key, key) == 0)
-        {
-            free(tmp->env_value);
-            tmp->env_value = ft_strdup(value);
-            return ;
-        }
-        if(!tmp->next )
-            break;
-        tmp = tmp->next;
-    }
-    new_node = malloc(sizeof(t_env));
-    if(!new_node)
-        return ;
-    new_node->env_key = ft_strdup(key);
-    new_node->env_value = ft_strdup(value);
-    new_node->next = NULL;
-    tmp->next = new_node;
-}
+//     tmp = *env_list;
+//     if(!*env_list || !env_list || !tmp)
+//         return;
+//     while(tmp)
+//     {   
+//         if(ft_strcmp(tmp->env_key, key) == 0)
+//         {
+//             free(tmp->env_value);
+//             tmp->env_value = ft_strdup(value);
+//             return ;
+//         }
+//         if(!tmp->next )
+//             break;
+//         tmp = tmp->next;
+//     }
+//     new_node = malloc(sizeof(t_env));
+//     if(!new_node)
+//         return ;
+//     new_node->env_key = ft_strdup(key);
+//     new_node->env_value = ft_strdup(value);
+//     new_node->next = NULL;
+//     tmp->next = new_node;
+// }
 
 void ft_display_env(t_env *env)
 {
