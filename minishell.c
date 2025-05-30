@@ -86,6 +86,10 @@ int is_buitins(char *cmd)
 
 void execute_buitlins(t_env *m_env, t_command *cmd)
 {
+    int (stdin), (stdout);
+
+    stdin = dup(0);
+    stdout = dup(1);
     if(!m_env->env_key || !m_env->env_value || !m_env->line)
         return;
     if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
@@ -102,6 +106,10 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
         ft_exit(cmd);
     else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
         printf("unset\n");// ft_unset(&cmd, &m_env);
+    dup2(stdin, 0);
+    dup2(stdout, 1);
+    close(stdin);
+    close(stdout);
 }   
 
 void signal_handler(int signal_num)
@@ -119,8 +127,8 @@ int main(int argc, char **argv, char **envp)
 {
     char *line;
     t_env *env_lst;
-
     (void)argc;
+
     env_lst = init_env(envp);
     env_lst = split_env(env_lst);
     signal(SIGQUIT, SIG_IGN);
@@ -130,6 +138,7 @@ int main(int argc, char **argv, char **envp)
         line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
         if(line == NULL)
         {
+            free_all(getter());
             printf("exit with ctrl+d\n");//for ctrl+d, detect EOF
             break;
         }
@@ -137,9 +146,15 @@ int main(int argc, char **argv, char **envp)
             continue;
         add_history(line);
         argv = ft_split(line, ' ');
-        
         if(is_buitins(argv[0]))
+        {
             execute_buitlins(env_lst, lexer(line));
+            restore_state(stdin, stdout);
+        }
+        else
+        {
+            execute_externals(lexer(line), env_lst);
+        }    
         if(lexer(line) == NULL)
         {
             free(line);
@@ -147,5 +162,6 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
         free(line);
+        free_all(getter());
     }
 }

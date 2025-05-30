@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/30 14:55:48 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:22:27 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ char** split_path(t_env *lst)
 }
 
 //search the command in each path to find it and pass it to access
-char* search_cmd(t_command *cmd, char **sp)
+char* search_cmd(t_command *cmd, t_env *lst)
 {
-    t_command *tmp;
+    // t_command *tmp;
     char *join;
     char *joinpath;
     int i;
+    char **sp;
     
     i = 0;
     // /command
+    sp = split_path(lst);
     join = ft_strjoin("/", cmd->arg[0]); // /cat
     while(sp[i])
     {
@@ -70,7 +72,7 @@ char** get_envp(t_env *lst)
     size = ft_lstsize(lst);
     envp = malloc(sizeof(char *) * (size + 1));
     if(!envp)
-        return ;
+        return (NULL);
     i = 0;
     while(lst)
     {
@@ -82,24 +84,24 @@ char** get_envp(t_env *lst)
     return (envp);
 }
 
-void ft_dup(char *pathcmd, t_command *cmd, t_env *env)
+void execute_externals(t_command *cmd, t_env *env)
 {
     char **envp;
     int f;
-    
-    envp = get_envp(env);
-    f = open_file(&cmd);
-    if(f == -1)
-        return;
-    if (cmd->redir->fd_in != 0)
-        close(cmd->redir->fd_in);
-    if (cmd->redir->fd_out != 1)
-        close(cmd->redir->fd_out);
-    execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
-}
+    char *pathcmd;
+    pid_t pid;
+    int status;
 
-int main()
-{
-    //testing executing simple commands
-    
+    pid = fork();
+    if(pid == 0)
+    {
+        envp = get_envp(env);
+        f = open_file(cmd);
+        if(f == -1)
+            return;
+        pathcmd = search_cmd(cmd, env);
+        execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+    }
+    waitpid(pid, &status, 0);
+    exit(WEXITSTATUS(status));
 }

@@ -6,20 +6,21 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/30 14:12:46 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/30 23:23:19 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include "structs.h"
-#include "../parsing/mimi.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <linux/limits.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/wait.h>
+#include "structs.h"
+#include "../parsing/mimi.h"
 #include "../libft/libft.h"
 #define BUFFER_SIZE 1024
 
@@ -61,4 +62,5 @@ int is_valid_identifier(const char *str);
 void signal_handler(int signal_num);
 //execution 
 int open_file(t_command *cmd);
+void execute_externals(t_command *cmd, t_env *env);
 #endif
