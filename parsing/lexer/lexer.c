@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/29 17:40:02 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:01:26 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,26 @@ char *get_string(char *s, int i)
     return(str);
 }
 
+// char *get_next_word(char *str, int *i)
+// {
+//     char *s;
+//     int j;
+    
+//     s = NULL;
+//     j = 0;
+//     while(str[*i] && str[*i + 1])
+//     {
+//         if (str[*i] == '$' && str[*i + 1] == '$')
+//             (*i) += 2;
+//     }
+//     while(str[*i] && str[*i] != ' ' && str[*i] != '\t')
+//     {
+//         s = ft_strjoin(s, create_string(str[*i]));
+//         (*i)++;
+//     }
+//     return(s);
+// }
+
 int has_dollar(char **s)
 {
     int  i;
@@ -180,20 +200,21 @@ int has_dollar(char **s)
                 count++;
                 i++;
             }
-        if((ft_isalpha(str[i]) || str[i] == '_') && count % 2 != 0)
-        {
-            *s = ft_strjoin(get_string(*s, i) , ft_strjoin("$", &str[i]));
-            return(1);
-        }
-        else if (count && count % 2 == 0)
+        if((ft_isalpha(str[i]) || str[i] == '_') && count)
         {
             *s = ft_strjoin(get_string(*s, i) , ft_strjoin("", &str[i]));
-            return(0);
+            return(1);
         }
+        // else
+        // {
+        //     // *s = ft_strjoin(get_string(*s, i) , ft_strjoin("", &str[i]));
+        //     return(0);
+        // }
         i++;
     }
     return(0);
 }
+
 
 t_token *handel_d_quotes(t_lexer *lexer)
 {
@@ -217,7 +238,11 @@ t_token *handel_d_quotes(t_lexer *lexer)
     lexer->i = i + 1;
     printf("s === %s\n", s);
     if(has_dollar(&s))
-        return(set_token(token, s, T_EXP));
+    {
+        printf("00000000000000 %s \n", s);
+            return(set_token(token, s, T_EXP));
+        
+    }
     return(set_token(token, s, T_D_COTS));/////////////////needs check with freind and create handel d
 }
 
@@ -476,20 +501,49 @@ char *get_exp(char *var, char **env)
     return(get_env_value(env_list, var));
 }
 
+char *should_not_be_expanded(char **val)
+{
+    int i;
+
+    i = 0;
+    while(**val && **val == '$')
+    {
+        (*val)++;
+        i++;
+    }
+    if (i % 2 == 0)
+        return(ft_strdup(""));
+    else if(!ft_isalnum(**val))
+    {
+        (*val)++;
+        return(ft_strdup(""));
+    }
+    else
+        return(NULL);
+    
+}
+
 char *is_exp(char **val, char **env)
 {
     char *s;
     char *ret;
     
     s = ft_strdup("");
-    while(**val == '$')
-        (*val)++;
-    if(!ft_isalnum(**val))
+    printf("****************888 %s\n", *val);
+    if(should_not_be_expanded(val))
     {
-        (*val)++;
-        return(s);
+        printf("****************888 %s\n", *val);
+            return(s);
+        
     }
-    else if(ft_isalpha(**val) || **val == '_')
+    // while(**val == '$')
+    //     (*val)++;
+    // if(!ft_isalnum(**val))
+    // {
+    //     (*val)++;
+    //     return(s);
+    // }
+    if(ft_isalpha(**val) || **val == '_')
     {
         while(ft_isalpha(**val) || **val == '_' || ft_isalnum(**val))
         {
@@ -556,16 +610,15 @@ void creat_new_token_exp(t_lexer *lexer, t_token *token,char **env)
         return;
     while(token && *token->value)
     {
-        // printf("%c\n", *token->value);
         if(token && *token->value && !ft_strncmp((const char *)(token->value), "$", 1))
         {
-            printf("---%s\n",token->value);
+            printf("---   token   %s\n",token->value);
             val = is_exp(&token->value, env);
-            printf("---%s\n", val);
+            printf("---  val  %s\n", val);
             if(!has_space(val))
             {
                 s = ft_strjoin(s, val);
-                printf("---%s\n", s);
+                printf("---   s    %s\n", s);
                 // append_token(token, s, lexer);
             }
             else
@@ -581,7 +634,6 @@ void creat_new_token_exp(t_lexer *lexer, t_token *token,char **env)
             if(*token->value)
                 token->value++;
         }
-        printf("***************%s\n", s);
     }
     append_token(token, s, lexer);
 }
@@ -657,7 +709,6 @@ int reel_list(t_lexer *lexer, char **env)
     t_token *token;
 
     token = lexer->head;
-    printf("%s\n", token->value);
     while(token)
     {
         if(token->type == T_EXP)
@@ -712,8 +763,8 @@ int parsing(char *line, char **env)
         if(lexer->error)
             return(1);
     }
-    reel_list(lexer, env);
     print_list(lexer->head);
+    reel_list(lexer, env);
     print_list2(lexer->reel_head);
     parser(lexer);
     free_all(getter());

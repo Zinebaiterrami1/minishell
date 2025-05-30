@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:11:58 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/10 20:40:26 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:32:26 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t	ft_strlen(const char *str)
 {
 	size_t	len;
-
+	
 	len = 0;
 	while (str[len] != '\0')
 		len++;
