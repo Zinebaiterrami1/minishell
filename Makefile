@@ -1,7 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 SRC = built-ins/builtin_echo.c minishell.c built-ins/builtin_pwd.c built-ins/builtin_env.c built-ins/builtin_cd.c built-ins/builtin_exit.c parsing/lexer/lexer.c parsing/parser/parser.c parsing/garbage_collector/gc.c\
-		parsing/lexer/utils.c built-ins/builtin_export.c #built-ins/builtin_unset.c 
+		parsing/lexer/utils.c built-ins/builtin_export.c \
+		execution/redirections.c
+		
 NAME= minishell
 
 %.o: %.c

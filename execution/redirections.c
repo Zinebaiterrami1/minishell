@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/29 23:46:41 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:02:09 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int open_file(t_command *cmd)
         {
             if(r->type == T_RED_IN) // if type here is redir in > 
             {
-                r->fd_in = open(r->name, O_RDONLY, 0644);
+                r->fd_in = open(r->name, O_RDONLY);
                 dup2(r->fd_in, 0);
                 close(r->fd_in);
             }
@@ -45,7 +45,15 @@ int open_file(t_command *cmd)
                 printf("error in fd\n");
                 perror(r->name);
                 return (-1);
-            }    
+            }
+            // if(r->fd_in != 0)
+            //     dup2(r->fd_in, 0);
+            // if(r->fd_out != 1)
+            //     dup2(r->fd_out, 1);
+            // if(r->fd_in > 2)
+            //     close(r->fd_in);
+            // if(r->fd_out > 2)
+            //     close(r->fd_out);
         }
         r = r->next;
     }

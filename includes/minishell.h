@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/29 22:59:08 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:12:46 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ int is_valid_identifier(const char *str);
 //signals
 void signal_handler(int signal_num);
 //execution 
-int open_file(t_command **args);
+int open_file(t_command *cmd);
 #endif
