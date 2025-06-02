@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/02 14:01:12 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:53:59 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,10 +287,10 @@ char *get_env_key(t_env *env_lst, const char *value)
 
 void ft_display_env(t_env *env)
 {
-    printf("%s\n", env->line);
     while(env)
     {
-        printf("%s\n", env->line);
+        if(env->env_value)
+            printf("%s=\"%s\"\n", env->env_key, env->env_value);
         env = env->next;
     }
 }
