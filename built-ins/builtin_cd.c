@@ -56,33 +56,57 @@
 
 //cd
 
+// int ft_cd(t_command *cmd, t_env **env)
+// {
+//     char *path;
+//     char buffer[BUFFER_SIZE];
+//     char *cwd;
+//     //getting the cwd to take it as oldpwd, and when i do cd path i will do
+//     //getcwd to take it as pwd
+//     cwd = getcwd(buffer, BUFFER_SIZE);
+//     // if(cmd->arg[4])
+//     // {
+//     //     printf("Error: too many arguments\n");
+//     //     return (1);
+//     // }
+//     if(!cmd->arg[1])
+//     {   
+//         set_env_value(env, "OLDPWD", cwd);
+//         path = get_env_value(*env, "HOME");
+//         chdir(path); //go to home
+//     }
+//     if(cmd->arg[1])
+//     {
+//         set_env_value(env, "OLDPWD", cwd);
+//         path = get_env_value(*env, cmd->arg[2]);
+//         chdir(path); //if one arg passed to cd, i will take it as key and go to its value(path)
+//     }
+//     if(chdir(cmd->arg[1]) != 0)
+//         printf("cd: no such file or directory: %s\n", cmd->arg[1]);
+//     set_env_value(env, "PWD", path);
+//     return (0);
+// }
+
+//new cd
 int ft_cd(t_command *cmd, t_env **env)
 {
-    char *path;
-    char buffer[BUFFER_SIZE];
-    char *cwd;
-    //getting the cwd to take it as oldpwd, and when i do cd path i will do
-    //getcwd to take it as pwd
-    cwd = getcwd(buffer, BUFFER_SIZE);
-    // if(cmd->arg[4])
-    // {
-    //     printf("Error: too many arguments\n");
-    //     return (1);
-    // }
+    char *old_path;
+    char *new_path;
+
     if(!cmd->arg[1])
-    {   
-        set_env_value(env, "OLDPWD", cwd);
-        path = get_env_value(*env, "HOME");
-        chdir(path); //go to home
-    }
-    if(cmd->arg[1])
     {
-        set_env_value(env, "OLDPWD", cwd);
-        path = get_env_value(*env, cmd->arg[2]);
-        chdir(path); //if one arg passed to cd, i will take it as key and go to its value(path)
+        printf("must be a relative or absolute path\n");
+        return (-1);
     }
+    old_path = getcwd(NULL, 0);
     if(chdir(cmd->arg[1]) != 0)
-        printf("cd: no such file or directory: %s\n", cmd->arg[1]);
-    set_env_value(env, "PWD", path);
+    {
+        perror("cd");
+        return (-1);
+    }
+    new_path = getcwd(NULL, 0);
+    printf("hello cd\n");
+    set_env_value(env, "PWD", new_path);
+    set_env_value(env, "OLDPWD", old_path);
     return (0);
 }

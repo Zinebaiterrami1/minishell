@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstneww_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 13:37:52 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/02 13:36:36 by zait-err         ###   ########.fr       */
+/*   Created: 2025/06/02 13:55:13 by zait-err          #+#    #+#             */
+/*   Updated: 2025/06/02 13:58:23 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_env *lst)
+t_env	*ft_lstneww(char *key, char *value)
 {
-	int	count;
+	t_env	*list;
 
-	count = 0;
-	if (!lst)
-		return (0);
-	while (lst != NULL)
-	{
-		count++;
-		lst->is_printed = 0;
-		lst = lst->next;
-	}
-	return (count);
+	list = malloc(sizeof(t_env));
+	if (!list)
+		return (NULL);
+	list->env_key = key;
+	list->env_value = value;
+    list->next = NULL;
+	return (list);
 }

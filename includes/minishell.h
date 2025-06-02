@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/30 23:23:19 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:00:57 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ t_env *init_env(char **envp);
 t_env *split_env(t_env *lst);
 char *get_env_value(t_env *env_list, const char *key);
 char *get_env_key(t_env *env_lst, const char *value);
-void set_env_value(t_env **env_list, const char *key, const char *value);
+void set_env_value(t_env **env_list, char *key, char *value);
 int ft_cd(t_command *cmd, t_env **env);
-// int ft_exit(t_command *args);
-void ft_exit();
+void ft_exit(t_command *args);
 void print_env(char **envp, char **args, int argc);
 void ft_export(t_env **env, t_command **args);
 void split_and_set(char *arg, t_env **splited_env_list);
@@ -63,4 +62,5 @@ void signal_handler(int signal_num);
 //execution 
 int open_file(t_command *cmd);
 void execute_externals(t_command *cmd, t_env *env);
+char** get_envp(t_env *lst);
 #endif

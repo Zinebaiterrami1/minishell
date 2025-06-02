@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:20:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/29 19:30:27 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/01 09:17:37 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct t_env
     char *line;
     char *env_key;
     char *env_value;
+    int is_printed;
     struct t_env *next;
 } t_env;
 

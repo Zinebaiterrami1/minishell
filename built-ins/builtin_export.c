@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/27 18:34:13 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:07:16 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,84 +27,180 @@ int is_valid_identifier(const char *str)
 	return (1);
 }
 
-// static void update_or_add_env(t_env **env, char *key, char *value)
+// static void ft_print_export(t_env *env)
 // {
-// 	t_env *tmp = *env;
-
-// 	while (tmp)
+// 	while (env)
 // 	{
-// 		printf("allo\n");
-// 		if (ft_strcmp(tmp->env_key, key) == 0)
-// 		{
-// 			free(tmp->env_value);
-// 			tmp->env_value = value ? ft_strdup(value) : NULL;
-// 			return ;
-// 		}
-// 		tmp = tmp->next;
+// 		printf("-----\n");
+// 		printf("declare -x %s\n", env->line);
+// 		env = env->next;
 // 	}
-// 	// Add new node
-// 	t_env *new = malloc(sizeof(t_env));
-// 	new->env_key = ft_strdup(key);
-// 	new->env_value = value ? ft_strdup(value) : NULL;
-// 	new->next = NULL;
-// 	// add to end
-// 	tmp = *env;
-// 	while (tmp && tmp->next)
-// 		tmp = tmp->next;
-// 	if (tmp)
-// 		tmp->next = new;
-// 	else
-// 		*env = new;
 // }
 
-static void print_export(t_env *env)
+static void print_export(t_env* export)
 {
-	while (env)
+	t_env *min;
+	t_env *current;
+	int size;
+	
+	size = ft_lstsize(export);
+	while(size > 0)
 	{
-		printf("-----\n");
-		printf("declare -x %s\n", env->line);
-		env = env->next;
+		min = export;
+		while(min->is_printed)
+		{
+			// printf("is_printed: %d, key: %s\n", min->is_printed, min->env_key);
+			min = min->next;
+		}
+		current = min->next;
+		while(current)
+		{
+			if(ft_strcmp(current->env_key, min->env_key) < 0 && current->is_printed == 0)
+			{
+				min = current;
+			}	
+			current = current->next;
+		}
+		min->is_printed = 1;
+		if(!min->env_value)
+			printf("declare -x %s\n", min->env_key);
+		else
+		printf("declare -x %s=\"%s\"\n", min->env_key,min->env_value);
+		size--;
 	}
 }
 
-void ft_export(t_env **env, t_command **args)
-{
-	int i;
-	char *key;
-	char *value;
-	char *equal;
-    t_command *tmp;
-	t_env *tmp1;
+//fixed
+// static void print_export(t_env *export)
+// {
+// 	t_env *min;
+// 	t_env *current;
+// 	int size;
+
+// 	size = ft_lstsize(export);
+// 	while (size > 0)
+// 	{
+// 		min = export;
+// 		while (min && min->is_printed)
+// 			min = min->next;
+// 		if (!min)
+// 			break;
+// 		current = export;
+// 		while (current)
+// 		{
+// 			if (ft_strcmp(current->env_key, min->env_key) < 0 && current->is_printed == 0)
+// 				min = current;
+// 			current = current->next;
+// 		}
+// 		min->is_printed = 1;
+// 		printf("declare -x %s\n", min->line);
+// 		size--;
+// 	}
+// }
+
+// void ft_export(t_env **env, t_command **args)
+// {
+// 	int i;
+// 	char *key;
+// 	char *value;
+// 	char *equal;
+//     t_command *tmp;
+// 	t_env *tmp1;
     
-    tmp = *args;
-	tmp1 = *env;
-	i = 1;
-	if (!tmp->arg[1])
+//     tmp = *args; //command list
+// 	tmp1 = *env; //env list
+// 	i = 1;
+// 	if (!tmp->arg[1])
+// 	{
+// 		return print_export(tmp1); //first case of export is handled with success
+// 	}
+// 	while (tmp->arg[i])
+// 	{	
+// 		if (!is_valid_identifier(tmp->arg[i]))
+// 			printf("export: `%s`: not a valid identifier\n", tmp->arg[i]);
+// 		else
+// 		{
+// 			equal = ft_strchr(tmp->arg[i], '=');
+// 			if (equal)
+// 			{
+// 				key = ft_substr(tmp->arg[i], 0, equal - tmp->arg[i]);
+// 				value = ft_strdup(equal + 1);
+// 			}
+// 			else
+// 			{
+// 				key = ft_strdup(tmp->arg[i]);
+// 				value = NULL;
+// 			}
+// 			set_env_value(env, key, value);
+// 			free(key);
+// 			if (value)
+// 				free(value);
+// 		}
+// 		i++;
+// 	}
+// }
+
+// helpers_export.c
+
+static void	free_key_value(char *key, char *value)
+{
+	free(key);
+	if (value)
+		free(value);
+}
+
+static void	add_export_var(t_env **env, char *arg)
+{
+	char	*key;
+	char	*value;
+	char	*equal;
+
+	equal = ft_strchr(arg, '=');
+	if (equal)
 	{
-		return print_export(tmp1);
-	}
-	while (tmp->arg[i])
-	{	
-		if (!is_valid_identifier(tmp->arg[i]))
-			printf("export: `%s`: not a valid identifier\n", tmp->arg[i]);
-		else
+		key = ft_substr(arg, 0, equal - arg);
+		value = ft_strdup(equal + 1);
+		if (!*key)
 		{
-			equal = ft_strchr(tmp->arg[i], '=');
-			if (equal)
-			{
-				key = ft_substr(tmp->arg[i], 0, equal - tmp->arg[i]);
-				value = ft_strdup(equal + 1);
-			}
-			else
-			{
-				key = ft_strdup(tmp->arg[i]);
-				value = NULL;
-			}
-			set_env_value(env, key, value);
-			free(key);
-			if (value)
-				free(value);
+			printf("export: `%s`: not a valid identifier\n", arg);
+			free_key_value(key, value);
+			return ;
 		}
+	}
+	else
+	{
+		key = ft_strdup(arg);
+		value = NULL;
+	}
+	set_env_value(env, key, value);
+}
+
+static void	handle_export_args(t_env **env, t_command *cmd)
+{
+	int	i;
+
+	i = 1;
+	while (cmd->arg[i])
+	{
+		if (!is_valid_identifier(cmd->arg[i]))
+			printf("export: `%s`: not a valid identifier\n", cmd->arg[i]);
+		else
+			add_export_var(env, cmd->arg[i]);
 		i++;
 	}
+}
+
+// ft_export.c
+
+void	ft_export(t_env **env, t_command **args)
+{
+	t_command	*cmd;
+
+	cmd = *args;
+	if (!cmd->arg[1])
+	{
+		print_export(*env);
+		return ;
+	}
+	handle_export_args(env, cmd);
 }

@@ -90,7 +90,7 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
 
     stdin = dup(0);
     stdout = dup(1);
-    if(!m_env->env_key || !m_env->env_value || !m_env->line)
+    if(!m_env->env_key || !m_env->env_value || !m_env->line || !cmd)
         return;
     if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
         ft_echo(cmd);
@@ -105,7 +105,7 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
     else if(ft_strcmp(cmd->arg[0], "exit") == 0)//SEGV
         ft_exit(cmd);
     else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
-        printf("unset\n");// ft_unset(&cmd, &m_env);
+        ft_unset(&cmd, &m_env);
     dup2(stdin, 0);
     dup2(stdout, 1);
     close(stdin);
@@ -149,7 +149,6 @@ int main(int argc, char **argv, char **envp)
         if(is_buitins(argv[0]))
         {
             execute_buitlins(env_lst, lexer(line));
-            restore_state(stdin, stdout);
         }
         else
         {

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:42:33 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/11 10:41:30 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/02 13:59:27 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_env	*ft_lstnew(char *key, char *value)
 {
-	t_list	*list;
+	t_env	*list;
 
-	list = malloc(sizeof(t_list));
+	list = malloc(sizeof(t_env));
 	if (!list)
 		return (NULL);
-	list->content = content;
-	list->next = NULL;
+	list->env_key = key;
+	list->env_value = value;
+    list->next = NULL;
 	return (list);
 }

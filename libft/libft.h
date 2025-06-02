@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:39:46 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/29 23:35:51 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/02 13:59:44 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_list
 }		t_list;
 
 
-t_list	*ft_lstnew(void *content);
+t_env	*ft_lstnew(char *key, char *value);
 int		ft_lstsize(t_env *lst);
 t_token	*ft_lstlast(t_token *lst);
 void	ft_lstiter(t_list *lst, void (*f)(void *));

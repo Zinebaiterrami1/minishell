@@ -90,7 +90,7 @@ void execute_externals(t_command *cmd, t_env *env)
     int f;
     char *pathcmd;
     pid_t pid;
-    int status;
+    // int status;
 
     pid = fork();
     if(pid == 0)
@@ -102,6 +102,7 @@ void execute_externals(t_command *cmd, t_env *env)
         pathcmd = search_cmd(cmd, env);
         execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
     }
-    waitpid(pid, &status, 0);
-    exit(WEXITSTATUS(status));
+    wait(NULL);
+    // waitpid(pid, &status, 0);
+    // exit(WEXITSTATUS(status));
 }
