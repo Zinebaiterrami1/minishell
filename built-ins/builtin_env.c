@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/02 16:53:59 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/02 22:13:54 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,29 @@ t_env *init_env(char **envp)
     return (head);
 }
 
+// void ft_split_env(char **envp, char *key, char *value)
+// {
+//     int i;
+//     int j;
+    
+    
+//     i = 0;
+//     j = 0;
+//     while(envp[i])
+//     {
+//         while(envp[i][j])
+//         {
+//             if(envp[i][j] == '=')
+//             {
+//                 key = envp[i][j - 1];
+//                 value = envp[i][j + 1];
+//                 return ;
+//             }
+//             j++;
+//         }
+//         i++;
+//     }
+// }
 // static void ft_exec_command(t_command *cmd)
 // {
 //     while(cmd)

@@ -90,7 +90,7 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
 
     stdin = dup(0);
     stdout = dup(1);
-    if(!m_env->env_key || !m_env->env_value || !m_env->line || !cmd)
+    if(!m_env->env_key || !m_env->env_value || !cmd)
         return;
     if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
         ft_echo(cmd);
