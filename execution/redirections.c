@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/30 18:02:31 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:10:29 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int open_file(t_command *cmd)
 {
     //fct that open file based on the type of redirections
     t_redir *r;
-    // int (original_in),(original_out);
-    // original_in=dup(0);
-    // original_out=dup(1);
     
     r = cmd->redir;
     while(r)
@@ -48,13 +45,10 @@ int open_file(t_command *cmd)
         }
         r = r->next;
     }
-    // dup2(0,original_in);
-    // dup2(1,original_out);
     return (0);
 }
 
 //dup stdin and stdout and save them in a variable, them rest them after exectution
-
 void restore_state(int stdin, int stdout)
 {
     dup2(stdin, STDIN_FILENO);

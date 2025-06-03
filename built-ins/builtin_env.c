@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/02 22:13:54 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:19:37 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,7 @@ t_env *init_env(char **envp)
     return (head);
 }
 
-// void ft_split_env(char **envp, char *key, char *value)
-// {
-//     int i;
-//     int j;
-    
-    
-//     i = 0;
-//     j = 0;
-//     while(envp[i])
-//     {
-//         while(envp[i][j])
-//         {
-//             if(envp[i][j] == '=')
-//             {
-//                 key = envp[i][j - 1];
-//                 value = envp[i][j + 1];
-//                 return ;
-//             }
-//             j++;
-//         }
-//         i++;
-//     }
-// }
+
 // static void ft_exec_command(t_command *cmd)
 // {
 //     while(cmd)
@@ -196,12 +174,32 @@ t_env *split_env(t_env *lst)
     return (lst);
 }
 
-// /* Update existing or add new environment variable */
+static void update_line(t_env *node)
+{
+    char *tmp;
+
+    if (!node || !node->env_key)
+        return;
+
+    free(node->line); // free old line if it exists
+
+    if (node->env_value)
+    {
+        tmp = ft_strjoin(node->env_key, "=");
+        node->line = ft_strjoin(tmp, node->env_value);
+        free(tmp);
+    }
+    else
+    {
+        node->line = ft_strdup(node->env_key); // no '=' if value is NULL
+    }
+}
+
+/* Update existing or add new environment variable */
 void set_env_value(t_env **env_list, char *key, char *value)
 {
     t_env *tmp;
-    // t_env *new_node;
-    // char **envp;
+    t_env *new_node;
     
     tmp = *env_list;
     if(!*env_list || !env_list || !tmp)
@@ -212,13 +210,16 @@ void set_env_value(t_env **env_list, char *key, char *value)
         {
             free(tmp->env_value);
             tmp->env_value = ft_strdup(value);
+            update_line(tmp);
             return ;
         }
         if(!tmp->next)
             break;
         tmp = tmp->next;
     }
-    ft_lstadd_backk(env_list, ft_lstnew(key, value));
+    new_node = ft_lstnew(key, value);
+    update_line(new_node);
+    ft_lstadd_backk(env_list, new_node);
 }
 
 void split_and_set(char *arg, t_env **splited_env_list)

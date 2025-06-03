@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/02 14:07:16 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:23:01 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static void print_export(t_env* export)
 	t_env *min;
 	t_env *current;
 	int size;
-	
+
 	size = ft_lstsize(export);
+	
 	while(size > 0)
 	{
 		min = export;
@@ -63,9 +64,15 @@ static void print_export(t_env* export)
 		}
 		min->is_printed = 1;
 		if(!min->env_value)
+		{
+			// printf("key: %s, value: %s, line: %s\t", min->env_key, min->env_value, min->line);
 			printf("declare -x %s\n", min->env_key);
+		}
 		else
-		printf("declare -x %s=\"%s\"\n", min->env_key,min->env_value);
+		{
+			printf("key: %s, value: %s, line: %s\t", min->env_key, min->env_value, min->line);
+			printf("declare -x %s=\"%s\"\n", min->env_key, min->env_value);
+		}	
 		size--;
 	}
 }
@@ -149,12 +156,47 @@ static void	free_key_value(char *key, char *value)
 		free(value);
 }
 
+static int check_dup(t_env *lst, char **arg)
+{
+	// t_command *tmp;
+	t_env *current;
+	char *equal;
+	char *key;
+	
+	current = lst;
+	int i = 1;
+
+	while(arg[i])
+	{	
+		equal = ft_strchr(arg[i], '=');
+		if(equal)
+		{			
+			key = ft_substr(arg[i], 0, equal - arg[i]);
+			current = lst;
+			while(current)
+			{
+				if(ft_strcmp(key, current->env_key) == 0)
+				{
+					free(key);
+					return (1);
+				}
+				current = current->next;
+			}
+			free (key);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static void	add_export_var(t_env **env, char *arg)
 {
 	char	*key;
 	char	*value;
 	char	*equal;
+	t_env *tmp;
 
+	tmp = *env;
 	equal = ft_strchr(arg, '=');
 	if (equal)
 	{
@@ -172,6 +214,7 @@ static void	add_export_var(t_env **env, char *arg)
 		key = ft_strdup(arg);
 		value = NULL;
 	}
+	check_dup(tmp, &arg);
 	set_env_value(env, key, value);
 }
 
