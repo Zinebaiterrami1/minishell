@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/20 15:22:52 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:58:07 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ t_command *new_comd(t_command **list, t_token *token)
         count++;
         cur = cur->next;
     }
-    printf("count = %d\n", count);
+    // printf("count = %d\n", count);
     comd->arg = gc_malloc(sizeof(char *) * (count + 1), getter());
     comd->next_com = NULL;
     comd->redir = NULL;

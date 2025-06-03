@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:39:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/28 15:38:35 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:16:02 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static int	len(char *str)
 {
 	int	l;
+	if(!str)
+		return(0);
 
 	l = 0;
 	while (str[l] != '\0')

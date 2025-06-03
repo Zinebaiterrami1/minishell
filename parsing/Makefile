@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror  -g3#-fsanitize=address -g3
 SRC = lexer/lexer.c lexer/utils.c garbage_collector/gc.c parser/parser.c lexer/builtin_env.c
 
 NAME = mini
