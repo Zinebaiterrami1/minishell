@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/22 13:25:46 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:08:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,15 @@ int check(char *line)
         return(1);
     return(0);
 }
+
 void *syntax_error()
 {
     printf("syntax error \n");
     return(NULL);
 }
+
+// int syntax_error()
+// {
+//     printf("syntax error \n");
+//     return(1);
+// }

@@ -78,10 +78,10 @@
 //     return 0;
 // }
 
-int is_buitins(char *cmd)
+int is_buitins(t_command *list)
 {
-    return(!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "env")
-            || !ft_strcmp(cmd, "exit") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "unset"));
+    return(!ft_strcmp(list->arg[0], "cd") || !ft_strcmp(list->arg[0], "echo") || !ft_strcmp(list->arg[0], "env")
+            || !ft_strcmp(list->arg[0], "exit") || !ft_strcmp(list->arg[0], "export") || !ft_strcmp(list->arg[0], "pwd") || !ft_strcmp(list->arg[0], "unset"));
 }
 
 void execute_buitlins(t_env *m_env, t_command *cmd)
@@ -128,7 +128,7 @@ int main(int argc, char **argv, char **envp)
     char *line;
     t_env *env_lst;
     (void)argc;
-
+    (void)argv;
     env_lst = init_env(envp);
     env_lst = split_env(env_lst);
     signal(SIGQUIT, SIG_IGN);
@@ -144,20 +144,10 @@ int main(int argc, char **argv, char **envp)
         }
         if (line[0] == '\0')
             continue;
-        add_history(line);
-        argv = ft_split(line, ' ');
-        if(is_buitins(argv[0]))
-        {
-            execute_buitlins(env_lst, lexer(line));
-        }
-        else
-        {
-            execute_externals(lexer(line), env_lst);
-        }    
-        if(lexer(line) == NULL)
+        add_history(line);   
+        if(!minishell(line, envp))
         {
             free(line);
-            syntax_error();
             continue;
         }
         free(line);

@@ -6,11 +6,11 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/29 19:30:21 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:57:57 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mimi.h"
+#include "../../includes/minishell.h"
 //"$$$HOME"
 
 int is_word(t_token_type type)
@@ -136,6 +136,7 @@ t_command *new_comd(t_command **list, t_token *token)
         cur = cur->next;
     }
     printf("count = %d\n", count);
+    // printf("count = %d\n", count);
     comd->arg = gc_malloc(sizeof(char *) * (count + 1), getter());
     comd->next_com = NULL;
     comd->redir = NULL;
@@ -196,6 +197,7 @@ void print_listtt(t_command *token)
             printf("arg = [%s] \n", token->arg[i]);
             if(token->redir && token->redir->name)
                 printf("file name : %s\n",token->redir->name);
+            printf("[%s] ", token->arg[i]);
             i++;
         }
         token = token->next_com;

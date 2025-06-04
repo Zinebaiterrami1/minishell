@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/02 14:00:57 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:12:17 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ extern int g_last_status;
 void ft_echo(t_command *cmd);
 void ft_pwd();
 t_env *init_env(char **envp);
+int is_buitins(t_command *list);
+void execute_buitlins(t_env *m_env, t_command *cmd);
 // void print_env(char **envp, char **args);
 t_env *split_env(t_env *lst);
 char *get_env_value(t_env *env_list, const char *key);

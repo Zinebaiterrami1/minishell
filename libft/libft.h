@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:39:46 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/02 13:59:44 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:07:52 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_itoa(int nbr);
+int		ft_strcmp(const char *s1, const char *s2);
 
 typedef struct s_list
 {
