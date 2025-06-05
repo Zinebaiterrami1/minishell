@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/03 22:12:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:40:21 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,7 @@ void signal_handler(int signal_num);
 int open_file(t_command *cmd);
 void execute_externals(t_command *cmd, t_env *env);
 char** get_envp(t_env *lst);
+//multiple_pipes
+int global_pipes(t_command *cmd, char **envp, int curr_cmd, t_pipes p);
+char* search_cmd(t_command *cmd, t_env *lst);
 #endif

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/03 22:15:25 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:44:16 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -788,10 +788,13 @@ void *minishell(char *line, char **env)
     list = parsing(line, env);
     if(!list)
         return(syntax_error());
-    if(is_buitins(list))
+    if(is_buitins(list) && ft_lstsize(list) == 1)
         execute_buitlins(env_lst, list);
-    else
+    else if(!is_buitins(list) && ft_lstsize(list) == 1)
         execute_externals(list, env_lst);
+    else if (ft_lstsize(list) > 1)
+        if(!multiple_pipes(env, list))
+            return(NULL);
     return(list);
 }
 

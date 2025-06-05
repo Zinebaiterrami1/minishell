@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/30 19:22:27 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:40:06 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void execute_externals(t_command *cmd, t_env *env)
     char *pathcmd;
     pid_t pid;
     // int status;
-
     pid = fork();
     if(pid == 0)
     {

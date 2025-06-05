@@ -1,6 +1,8 @@
 #include "includes/minishell.h"
 #include "includes/mini.h"
 
+int g_exit_status = 0;
+
 // int g_last_status = 0;
 // int main(int ac, char **argv, char **env)
 // {
