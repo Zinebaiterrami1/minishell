@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   ft_lstsizee_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 21:08:36 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/08 19:10:59 by zait-err         ###   ########.fr       */
+/*   Created: 2024/10/28 13:37:52 by nel-khad          #+#    #+#             */
+/*   Updated: 2025/06/08 20:10:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
- 
-void ft_pwd()
+#include "libft.h"
+
+int	ft_lstsizee(t_command *lst)
 {
-    char buffer[BUFFER_SIZE];
-    if(getcwd(buffer, BUFFER_SIZE) == NULL)
-        write(2, "Cannot get the current directory ... !\n", ft_strlen("Cannot get the current directory ... !\n"));
-    else
-        write(1, buffer, ft_strlen(buffer));
-    write(1, "\n", 1);
+	int	count;
+
+	count = 0;
+	if (!lst)
+		return (0);
+	while (lst != NULL)
+	{
+		count++;
+		lst = lst->next_com;
+	}
+	return (count);
 }

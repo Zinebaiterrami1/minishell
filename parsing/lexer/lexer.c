@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/05 14:44:16 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/08 22:14:39 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mimi.h"
+#include "../../includes/minishell.h"
 
 t_lexer *init_lexer(char *line)
 {
@@ -781,6 +781,10 @@ t_command *parsing(char *line, char **env)
 
 void *minishell(char *line, char **env)
 {
+        int (stdin), (stdout);
+
+    stdin = dup(STDIN_FILENO);
+    stdout = dup(STDOUT_FILENO);
     t_command *list;
     t_env *env_lst;
 
@@ -788,13 +792,17 @@ void *minishell(char *line, char **env)
     list = parsing(line, env);
     if(!list)
         return(syntax_error());
-    if(is_buitins(list) && ft_lstsize(list) == 1)
+    if(is_buitins(list) && ft_lstsizee(list) == 1)
         execute_buitlins(env_lst, list);
-    else if(!is_buitins(list) && ft_lstsize(list) == 1)
+    else if(!is_buitins(list) && ft_lstsizee(list) == 1)
         execute_externals(list, env_lst);
-    else if (ft_lstsize(list) > 1)
+    else if (ft_lstsizee(list) > 1)
         if(!multiple_pipes(env, list))
             return(NULL);
+    dup2(stdin, STDIN_FILENO);
+    dup2(stdout, STDOUT_FILENO);
+    close(stdin);
+    close(stdout);
     return(list);
 }
 

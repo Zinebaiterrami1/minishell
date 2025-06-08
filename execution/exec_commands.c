@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:13:59 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/05 15:54:35 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/08 21:29:09 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/structs.h"
 
 int first_command(t_command *cmd, char **envp, t_pipes p)
 {
-    t_redir *r;
-    
+    // t_redir *r;
+     
     if(cmd->redir)
     {
-        r = cmd->redir;
-        if(open_file(r) == -1)
+        // r = cmd->redir;
+        if(open_file(cmd) == -1)
             return (-1);
     }
     else
@@ -35,12 +34,12 @@ int first_command(t_command *cmd, char **envp, t_pipes p)
 
 int last_command(t_command *cmd, char **envp, t_pipes p)
 {
-    t_redir *r;
+    // t_redir *r;
     
     if(cmd->redir)
     {
-        r = cmd->redir;
-        if(open_file(r) == -1)
+        // r = cmd->redir;
+        if(open_file(cmd) == -1)
             return (-1);
     }
     else
@@ -55,12 +54,12 @@ int last_command(t_command *cmd, char **envp, t_pipes p)
 
 int mid_command(t_command *cmd, char **envp, t_pipes p)
 {
-    t_redir *r;
+    // t_redir *r;
 
     if(cmd->redir)
     {
-        r = cmd->redir;
-        if(open_file(r) == -1)
+        // r = cmd->redir;
+        if(open_file(cmd) == -1)
             return (-1);
     }
     else

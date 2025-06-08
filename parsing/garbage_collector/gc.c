@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:17:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/14 12:07:45 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:11:35 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gc.h"
+#include "../../includes/minishell.h"
 
 t_garbage *get_last_node(t_garbage *list)
 {

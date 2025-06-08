@@ -1,5 +1,4 @@
 #include "includes/minishell.h"
-#include "includes/mini.h"
 
 int g_exit_status = 0;
 
@@ -88,10 +87,10 @@ int is_buitins(t_command *list)
 
 void execute_buitlins(t_env *m_env, t_command *cmd)
 {
-    int (stdin), (stdout);
+    // int (stdin), (stdout);
 
-    stdin = dup(0);
-    stdout = dup(1);
+    // stdin = dup(STDIN_FILENO);
+    // stdout = dup(STDOUT_FILENO);
     if(!m_env->env_key || !m_env->env_value || !cmd)
         return;
     if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
@@ -108,10 +107,10 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
         ft_exit(cmd);
     else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
         ft_unset(&cmd, &m_env);
-    dup2(stdin, 0);
-    dup2(stdout, 1);
-    close(stdin);
-    close(stdout);
+    // dup2(stdin, STDIN_FILENO);
+    // dup2(stdout, STDOUT_FILENO);
+    // close(stdin);
+    // close(stdout);
 }   
 
 void signal_handler(int signal_num)
@@ -138,6 +137,7 @@ int main(int argc, char **argv, char **envp)
     while(1)
     {
         line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
+        printf("%s\n", line);
         if(line == NULL)
         {
             free_all(getter());
@@ -150,6 +150,7 @@ int main(int argc, char **argv, char **envp)
         if(!minishell(line, envp))
         {
             free(line);
+            line = NULL;
             continue;
         }
         free(line);

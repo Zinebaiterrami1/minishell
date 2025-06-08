@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/05/31 12:02:00 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:10:50 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/mini.h"
 
 static int	ft_is_numeric(char *str)
 {

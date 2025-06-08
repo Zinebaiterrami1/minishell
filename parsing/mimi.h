@@ -2,7 +2,6 @@
 #define MIMI_H
 
 #include "../includes/structs.h"
-#include "../includes/minishell.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -3,25 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:39:46 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/03 20:07:52 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/08 20:10:56 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-#include "../parsing/mimi.h"
 #include "../includes/minishell.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-
-typedef struct s_token t_token;
-typedef struct t_env t_env;
 // typedef struct s_command t_command;
 // typedef struct s_redir t_redir;
 
@@ -68,6 +60,7 @@ typedef struct s_list
 	struct s_list	*next;
 }		t_list;
 
+typedef struct s_token t_token;
 
 t_env	*ft_lstnew(char *key, char *value);
 int		ft_lstsize(t_env *lst);
@@ -79,4 +72,5 @@ void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 void	ft_lstadd_backk(t_env **env, t_env *new);
 t_env	*ft_lstlastt(t_env *lst);
+int		ft_lstsizee(t_command *lst);
 #endif

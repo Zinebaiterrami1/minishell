@@ -3,21 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   multi_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/05 16:02:47 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/08 20:23:45 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/structs.h"
 
+/*
+Here’s the mental map:
+
+fd 0 → Standard Input → read
+
+fd 1 → Standard Output → write
+
+So when you create a pipe:
+
+pipefd[0] behaves like stdin (used to read).
+
+pipefd[1] behaves like stdout (used to write).
+
+That’s why when you do something like:
+
+c
+Copy
+Edit
+dup2(pipefd[0], STDIN_FILENO);  // read from the pipe
+dup2(pipefd[1], STDOUT_FILENO); // write into the pipe
+*/
 
 pid_t global_pipes(t_command *cmd, char **envp, int curr_cmd, t_pipes *p)
 {
     int error;
-   p->pid = fork();
+    p->pid = fork();
    if(p->pid == -1)
    {
     perror("fork failed\n");
@@ -26,11 +46,11 @@ pid_t global_pipes(t_command *cmd, char **envp, int curr_cmd, t_pipes *p)
    if(p->pid == 0)
    {
         if(curr_cmd == 0)
-            error = first_command(cmd, envp, p->fd);
+            error = first_command(cmd, envp, *p);
         if(curr_cmd == p->nb_cmd - 1)
-            error = last_command(cmd, envp, p->fd);
+            error = last_command(cmd, envp, *p);
         else 
-            error = mid_command(cmd, envp, p->fd);
+            error = mid_command(cmd, envp, *p);
    }
    if(error == -1)
     return(error);
@@ -62,7 +82,7 @@ void *multiple_pipes(char **env, t_command *list)
     t_pipes p;
     
     curr_cmd = 0;
-    p.nb_cmd = ft_lstsize(list);
+    p.nb_cmd = ft_lstsizee(list);
     while(list && curr_cmd < p.nb_cmd)
     {
         if(pipe(p.fd) == -1)
@@ -79,4 +99,5 @@ void *multiple_pipes(char **env, t_command *list)
     // wait_children(); //return exit status li kat9adha waitpid
     // g_exit_status //w nhto f hada
     g_exit_status = wait_children(&p);
+    return ("success\n");
 }
