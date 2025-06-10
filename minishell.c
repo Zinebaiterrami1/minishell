@@ -98,7 +98,7 @@ void execute_buitlins(t_env *m_env, t_command *cmd)
     else if(ft_strcmp(cmd->arg[0], "cd") == 0)//SEGV
         ft_cd(cmd, &m_env);
     else if(ft_strcmp(cmd->arg[0], "env") == 0)//khdama
-        ft_display_env(m_env);
+        ft_display_env(m_env, cmd);
     else if(ft_strcmp(cmd->arg[0], "pwd") == 0) //khdama
         ft_pwd();
     else if(ft_strcmp(cmd->arg[0], "export") == 0)//SEGV
@@ -137,23 +137,23 @@ int main(int argc, char **argv, char **envp)
     while(1)
     {
         line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
-        printf("%s\n", line);
         if(line == NULL)
         {
-            free_all(getter());
             printf("exit with ctrl+d\n");//for ctrl+d, detect EOF
             break;
         }
         if (line[0] == '\0')
+        {
+            free(line);
             continue;
+        }
         add_history(line);   
         if(!minishell(line, envp))
         {
             free(line);
-            line = NULL;
             continue;
         }
         free(line);
-        free_all(getter());
     }
+    free_all(getter());
 }

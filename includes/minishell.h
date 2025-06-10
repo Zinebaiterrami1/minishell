@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/08 20:17:27 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:24:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,10 +208,11 @@ void ft_exit(t_command *args);
 void print_env(char **envp, char **args, int argc);
 void ft_export(t_env **env, t_command **args);
 void split_and_set(char *arg, t_env **splited_env_list);
-void ft_display_env(t_env *env);
+void ft_display_env(t_env *env, t_command *cmd);
 // int ft_unset(t_command **cmd, t_env **env);
 void ft_unset(t_command **args, t_env **env);
-int is_valid_identifier(const char *str);
+// int is_valid_identifier(const char *str);
+int is_valid_identifier(char *str, t_env **env);
 //signals
 void signal_handler(int signal_num);
 //execution 

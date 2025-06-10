@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/08 20:23:45 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:23:46 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ dup2(pipefd[1], STDOUT_FILENO); // write into the pipe
 pid_t global_pipes(t_command *cmd, char **envp, int curr_cmd, t_pipes *p)
 {
     int error;
+
+    error = 1;
     p->pid = fork();
    if(p->pid == -1)
    {

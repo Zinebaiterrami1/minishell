@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 17:14:58 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:45:25 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int ft_cd(t_command *cmd, t_env **env)
     new_path = getcwd(NULL, 0);
     set_env_value(env, "PWD", new_path);
     set_env_value(env, "OLDPWD", old_path);
-    free(old_path);
-    free(new_path);
+    // free(old_path);
+    // free(new_path);
     return (0);
 }

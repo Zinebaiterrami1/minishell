@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 18:48:03 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:46:16 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ static void update_line(t_env *node)
         if(!newline)
             return ;
     }
-    free(node->line);
+    // free(node->line);
     node->line = newline;
 }
 

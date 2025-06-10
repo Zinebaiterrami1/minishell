@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/03 16:10:29 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:19:40 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int open_file(t_command *cmd)
     r = cmd->redir;
     while(r)
     {
+        printf("open file desc\n");
         if(r->name)
         {
             if(r->type == T_RED_IN) // if type here is redir in > 

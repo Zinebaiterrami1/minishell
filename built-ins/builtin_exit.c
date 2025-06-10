@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/08 19:10:50 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:52:36 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void ft_exit(t_command *cmd)
 	}
 	write(1, "exit\n", 5);
 	status = ft_atoi(cmd->arg[1]);
-	exit(status % 256);
+	g_exit_status = status % 256;
+	exit(g_exit_status);
 }

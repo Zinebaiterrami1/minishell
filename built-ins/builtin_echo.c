@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 15:57:10 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:27:29 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,6 @@ write() expects a pointer to characters (char *), not a pointer to a pointer.
 
 ✅ Fix: Use write(1, cmd->args[i], ft_strlen(cmd->args[i])) to print the whole string.
 */
+
+
+
