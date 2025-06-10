@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/03 12:19:37 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:48:03 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,25 +174,52 @@ t_env *split_env(t_env *lst)
     return (lst);
 }
 
+// static void update_line(t_env *node)
+// {
+//     char *tmp;
+    
+//     if (!node || !node->env_key)
+//     return;
+    
+//     free(node->line); // free old line if it exists
+
+//     if (node->env_value)
+//     {
+//          tmp = ft_strjoin(node->env_key, "=");
+//         node->line = ft_strjoin(tmp, node->env_value);
+//          free(tmp);
+//     }
+//     else
+//     {
+//          node->line = ft_strdup(node->env_key); // no '=' if value is NULL
+//     }
+// }
+
 static void update_line(t_env *node)
 {
     char *tmp;
+    char *newline;
 
-    if (!node || !node->env_key)
-        return;
-
-    free(node->line); // free old line if it exists
-
-    if (node->env_value)
+    if(!node || !node->env_key)
+        return ;
+    if(node->env_value)
     {
         tmp = ft_strjoin(node->env_key, "=");
-        node->line = ft_strjoin(tmp, node->env_value);
+        if(!tmp)
+            return ;
+        newline = ft_strjoin(tmp, node->env_value);
         free(tmp);
+        if(!newline)
+            return ;
     }
     else
     {
-        node->line = ft_strdup(node->env_key); // no '=' if value is NULL
+        newline = ft_strdup(node->env_key);
+        if(!newline)
+            return ;
     }
+    free(node->line);
+    node->line = newline;
 }
 
 /* Update existing or add new environment variable */
@@ -200,6 +227,7 @@ void set_env_value(t_env **env_list, char *key, char *value)
 {
     t_env *tmp;
     t_env *new_node;
+    char *new_value;
     
     tmp = *env_list;
     if(!*env_list || !env_list || !tmp)
@@ -208,16 +236,22 @@ void set_env_value(t_env **env_list, char *key, char *value)
     {   
         if(ft_strcmp(tmp->env_key, key) == 0 && value)
         {
-            free(tmp->env_value);
-            tmp->env_value = ft_strdup(value);
+            if(value)
+            {
+                new_value = ft_strdup(value);
+                if(!new_value)
+                    return;
+                free(tmp->env_value);
+                tmp->env_value = new_value;
+            }   
             update_line(tmp);
             return ;
         }
-        if(!tmp->next)
-            break;
         tmp = tmp->next;
     }
     new_node = ft_lstnew(key, value);
+    if(!new_node)
+        return ;
     update_line(new_node);
     ft_lstadd_backk(env_list, new_node);
 }
@@ -309,12 +343,33 @@ char *get_env_key(t_env *env_lst, const char *value)
 //     ft_lstadd_backk(&tmp, new_node);
 // }
 
-void ft_display_env(t_env *env)
+void ft_display_env(t_env *env, t_command *cmd)
 {
-    while(env)
+    t_command *tmp;
+    int fd;
+    
+    fd = 0;
+    tmp = cmd;
+    if(tmp && tmp->redir && tmp->redir->name)
+    {
+        if(tmp->redir->type == T_RED_OUT) // >
+            fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+        else if(tmp->redir->type == T_RED_OUT_APEND) // >>
+            fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+        if(fd < 0)
+            printf("error fd\n");
+    }
+    while(env && tmp)
     {
         if(env->env_value)
-            printf("%s=\"%s\"\n", env->env_key, env->env_value);
+        {
+            write(fd, env->env_key, ft_strlen(env->env_key));
+            write(fd, "=\"", 2);
+            write(fd,  env->env_value, ft_strlen( env->env_value));
+            write(fd, "\"", 1);
+            write(fd, "\n", 1);
+            // printf("%s=\"%s\"\n", env->env_key, env->env_value);
+        }
         env = env->next;
     }
 }
