@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 20:45:25 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:38:44 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int ft_cd(t_command *cmd, t_env **env)
     if(chdir(cmd->arg[1]) != 0)
     {
         perror("cd");
+        
         return (-1);
     }
     new_path = getcwd(NULL, 0);
