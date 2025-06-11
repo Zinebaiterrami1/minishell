@@ -4,3 +4,5 @@ echo hhdssgvc x cx c xc xc  >> file ,
 ------------------------------------------>fixed echo ....
 
 
+ls >> file | < file cat
+ls > file | < file cat
