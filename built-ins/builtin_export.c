@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 18:46:29 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:33:30 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ static void	add_export_var(t_env **env, char *arg)
 	char	*key;
 	char	*value;
 	char	*equal;
-	t_env *tmp;
+	// t_env 	*tmp;
 
-	tmp = *env;
+	// tmp = *env;
 	equal = ft_strchr(arg, '=');
 	if (equal)
 	{
+		printf("with value = value\n");
 		key = ft_substr(arg, 0, equal - arg);
 		value = ft_strdup(equal + 1);
 		if (!*key)
@@ -56,6 +57,7 @@ static void	add_export_var(t_env **env, char *arg)
 	}
 	else
 	{
+		printf("with value = null\n");
 		key = ft_strdup(arg);
 		value = NULL;
 	}
@@ -63,8 +65,7 @@ static void	add_export_var(t_env **env, char *arg)
 	set_env_value(env, key, value);
 }
 
-
-int is_valid_identifier(char *str, t_env **env)
+int is_valid_identifier(char *str)
 {
 	int i;
 	
@@ -79,24 +80,15 @@ int is_valid_identifier(char *str, t_env **env)
 			return (0);
 		else if(str[i] == '+' && str[i + 1] == '=')
 		{
+			printf("am here inside is_valid_identifier\n");
 			g_exit_status = 0;
-			return (add_export_var(env, str), 1);
+			return (1);
 		}
 		break;
 	}
 	g_exit_status = 1;
 	return (1);
 }
-
-// static void ft_print_export(t_env *env)
-// {
-// 	while (env)
-// 	{
-// 		printf("-----\n");
-// 		printf("declare -x %s\n", env->line);
-// 		env = env->next;
-// 	}
-// }
 
 static void print_export(t_env* export)
 {
@@ -105,12 +97,12 @@ static void print_export(t_env* export)
 	int size;
 
 	size = ft_lstsize(export);
-	
+	printf("im here\n");
 	while(size > 0)
-	{
+	{	printf("im here2\n");
 		min = export;
 		while(min->is_printed)
-		{
+		{		
 			// printf("is_printed: %d, key: %s\n", min->is_printed, min->env_key);
 			min = min->next;
 		}
@@ -125,12 +117,12 @@ static void print_export(t_env* export)
 		}
 		min->is_printed = 1;
 		if(!min->env_value)
-		{
+		{printf("im here3\n");
 			// printf("key: %s, value: %s, line: %s\t", min->env_key, min->env_value, min->line);
 			printf("declare -x %s\n", min->env_key);
 		}
 		else
-		{
+		{printf("im here4\n");
 			// printf("key: %s, value: %s, line: %s\t", min->env_key, min->env_value, min->line);
 			printf("declare -x %s=\"%s\"\n", min->env_key, min->env_value);
 		}	
@@ -243,24 +235,25 @@ static void print_export(t_env* export)
 // 	return (0);
 // }
 
-
-static void	handle_export_args(t_env **env, t_command *cmd)
+void	handle_export_args(t_env **env, t_command *cmd)
 {
 	int	i;
-
+	
 	i = 1;
 	while (cmd->arg[i])
 	{
-		if (is_valid_identifier(cmd->arg[i], env) == 1)
+		
+		if (is_valid_identifier(cmd->arg[i]))
 		{
 			printf("export: `%s`: not a valid identifier\n", cmd->arg[i]);
 		}
+		else
+			add_export_var(env, cmd->arg[i]);
 		i++;
 	}
 }
 
 // ft_export.c
-
 void	ft_export(t_env **env, t_command **args)
 {
 	t_command	*cmd;
@@ -268,6 +261,7 @@ void	ft_export(t_env **env, t_command **args)
 	cmd = *args;
 	if (!cmd->arg[1])
 	{
+		printf("after adding new node to the list\n");
 		print_export(*env);
 		return ;
 	}
