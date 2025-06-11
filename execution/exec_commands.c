@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:13:59 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/11 19:56:43 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:50:50 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int last_command(t_command *cmd, char **envp, t_pipes p)
     }
     else
     {
-        dup2(p.fd[0], STDIN_FILENO);
+        // dup2(p.fd[0], STDIN_FILENO);
+        dup2(STDOUT_FILENO, p.fd[0]);
         close(p.fd[0]);
         close(p.fd[1]);
     }
