@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 18:24:41 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:04:53 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,8 +211,8 @@ void split_and_set(char *arg, t_env **splited_env_list);
 void ft_display_env(t_env *env, t_command *cmd);
 // int ft_unset(t_command **cmd, t_env **env);
 void ft_unset(t_command **args, t_env **env);
-// int is_valid_identifier(const char *str);
-int is_valid_identifier(char *str, t_env **env);
+int is_valid_identifier(char *str);
+void	handle_export_args(t_env **env, t_command *cmd);
 //signals
 void signal_handler(int signal_num);
 //execution 

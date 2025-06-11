@@ -1,4 +1,6 @@
 echo hhdssgvc x cx c xc xc  >> file , 
 --> ana : hhdssgvc
 --> normal : hhdssgvc x cx c xc xc 
+------------------------------------------>fixed echo ....
+
 
