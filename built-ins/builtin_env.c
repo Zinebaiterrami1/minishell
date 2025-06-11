@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 20:46:16 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:58:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,11 +249,13 @@ void set_env_value(t_env **env_list, char *key, char *value)
         }
         tmp = tmp->next;
     }
+    printf("here to add new node to the list\n");
     new_node = ft_lstnew(key, value);
     if(!new_node)
         return ;
     update_line(new_node);
     ft_lstadd_backk(env_list, new_node);
+    printf("node added\n");
 }
 
 void split_and_set(char *arg, t_env **splited_env_list)
