@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/11 18:33:30 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:36:05 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	free_key_value(char *key, char *value)
 	if (value)
 		free(value);
 }
+
 
 static void	add_export_var(t_env **env, char *arg)
 {
@@ -77,17 +78,17 @@ int is_valid_identifier(char *str)
 		while(ft_isalpha(str[i]) == 1 || ft_isdigit(str[i]) == 1 || str[i] == '_')
 			i++;
 		if(str[i] == '=' || str[i] == '\0')
-			return (0);
+			return (1);
 		else if(str[i] == '+' && str[i + 1] == '=')
 		{
 			printf("am here inside is_valid_identifier\n");
 			g_exit_status = 0;
-			return (1);
+			return (0);
 		}
 		break;
 	}
 	g_exit_status = 1;
-	return (1);
+	return (0);
 }
 
 static void print_export(t_env* export)
@@ -97,9 +98,8 @@ static void print_export(t_env* export)
 	int size;
 
 	size = ft_lstsize(export);
-	printf("im here\n");
 	while(size > 0)
-	{	printf("im here2\n");
+	{	
 		min = export;
 		while(min->is_printed)
 		{		
@@ -117,12 +117,12 @@ static void print_export(t_env* export)
 		}
 		min->is_printed = 1;
 		if(!min->env_value)
-		{printf("im here3\n");
+		{
 			// printf("key: %s, value: %s, line: %s\t", min->env_key, min->env_value, min->line);
 			printf("declare -x %s\n", min->env_key);
 		}
 		else
-		{printf("im here4\n");
+		{
 			// printf("key: %s, value: %s, line: %s\t", min->env_key, min->env_value, min->line);
 			printf("declare -x %s=\"%s\"\n", min->env_key, min->env_value);
 		}	
@@ -243,7 +243,7 @@ void	handle_export_args(t_env **env, t_command *cmd)
 	while (cmd->arg[i])
 	{
 		
-		if (is_valid_identifier(cmd->arg[i]))
+		if (!is_valid_identifier(cmd->arg[i]))
 		{
 			printf("export: `%s`: not a valid identifier\n", cmd->arg[i]);
 		}
@@ -253,6 +253,8 @@ void	handle_export_args(t_env **env, t_command *cmd)
 	}
 }
 
+
+
 // ft_export.c
 void	ft_export(t_env **env, t_command **args)
 {
@@ -261,9 +263,17 @@ void	ft_export(t_env **env, t_command **args)
 	cmd = *args;
 	if (!cmd->arg[1])
 	{
-		printf("after adding new node to the list\n");
-		print_export(*env);
+		//printf("after adding new node to the list\n");
+		//printf("call print_export after addin new node--------------------------------------------: \n");
+		//print_test(*env);
+		print_export(*env);	
+		//printf("===============================\n");
+		
 		return ;
 	}
+	//print_test(*env);
 	handle_export_args(env, cmd);
+	printf("after --------------------\n");
+	//print_test(*env);
+	//printf("ft_export-----------------------------------\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:39:46 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/08 20:10:56 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/13 06:26:43 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_list
 }		t_list;
 
 typedef struct s_token t_token;
+typedef struct t_env t_env;
+typedef struct s_command t_command;
 
 t_env	*ft_lstnew(char *key, char *value);
 int		ft_lstsize(t_env *lst);

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/11 12:04:53 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 00:34:41 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_command *lexer(char *line);
 char *get_env_value(t_env *env_list, const char *key);
 t_env *split_env(t_env *lst);
 t_env *init_env(char **envp);
-void *minishell(char *line, char **env);
+void *minishell(char *line, t_env **env);
 /********************************************************* */
 
 /*from structs header*/
@@ -189,6 +189,7 @@ typedef struct s_cmd
     void *next;
 } t_cmd;
 
+typedef struct s_pipes t_pipes;
 
 extern int g_last_status;
 /*----builtin----*/
@@ -197,7 +198,7 @@ void ft_echo(t_command *cmd);
 void ft_pwd();
 t_env *init_env(char **envp);
 int is_buitins(t_command *list);
-void execute_buitlins(t_env *m_env, t_command *cmd);
+void execute_buitlins(t_env **m_env, t_command *cmd);
 // void print_env(char **envp, char **args);
 t_env *split_env(t_env *lst);
 char *get_env_value(t_env *env_list, const char *key);
@@ -220,10 +221,12 @@ int open_file(t_command *cmd);
 void execute_externals(t_command *cmd, t_env *env);
 char** get_envp(t_env *lst);
 //multiple_pipes
-pid_t global_pipes(t_command *cmd, char **envp, int curr_cmd, t_pipes *p);
+pid_t global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p);
 char* search_cmd(t_command *cmd, t_env *lst);
-void *multiple_pipes(char **env, t_command *list);
-int first_command(t_command *cmd, char **envp, t_pipes p);
-int last_command(t_command *cmd, char **envp, t_pipes p);
-int mid_command(t_command *cmd, char **envp, t_pipes p);
+void *multiple_pipes(t_env **env, t_command *list);
+int first_command(t_command *cmd, t_env **envp, t_pipes p);
+int last_command(t_command *cmd, t_env **envp, t_pipes p);
+int mid_command(t_command *cmd, t_env **envp, t_pipes p);
+
+void	print_test(t_env *head);
 #endif

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/08 19:12:12 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/13 06:43:10 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// #include "../mimi.h"
 #include "../../includes/minishell.h"
 
 void print_listt(t_garbage *token)
@@ -55,15 +56,8 @@ int check(char *line)
         return(1);
     return(0);
 }
-
 void *syntax_error()
 {
     printf("syntax error \n");
     return(NULL);
 }
-
-// int syntax_error()
-// {
-//     printf("syntax error \n");
-//     return(1);
-// }

@@ -85,28 +85,46 @@ int is_buitins(t_command *list)
             || !ft_strcmp(list->arg[0], "exit") || !ft_strcmp(list->arg[0], "export") || !ft_strcmp(list->arg[0], "pwd") || !ft_strcmp(list->arg[0], "unset"));
 }
 
-void execute_buitlins(t_env *m_env, t_command *cmd)
+// #include <stdio.h>
+
+// void	print_test(t_env *head)
+// {
+// 	t_env *current = head;
+
+// 	while (current)
+// 	{
+// 		if (current->env_value)
+// 			printf("%s=%s\n", current->env_key, current->env_value);
+// 		else
+// 			printf("%s\n", current->env_key);
+// 		current = current->next;
+// 	}
+// }
+
+void execute_buitlins(t_env **m_env, t_command *cmd)
 {
     // int (stdin), (stdout);
 
     // stdin = dup(STDIN_FILENO);
     // stdout = dup(STDOUT_FILENO);
-    if(!m_env->env_key || !m_env->env_value || !cmd)
+    if(!(*m_env)->env_key || !(*m_env)->env_value || !cmd)
         return;
     if(ft_strcmp(cmd->arg[0], "echo") == 0)//no exec
         ft_echo(cmd);
     else if(ft_strcmp(cmd->arg[0], "cd") == 0)//SEGV
-        ft_cd(cmd, &m_env);
+        ft_cd(cmd, m_env);
     else if(ft_strcmp(cmd->arg[0], "env") == 0)//khdama
-        ft_display_env(m_env, cmd);
+        ft_display_env(*m_env, cmd);
     else if(ft_strcmp(cmd->arg[0], "pwd") == 0) //khdama
         ft_pwd();
     else if(ft_strcmp(cmd->arg[0], "export") == 0)//SEGV
-        ft_export(&m_env, &cmd);
+        ft_export(m_env, &cmd);
     else if(ft_strcmp(cmd->arg[0], "exit") == 0)//SEGV
         ft_exit(cmd);
     else if(ft_strcmp(cmd->arg[0], "unset") == 0)//SEGV
-        ft_unset(&cmd, &m_env);
+        ft_unset(&cmd, m_env);
+    //printf("in execute builtins function!-----------------------------------: \n");
+    //print_test(*m_env);
     // dup2(stdin, STDIN_FILENO);
     // dup2(stdout, STDOUT_FILENO);
     // close(stdin);
@@ -148,7 +166,7 @@ int main(int argc, char **argv, char **envp)
             continue;
         }
         add_history(line);   
-        if(!minishell(line, envp))
+        if (!minishell(line, &env_lst))
         {
             free(line);
             continue;

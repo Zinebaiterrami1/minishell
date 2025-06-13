@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/04 19:40:06 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/13 08:32:38 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ char* search_cmd(t_command *cmd, t_env *lst)
     
     i = 0;
     // /command
+    if(ft_strchr(cmd->arg[0], '/'))
+    {
+        if(access(cmd->arg[0], F_OK | X_OK) == 0)
+            return (cmd->arg[0]);
+        return (NULL);
+    }
     sp = split_path(lst);
     join = ft_strjoin("/", cmd->arg[0]); // /cat
     while(sp[i])
@@ -99,7 +105,14 @@ void execute_externals(t_command *cmd, t_env *env)
         if(f == -1)
             return;
         pathcmd = search_cmd(cmd, env);
+        if(!pathcmd)
+        {
+            printf("minishell: %s command not found\n", cmd->arg[0]);
+            g_exit_status = 127;
+        }
         execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+        perror("minishell");
+        exit(EXIT_FAILURE);
     }
     wait(NULL);
     // waitpid(pid, &status, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:57:29 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/05/14 12:17:54 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/13 06:39:52 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 
 // t_garbage **gc;
 
-typedef struct s_garbage
-{
-    void *adress;
-    struct s_garbage *next;
-}t_garbage;
+// typedef struct s_garbage
+// {
+//     void *adress;
+//     struct s_garbage *next;
+// }t_garbage;
 
 t_garbage **getter();
 char	*gc_strdup(const char *s1);

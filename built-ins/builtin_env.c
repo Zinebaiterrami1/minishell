@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/11 19:58:41 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:45:12 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ static void update_line(t_env *node)
     node->line = newline;
 }
 
+
 /* Update existing or add new environment variable */
 void set_env_value(t_env **env_list, char *key, char *value)
 {
@@ -229,12 +230,12 @@ void set_env_value(t_env **env_list, char *key, char *value)
     t_env *new_node;
     char *new_value;
     
-    tmp = *env_list;
-    if(!*env_list || !env_list || !tmp)
+    if(!*env_list || !env_list)
         return;
+    tmp = *env_list;
     while(tmp)
     {   
-        if(ft_strcmp(tmp->env_key, key) == 0 && value)
+        if(ft_strcmp(tmp->env_key, key) == 0)
         {
             if(value)
             {
@@ -344,6 +345,7 @@ char *get_env_key(t_env *env_lst, const char *value)
 //     new_node->next = NULL;
 //     ft_lstadd_backk(&tmp, new_node);
 // }
+
 
 void ft_display_env(t_env *env, t_command *cmd)
 {

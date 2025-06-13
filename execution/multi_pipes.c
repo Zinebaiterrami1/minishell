@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 09:23:46 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 00:18:15 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ dup2(pipefd[0], STDIN_FILENO);  // read from the pipe
 dup2(pipefd[1], STDOUT_FILENO); // write into the pipe
 */
 
-pid_t global_pipes(t_command *cmd, char **envp, int curr_cmd, t_pipes *p)
+pid_t global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 {
     int error;
 
@@ -78,7 +78,7 @@ int wait_children(t_pipes *p)
     return (status);
 }
 
-void *multiple_pipes(char **env, t_command *list)
+void *multiple_pipes(t_env **env, t_command *list)
 {
     int curr_cmd;
     t_pipes p;

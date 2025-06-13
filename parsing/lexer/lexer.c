@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/08 22:14:39 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 00:17:43 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -751,7 +751,7 @@ void print_list2(t_token *token)
     printf("\n");
 }
 
-t_command *parsing(char *line, char **env)
+t_command *parsing(char *line, t_env **env)
 {
     t_lexer *lexer;
     t_token *token;
@@ -778,26 +778,39 @@ t_command *parsing(char *line, char **env)
     return( parser(lexer));
 }
 
+#include <stdio.h>
 
-void *minishell(char *line, char **env)
+void	print_test(t_env *head)
 {
-        int (stdin), (stdout);
+	t_env *current = head;
+
+	while (current)
+	{
+		if (current->env_value)
+			printf("%s=%s\n", current->env_key, current->env_value);
+		else
+			printf("%s\n", current->env_key);
+		current = current->next;
+	}
+}
+
+void *minishell(char *line, t_env **env_lst)
+{
+    int (stdin), (stdout);
 
     stdin = dup(STDIN_FILENO);
     stdout = dup(STDOUT_FILENO);
     t_command *list;
-    t_env *env_lst;
-
-    env_lst = split_env(init_env(env));
-    list = parsing(line, env);
+    
+    list = parsing(line, env_lst);
     if(!list)
         return(syntax_error());
     if(is_buitins(list) && ft_lstsizee(list) == 1)
         execute_buitlins(env_lst, list);
     else if(!is_buitins(list) && ft_lstsizee(list) == 1)
-        execute_externals(list, env_lst);
+        execute_externals(list, *env_lst);
     else if (ft_lstsizee(list) > 1)
-        if(!multiple_pipes(env, list))
+        if(!multiple_pipes(env_lst, list))
             return(NULL);
     dup2(stdin, STDIN_FILENO);
     dup2(stdout, STDOUT_FILENO);
