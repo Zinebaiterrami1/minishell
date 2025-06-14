@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 18:27:29 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:30:51 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void ft_echo(t_command *cmd)
     if(cmd && cmd->redir && cmd->redir->name)
     {
         if(open_file(cmd) == -1)
+        {
+            g_exit_status = 1;
             return ;
+        }
     }
     while(cmd->arg[i])
     {
@@ -89,6 +92,7 @@ void ft_echo(t_command *cmd)
     }
     if(flag == 1)
         write(1, "\n", 1);
+    g_exit_status = 0;
 }
 
 /*

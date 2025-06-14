@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:40 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/02 16:51:23 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:45:11 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void ft_unset(t_command **cmd, t_env **env)
 	int i = 1;
 
 	if(!tmp->arg[1])
+	{
+		g_exit_status = 1;
         return ;
+	}
 	while (tmp->arg[i])
 	{
 		current = *env;
@@ -101,4 +104,5 @@ void ft_unset(t_command **cmd, t_env **env)
 		}
 		i++;
 	}
+	g_exit_status = 0;
 }

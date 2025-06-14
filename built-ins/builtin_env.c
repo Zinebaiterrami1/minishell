@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/13 21:45:12 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:40:32 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,6 +363,11 @@ void ft_display_env(t_env *env, t_command *cmd)
         if(fd < 0)
             printf("error fd\n");
     }
+    if(!env)
+    {
+        g_exit_status = 1;
+        return ;
+    }
     while(env && tmp)
     {
         if(env->env_value)
@@ -376,4 +381,5 @@ void ft_display_env(t_env *env, t_command *cmd)
         }
         env = env->next;
     }
+    g_exit_status = 0;
 }

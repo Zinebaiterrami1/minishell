@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/14 00:34:41 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:48:54 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "../libft/libft.h"
 #define BUFFER_SIZE 1024
 
+extern int g_exit_status;
 /*from mimi header*/
 typedef enum s_token_type
 {

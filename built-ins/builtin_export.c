@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/13 23:36:05 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:42:46 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ void	ft_export(t_env **env, t_command **args)
 		//print_test(*env);
 		print_export(*env);	
 		//printf("===============================\n");
-		
+		g_exit_status = 0;
 		return ;
 	}
 	//print_test(*env);

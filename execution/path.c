@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/13 08:32:38 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:46:45 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,23 @@ char** get_envp(t_env *lst)
     envp[i] = NULL;
     return (envp);
 }
+void signal_handler_child(int signal_num)
+{
+    if(signal_num == SIGINT)
+    {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+    else
+    {
+        printf("Quit (core dumped)\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+}
 
 void execute_externals(t_command *cmd, t_env *env)
 {
@@ -100,6 +117,9 @@ void execute_externals(t_command *cmd, t_env *env)
     pid = fork();
     if(pid == 0)
     {
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+        
         envp = get_envp(env);
         f = open_file(cmd);
         if(f == -1)
@@ -114,6 +134,8 @@ void execute_externals(t_command *cmd, t_env *env)
         perror("minishell");
         exit(EXIT_FAILURE);
     }
+    signal(SIGINT, signal_handler_child);
+    signal(SIGQUIT, signal_handler_child);
     wait(NULL);
     // waitpid(pid, &status, 0);
     // exit(WEXITSTATUS(status));
