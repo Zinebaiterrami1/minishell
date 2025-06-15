@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/15 11:58:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 18:13:20 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ void signal_handler_child(int signal_num)
     else
     {
         printf("Quit (core dumped)\n");
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
+        // rl_on_new_line();
+        // rl_replace_line("", 0);
+        // rl_redisplay();
     }
 }
 
@@ -113,7 +113,7 @@ void execute_externals(t_command *cmd, t_env *env)
     int f;
     char *pathcmd;
     pid_t pid;
-    int status;
+    // int status;
     
     pid = fork();
     if(pid == 0)
@@ -125,19 +125,25 @@ void execute_externals(t_command *cmd, t_env *env)
     f = open_file(cmd);
     if(f == -1)
         return;
-        pathcmd = search_cmd(cmd, env);
-        if(!pathcmd)
-        {
-            printf("minishell: %s command not found\n", cmd->arg[0]);
-            g_exit_status = 127;
-        }
-        execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
-        perror("minishell");
-        exit(EXIT_FAILURE);
+    pathcmd = search_cmd(cmd, env);
+    if(!pathcmd)
+    {
+        printf("minishell: %s command not found\n", cmd->arg[0]);
+        g_exit_status = 127;
+    }
+    execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+    perror("minishell");
+    exit(EXIT_FAILURE);
     }
     signal(SIGINT, signal_handler_child);
     signal(SIGQUIT, signal_handler_child);
     // wait(NULL);
+    int status;
+    waitpid(pid, &status, 0);
+    if (WIFSIGNALED(status))
+        g_exit_status = 128 + WTERMSIG(status); // like bash: 130 for SIGINT, 131 for SIGQUIT
+    else
+        g_exit_status = WEXITSTATUS(status);
     // waitpid(pid, &status, 0);
     // exit(WEXITSTATUS(status));
 }
