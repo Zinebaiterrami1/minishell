@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/13 06:43:10 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:37:11 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ int check(char *line)
         return(1);
     return(0);
 }
-void *syntax_error()
+void *syntax_error(int i)
 {
-    printf("syntax error \n");
+    if(i == 1)
+        ft_putstr_fd("syntax error lexer\n", 2);
+    else
+        ft_putstr_fd("syntax error parser\n", 2);
     return(NULL);
 }

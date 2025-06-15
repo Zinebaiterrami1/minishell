@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/14 18:48:54 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:31:38 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,22 @@
 #include <readline/history.h> 
 #include "structs.h"
 #include "../libft/libft.h"
+// #include "../parsing/garbage_collector/gc.h"
+
+
+#define SUCCESS_PTR ((void *)1)
+#define FAILURE_PTR ((void *)0)
+
+#define PINK "\001\033[1;95m\002"
+#define RESET "\001\033[0m\002"
+
 #define BUFFER_SIZE 1024
 
 extern int g_exit_status;
+
+
+
+
 /*from mimi header*/
 typedef enum s_token_type
 {
@@ -39,10 +52,14 @@ typedef enum s_token_type
     T_HERDOC,
     T_WORD,
     T_EXP,
-    //T_EOF,
-
+    
 }t_token_type;
 
+typedef struct s_garbage
+{
+    void *adress;
+    struct s_garbage *next;
+}t_garbage;
 
 typedef struct s_token
 {
@@ -52,6 +69,7 @@ typedef struct s_token
     int d_quotes;
     struct s_token *next;
 }t_token;
+
 
 typedef struct s_lexer
 {
@@ -63,6 +81,7 @@ typedef struct s_lexer
     unsigned int i;
     t_token *head;
     t_token *reel_head;
+    t_env **env;
     size_t line_size;
 }t_lexer;
 
@@ -106,12 +125,20 @@ typedef struct s_file
 //     struct s_command *next_com;
 // } t_command;
 
+
+void print_listt(t_garbage *token);
+int check(char *line);
+
+
+int is_word(t_token_type type);
+char *create_string(char c);
+char *get_exp(char *var, t_env **env);
+
 typedef struct s_garbage t_garbage;
 
-char *get_env_value(t_env *env_list, const char *key);
-t_env *split_env(t_env *lst);
+
 t_command *parser(t_lexer *lexer);
-void print_listt(t_garbage *token);
+// void print_listt(t_garbage *token);
 int check(char *line);
 void *syntax_error();
 t_command *lexer(char *line);
@@ -165,11 +192,6 @@ extern int g_exit_status;
 
 // t_garbage **gc;
 
-typedef struct s_garbage
-{
-    void *adress;
-    struct s_garbage *next;
-}t_garbage;
 
 t_garbage **getter();
 char	*gc_strdup(const char *s1);

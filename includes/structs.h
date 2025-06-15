@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:20:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/08 18:16:01 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:32:02 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,21 @@ typedef struct t_env
     struct t_env *next;
 } t_env;
 
+typedef struct s_herdoc
+{
+    char *file_name;
+    char *delimit;
+    int fd;
+    t_env **env;
+}t_herdoc;
+
 typedef struct s_redir
 {
     int type;
     char *name;
-    int fd_in;
+    int fd_in;//why 2 fd
     int  fd_out;
+    t_herdoc *herdoc;
     struct s_redir *next;
 }t_redir;
 

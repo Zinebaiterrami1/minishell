@@ -3,16 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/14 17:15:26 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:58:26 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_lexer *init_lexer(char *line)
+// t_lexer *init_lexer(char *line)
+// {
+//     t_lexer *lexer;
+//     lexer = gc_malloc(sizeof(t_lexer), getter());
+//     lexer->line = line;
+//     lexer->head = NULL;
+//     lexer->reel_head = NULL;
+//     lexer->i = 0;
+//     lexer->c = line[lexer->i];
+//     lexer->line_size = ft_strlen(line);
+//     lexer->error = 0;
+//     lexer->status_d = 0;
+//     lexer->status_s = 0;
+//     // lexer->head->space = 0;
+//     return(lexer);
+// }
+t_lexer *init_lexer(char *line, t_env **env)
 {
     t_lexer *lexer;
     lexer = gc_malloc(sizeof(t_lexer), getter());
@@ -25,6 +41,7 @@ t_lexer *init_lexer(char *line)
     lexer->error = 0;
     lexer->status_d = 0;
     lexer->status_s = 0;
+    lexer->env = env;
     // lexer->head->space = 0;
     return(lexer);
 }
@@ -43,19 +60,20 @@ t_token *set_token(t_token *token, char *cmd, int type)
     token->next = NULL;
     return(token);
 }
-t_token *set_new_token(t_token *token, char *s, t_token *old_token, int flag)
+t_token *set_new_token(t_token *token, char *s, t_token *old_token, int separat_red)
 {
-    token->type = old_token->type;
     if(s)
         token->value = s;
     else
         token->value = old_token->value;
-    // printf("....s %s\n", s);
-    if(flag)
+    if(separat_red)
         token->space = 1;
     else
         token->space = old_token->space;
-    // printf("space %d\n", token->space);
+    if(old_token->type == T_WORD && old_token->next && !token->space)
+        token->type = old_token->next->type;
+    else
+        token->type = old_token->type;
     token->next = NULL;
     return(token);
 }
@@ -92,7 +110,7 @@ t_token *handel_redir(t_lexer *lexer)
     
     token = gc_malloc(sizeof(t_token), getter());
     token->d_quotes = 0;
-    token->space = 0;
+    token->space = 1;
     if(lexer->line[lexer->i] == '>')
         return(handel_redir_out(token, lexer));
     else if(lexer->line[lexer->i] == '<')
@@ -164,9 +182,13 @@ char *get_string(char *s, int i)
     
     while(j < i)
     {
-        str = ft_strjoin(str, create_string(s[j]));
+        if(s[j] == '$' && s[j + 1] && s[j + 1] == '$')
+            j += 2;
+        if(j < i)
+            str = ft_strjoin(str, create_string(s[j]));
         j++;
     }
+            // printf("______%s________\n",str);
     return(str);
 }
 
@@ -194,30 +216,30 @@ int has_dollar(char **s)
 {
     int  i;
     int count;
-    
     char *str;
+    
     str = *s;
     count = 0;
     i = 0;
+    // printf("hasdollar\n");
     while(str[i])
     {
         if(str[i] == '$')
+        {
             while(str[i] && str[i] == '$')
             {
                 count++;
                 i++;
             }
-        if((ft_isalpha(str[i]) || str[i] == '_') && count)
+        }
+        if((str[i] && (ft_isalpha(str[i]) || str[i] == '_') && count) || !str[i])
         {
             *s = ft_strjoin(get_string(*s, i) , &str[i]);
+            
             return(1);
         }
-        // else
-        // {
-        //     // *s = ft_strjoin(get_string(*s, i) , ft_strjoin("", &str[i]));
-        //     return(0);
-        // }
-        i++;
+        if(str[i])
+            i++;
     }
     return(0);
 }
@@ -243,13 +265,9 @@ t_token *handel_d_quotes(t_lexer *lexer)
     s = gc_malloc(sizeof(char ) * (len + 1), getter());
     ft_strlcpy(s, &lexer->line[++lexer->i], len + 1);
     lexer->i = i + 1;
-    // printf("s === %s\n", s);
+    // printf("s ___________________________________ %s\n", s);
     if(has_dollar(&s))
-    {
-        // printf("00000000000000 %s \n", s);
             return(set_token(token, s, T_EXP));
-        
-    }
     return(set_token(token, s, T_D_COTS));/////////////////needs check with freind and create handel d
 }
 
@@ -302,7 +320,7 @@ t_token *pick_d_quotes_dollar(t_lexer *lexer, t_token *token)
     i = lexer->i;
     while(lexer->line[i] && lexer->line[i++] != '"')
         len++;
-    if(lexer->line[i] && lexer->line[i + 1] && is_space(lexer->line[i + 1]))
+    if(lexer->line[i] && lexer->line[i] && is_space(lexer->line[i]))
         token->space = 1;
     s = gc_malloc(sizeof(char) * (len + 1), getter());
     // s[0] = '$';
@@ -328,8 +346,8 @@ t_token *pick_s_quotes_dollar(t_lexer *lexer, t_token *token)
     i = lexer->i;
     while(lexer->line[i] && lexer->line[i++] != '\'')
         len++;
-    if(lexer->line[i] && lexer->line[i + 1] && is_space(lexer->line[i + 1]))
-        token->space = 1;
+    if(lexer->line[i] && lexer->line[i] && is_space(lexer->line[i]))
+    token->space = 1;
     s = gc_malloc(sizeof(char) * (len + 1), getter());
     while(u < len)
     {
@@ -339,6 +357,7 @@ t_token *pick_s_quotes_dollar(t_lexer *lexer, t_token *token)
     lexer->i += 1;
     return(set_token(token, s, T_WORD));
 }
+
 
 
 t_token *handel_expand(t_lexer *lexer, t_token *token)
@@ -394,23 +413,73 @@ t_token *handel_dollar(t_lexer *lexer)
         return(pick_s_quotes_dollar(lexer, token));
     else if(lexer->line[lexer->i + 1] == '$')
         return(lexer->i += 2, NULL);
-    else if(isalnum(lexer->line[lexer->i + 1]))
+    else if(isdigit(lexer->line[lexer->i + 1]))
         return(lexer->i += 2, NULL);
     else
         return(handel_else(lexer));
     return(NULL);
 }
 
+t_token *dilim_helper()
+{
+    t_token *token;
+
+    token = gc_malloc(sizeof(t_token), getter());
+    token->d_quotes = 0;
+    token->space = 0;
+    token->type = T_WORD;
+    return(token);
+}
+
+static int is_redir(char c)
+{
+    if (c == '>' || c == '<')
+        return(1);
+    return(0);
+}
+
+t_token *handel_dilim(t_lexer *lexer)
+{
+    t_token *token;
+    char *s;
+    int i;
+    
+    i  = lexer->i;
+    s = ft_strdup("");
+    token = dilim_helper();
+    while(lexer->line[i] && !is_space(lexer->line[i]) 
+    && !is_redir(lexer->line[i]))
+    {
+        if(lexer->line[i] == '"' || lexer->line[i] == '\'')
+        {
+            token->type = T_S_COTS;
+            token->d_quotes = 1;
+        }
+        else
+            s = ft_strjoin(s, create_string(lexer->line[i]));
+        // if(lexer->line[i] && !is_space(lexer->line[i]))
+        i++;
+    }
+    if(lexer->line[i] && is_space(lexer->line[i]))
+        token->space = 1;
+    lexer->i = i;
+    // printf("s_____________________%s___\n", s);
+    return(set_token(token, s, token->type));
+}
+
 t_token *handel_word(t_lexer *lexer)
 {
+    t_token *last;
+
+    last = ft_lstlast(lexer->head);
+    if(last && last->type == T_HERDOC)
+        return(handel_dilim(lexer));
     if(lexer->line[lexer->i] == '\'')
         return(handel_s_quotes(lexer));
     else if(lexer->line[lexer->i] == '"')
         return(handel_d_quotes(lexer));
     else if(lexer->line[lexer->i] == '$')
         return(handel_dollar(lexer));
-    // else if(lexer->line[lexer->i] == '&')
-    //     return(lexer->error = 1, NULL);
     else
         return(handel_else(lexer));
     return(NULL);
@@ -477,10 +546,12 @@ void *adding_new_token(t_lexer *lexer, t_token *token)
     last = ft_lstlast(lexer->reel_head);
     // if (last)
     //     printf("===============%s\n",last->value);
-    if(last && !last->space)
+    if(last && !last->space && is_word(token->type))
     {
         last->value = ft_strjoin(last->value, token->value);
         last->space = token->space;
+        if(last->type == T_WORD)
+            last->type = token->type;
     }
     else
         ft_lstadd_back(&lexer->reel_head, token);
@@ -502,12 +573,12 @@ int has_space(char *s)
     return(0);
 }
 
-char *get_exp(char *var, char **env)
+char *get_exp(char *var, t_env **env)
 {
-    t_env *env_list;
+    // t_env *env_list;
     
-    env_list = split_env(init_env(env));
-    return(get_env_value(env_list, var));
+    // env_list = split_env(init_env(env));
+    return(get_env_value(*env, var));
 }
 
 char *should_not_be_expanded(char **val)
@@ -515,14 +586,14 @@ char *should_not_be_expanded(char **val)
     int i;
 
     i = 0;
-    while(**val && **val == '$')
+    while(*val[i] && *val[i] == '$')
     {
-        (*val)++;
+        // (*val)++;
         i++;
     }
     if (i % 2 == 0)
         return(ft_strdup(""));
-    else if(ft_isalnum(**val))
+    else if(ft_isdigit(**val))
     {
         (*val)++;
         return(ft_strdup(""));
@@ -531,35 +602,41 @@ char *should_not_be_expanded(char **val)
         return(NULL);
     
 }
-
-char *is_exp(char **val, char **env)
-{
-    char *s;
-    char *ret;
+    // while(token_val)
+    // {
+    //     printf("is exp val____________ = %s\n", *token_val);
+    //     if(**token_val == '$')
+    //         (*token_val)++;
+    //     if(ft_isalpha(**token_val) || **token_val == '_')
+    //     {
+    //         while(**token_val == '_' || ft_isalnum(**token_val))
+    //         {
+    //             s = ft_strjoin(s, create_string(**token_val));
+    //             (*token_val)++;
+    //         }
+            
+    //         get_val = get_exp(s, env);
+    //         if(get_val)
+    //             ret = ft_strjoin(ret, get_val);
+    //         else
+    //             ret = ft_strjoin(ret, ft_strdup("$"));
+    //         printf("is exp val____________ = %s\n", ret);
+    //         s = NULL;
+    //     }
+    // }
+    // return(ret);
     
-    s = ft_strdup("");
-    // printf("****************888 %s\n", *val);
-    if(should_not_be_expanded(val))
-    {
-        // printf("****************888 %s\n", *val);
-            return(s);
-        
-    }
-    if(ft_isalpha(**val) || **val == '_')
-    {
-        while(ft_isalpha(**val) || **val == '_' || ft_isalnum(**val))
-        {
-            s = ft_strjoin(s, create_string(**val));
-            (*val)++;
-        }
-        ret = get_exp(s, env);
-        if(ret)
-            return(ret);
-        return(NULL);
-    }
-    else
-        return("$");
-}
+
+    
+
+
+    
+
+
+    
+    
+    
+
 
 void append_token(t_token *old_token, char *s, t_lexer *lexer, int flag)
 {
@@ -567,16 +644,14 @@ void append_token(t_token *old_token, char *s, t_lexer *lexer, int flag)
     
     token = gc_malloc(sizeof(t_token), getter());
     set_new_token(token, s, old_token, flag);
-    printf("token--------->val %s\n", token->value);
+    printf("append_token->val ____________________ %s\n", token->value);
     adding_new_token(lexer,token);
 }
-
 void skip_white_spaces(char *s, int *i)
 {
     while(s[*i] && (s[*i] == ' ' || s[*i] == '\t'))
         (*i)++;
 }
-
 char *befor_space(char *s, int *i)
 {
     char *str;
@@ -588,10 +663,9 @@ char *befor_space(char *s, int *i)
         str = ft_strjoin(str, create_string(s[*i]));
         (*i)++;
     }
-    printf("---- before space %s\n", str);
+    printf("before space = ________%s\n", str);
     return(str);
 }
-
 char *after_space(char *s, int *i)
 {
     char *str;
@@ -645,77 +719,179 @@ char *after_space(char *s, int *i)
     append_token(token, s, lexer);
 }*/
 
+int num_of_word(char *str)
+{
+    int count = 0;
+    int in_word = 0;
 
-void creat_new_token_exp(t_lexer *lexer, t_token *token,char **env)
+    while (*str)
+    {
+        if (is_space(*str))
+            in_word = 0;
+        else if (!in_word)
+        {
+            in_word = 1;
+            count++;
+        }
+        str++;
+    }
+    return count;
+}
+
+char *is_exp(char **token_val, t_env **env)
+{
+    char *s;
+    char *ret;
+    // char *get_val;
+
+    s = ft_strdup("");
+    ret = ft_strdup("");
+    printf("is exp val____________ = %s\n", *token_val);
+    // if(should_not_be_expanded(token_val))
+    // {
+    //     printf("s_should not be exp_________________ %s\n", *token_val);
+    //     return(s);   
+    // }
+
+
+    while(**token_val)
+    {
+        if(**token_val == '$')
+        {
+            (*token_val)++;
+            if(!*token_val)
+                break;
+            while(**token_val == '$')
+                (*token_val)++;
+            if(ft_isalpha(**token_val) || **token_val == '_')
+            {
+                while(**token_val == '_' || ft_isalnum(**token_val))
+                {
+                    s = ft_strjoin(s, create_string(**token_val));
+                    (*token_val)++;
+                }
+                ret = ft_strjoin(ret, get_exp(s, env));
+                s = NULL;
+            }
+            else if(**token_val == '?')
+                ret = ft_strjoin(ret, ft_itoa(g_exit_status));
+        }
+        else   
+        {
+            ret = ft_strjoin(ret, create_string(**token_val));
+            (*token_val)++;
+        }
+        
+    }
+    return(ret);
+
+    
+    // printf("is exp val____________ = %s\n", *token_val);
+    
+    // if(ft_isalpha(**token_val) || **token_val == '_')
+    // {
+    //     while(**token_val == '_' || ft_isalnum(**token_val))
+    //     {
+    //         s = ft_strjoin(s, create_string(**token_val));
+    //         (*token_val)++;
+    //     }
+    //     ret = get_exp(s, env);
+    //     printf("is exp return____________ = %s\n", ret);
+    //     if(ret)
+    //         return(ret);
+    //     return(NULL);
+    // }
+    // return(NULL); 
+}
+
+void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 {
     char *s;
     char *val;
     int i;
+    char **splited;
 
     i = 0;
     s = NULL;
     if(!token || !token->value)
-        return;
+        return (NULL);
     while(token && *token->value)
     {
         if(token && *token->value && !ft_strncmp((const char *)(token->value), "$", 1))
         {
-            val = is_exp(&token->value, env);
-            // printf("---  val  %s\n", val);
-            // printf("---   token   %s\n",token->value);
-            while(val && val[i])
-            {
-                if(!has_space(&val[i]) || token->d_quotes)
+            printf("token->val ______________ %s\n",token->value);
+            val = ft_strjoin(s, is_exp(&token->value, env));
+            if(val && num_of_word(val) > 1 &&(ft_lstlast(lexer->reel_head)) 
+                && (ft_lstlast(lexer->reel_head)->type == T_RED_OUT 
+                || ft_lstlast(lexer->reel_head)->type == T_RED_OUT_APEND 
+                || ft_lstlast(lexer->reel_head)->type == T_RED_IN))
                 {
-                    s = ft_strjoin(s, val);
-                    // printf("---   s    %s\n", s);
-                    break;
-                    // append_token(token, s, lexer);
+                    lexer->error = 1;
+                    return(ft_putstr_fd("ambiguous redirect\n", 2), SUCCESS_PTR);
                 }
-                else
+            printf("value_________________ ___ %s\n", val);
+            if(val && has_space(val) && !token->d_quotes)
+            {
+                splited = ft_split(val, ' ');
+                while(splited[i])
                 {
-                    s = ft_strjoin(s, befor_space(val, &i));
-                    // printf("s .... %s\n", s);
-                    append_token(token, s, lexer, 1);
-                    s = NULL;
-                    // if(val[i])
-                    // {
-                    //     s = ft_strdup(after_space(val, &i));
-                    //     // append_token(token, s, lexer, 1);
-                    //     printf("...... s after space %s\n", s);
-                    // }
+                    append_token(token, splited[i], lexer, 1);
+                    i++;
                 }
             }
+            else
+            {
+                append_token(token, val, lexer, 0);
+            }
         }
-        else if(*token->value)
+        else
         {
             s = ft_strjoin(s, create_string(*token->value));
             token->value++;
         }
     }
-    if (s)
-        append_token(token, s, lexer, 0);
+    return(NULL);
 }
+    //         while(val && (unsigned int)i < ft_strlen(val))
+    //         {
+    //             if(!has_space(val) || token->d_quotes)//has_space not numofword
+    //             {
+    //                 s = ft_strjoin(s, val);
+    //                 printf("_______ s __%s_______val __ %s\n",s, val);
+    //                 break;
+    //             }
+    //             else
+    //             {
+    //                 s = ft_strjoin(s, befor_space(val, &i));
+    //                 printf("i = _______ %d\n", i);
+    //                 append_token(token, s, lexer, 1);
+    //                 s = NULL;
+    //             }
+    //             // break;
+    //         }
+    //     }
+    //     else if(*token->value && ft_strncmp((const char *)(token->value), "$", 1))
+    //     {
+    //         printf("salamo3alikom\n");
+    //         s = ft_strjoin(s, create_string(*token->value));
+    //         token->value++;
+    //     }
+    //     // break;
+    // }
+    // if(s)
+    //     append_token(token, s, lexer, 0);
+    // return(NULL);
+// }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-int reel_list(t_lexer *lexer, char **env)
+int reel_list(t_lexer *lexer, t_env **env)
 {
     t_token *token;
+    t_token *last;
 
     token = lexer->head;
+    last = ft_lstlast(lexer->reel_head);
     while(token)
     {
         if(token->type == T_EXP)
@@ -726,8 +902,6 @@ int reel_list(t_lexer *lexer, char **env)
     }
     return(0);
 }
-
-
 
 void print_list(t_token *token)
 {
@@ -751,6 +925,7 @@ void print_list2(t_token *token)
     printf("\n");
 }
 
+
 t_command *parsing(char *line, t_env **env)
 {
     t_lexer *lexer;
@@ -759,7 +934,7 @@ t_command *parsing(char *line, t_env **env)
     (void)env;
     if(check(line))
         return(syntax_error());
-    lexer = init_lexer(line);
+    lexer = init_lexer(line, env);
     while(lexer->i < lexer->line_size)
     {
         lexer_skip_white(lexer);
@@ -772,8 +947,8 @@ t_command *parsing(char *line, t_env **env)
             return(NULL);
     }
     print_list(lexer->head);
-    // reel_list(lexer, env);
-    // print_list2(lexer->reel_head);
+    reel_list(lexer, env);
+    print_list2(lexer->reel_head);
     // free_all(getter());
     return( parser(lexer));
 }

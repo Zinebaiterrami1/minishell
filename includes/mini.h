@@ -9,6 +9,12 @@
 #include "libft/libft.h"
 #include "garbage_collector/gc.h"
 
+#define SUCCESS_PTR ((void *)1)
+#define FAILURE_PTR ((void *)0)
+
+#define PINK "\001\033[1;95m\002"
+#define RESET "\001\033[0m\002"
+
 typedef enum s_token_type
 {
     T_D_COTS,
@@ -28,7 +34,8 @@ typedef struct s_token
 {
     char *value;
     int type;
-    int print_space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
+    int space;
+    int d_quotes;
     struct s_token *next;
 }t_token;
 
@@ -44,6 +51,7 @@ typedef struct s_lexer
     size_t line_size;
     
 }t_lexer;
+
 
 
 typedef struct s_check
@@ -81,7 +89,15 @@ typedef struct s_command
 
 
 t_command *parser(t_lexer *lexer);
-
+void print_listt(t_garbage *token);
+int check(char *line);
+void *syntax_error();
+char *get_env_value(t_env *env_list, const char *key);
+t_env *split_env(t_env *lst);
+t_env *init_env(char **envp);
+int is_word(t_token_type type);
+char *create_string(char c);
+char *get_exp(char *var, char **env);
 
 
 
