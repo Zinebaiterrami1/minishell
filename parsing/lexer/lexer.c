@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/15 15:58:26 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:00:03 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -578,7 +578,9 @@ char *get_exp(char *var, t_env **env)
     // t_env *env_list;
     
     // env_list = split_env(init_env(env));
-    return(get_env_value(*env, var));
+    char *s;
+    s = get_env_value(*env, var);
+    return(s);
 }
 
 char *should_not_be_expanded(char **val)
@@ -770,6 +772,8 @@ char *is_exp(char **token_val, t_env **env)
                     s = ft_strjoin(s, create_string(**token_val));
                     (*token_val)++;
                 }
+                printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%s\n",*token_val);
+
                 ret = ft_strjoin(ret, get_exp(s, env));
                 s = NULL;
             }
@@ -815,6 +819,7 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
     s = NULL;
     if(!token || !token->value)
         return (NULL);
+    // ft_display_env(*env, NULL);
     while(token && *token->value)
     {
         if(token && *token->value && !ft_strncmp((const char *)(token->value), "$", 1))
@@ -977,16 +982,18 @@ void *minishell(char *line, t_env **env_lst)
     stdout = dup(STDOUT_FILENO);
     t_command *list;
     
+    
     list = parsing(line, env_lst);
     if(!list)
         return(syntax_error());
-    if(is_buitins(list) && ft_lstsizee(list) == 1)
-        execute_buitlins(env_lst, list);
-    else if(!is_buitins(list) && ft_lstsizee(list) == 1)
-        execute_externals(list, *env_lst);
-    else if (ft_lstsizee(list) > 1)
-        if(!multiple_pipes(env_lst, list))
-            return(NULL);
+    // ft_display_env(*env_lst, list);
+    // if(is_buitins(list) && ft_lstsizee(list) == 1)
+    //     execute_buitlins(env_lst, list);
+    // else if(!is_buitins(list) && ft_lstsizee(list) == 1)
+    //     execute_externals(list, *env_lst);
+    // else if (ft_lstsizee(list) > 1)
+    //     if(!multiple_pipes(env_lst, list))
+    //         return(NULL);
     dup2(stdin, STDIN_FILENO);
     dup2(stdout, STDOUT_FILENO);
     close(stdin);

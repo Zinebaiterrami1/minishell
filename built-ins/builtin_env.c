@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/15 10:22:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 18:57:15 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,12 +286,14 @@ char *get_env_value(t_env *env_list, const char *key)
     t_env *tmp;
 
     tmp = env_list;
+    // ft_display_env(env_list, NULL);
     while(tmp)
     {
         if(ft_strcmp(tmp->env_key, key) == 0)
             return (tmp->env_value);
         tmp = tmp->next;
     }
+    printf("salma %s\n", key);
     return (NULL);
 }
 

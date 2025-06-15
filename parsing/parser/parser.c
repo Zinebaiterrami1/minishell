@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/15 16:36:39 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:11:45 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ t_command *new_comd(t_command **list, t_token *token)
 void fill_arg(t_command *comd, int f, t_token *token)
 {
     comd->arg[f] = gc_strdup(token->value);
+    printf("argg = ___%s\n", token->value);
 }
 
 void add_redir(t_redir **list, t_redir *new)
@@ -381,7 +382,6 @@ t_command *creat_comand_list(t_token *token, t_lexer *lexer)
         }
         if((token->next == NULL || token->type == T_PIPE ) && cur_comd->arg)
         {
-            // printf("argg = ___%s\n", cur_comd->arg[f-1]);
             cur_comd->arg[f] = NULL;
             cur_comd = NULL;
             f = 0;
@@ -407,5 +407,5 @@ t_command *parser(t_lexer *lexer)
 {
     if(parser_check(lexer->head))
     return(syntax_error());
-    return(creat_comand_list(lexer->head, lexer));
+    return(creat_comand_list(lexer->reel_head, lexer));
 }

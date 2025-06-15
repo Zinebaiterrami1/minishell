@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:20:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/15 16:32:02 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/15 18:29:05 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_redir
 {
     int type;
     char *name;
-    int fd_in;//why 2 fd
+    int fd_in;
     int  fd_out;
     t_herdoc *herdoc;
     struct s_redir *next;
