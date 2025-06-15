@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/14 18:46:45 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:58:17 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,18 @@ void execute_externals(t_command *cmd, t_env *env)
     int f;
     char *pathcmd;
     pid_t pid;
-    // int status;
+    int status;
+    
     pid = fork();
     if(pid == 0)
     {
     signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
         
-        envp = get_envp(env);
-        f = open_file(cmd);
-        if(f == -1)
-            return;
+    envp = get_envp(env);
+    f = open_file(cmd);
+    if(f == -1)
+        return;
         pathcmd = search_cmd(cmd, env);
         if(!pathcmd)
         {
@@ -136,7 +137,7 @@ void execute_externals(t_command *cmd, t_env *env)
     }
     signal(SIGINT, signal_handler_child);
     signal(SIGQUIT, signal_handler_child);
-    wait(NULL);
+    // wait(NULL);
     // waitpid(pid, &status, 0);
     // exit(WEXITSTATUS(status));
 }

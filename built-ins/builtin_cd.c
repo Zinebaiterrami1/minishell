@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/14 23:22:22 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 10:22:44 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,26 @@
 //     return (0);
 // }
 
+int verify_permission(t_command *cmd)
+{
+    //check if file exists first
+    if(access(cmd->arg[1], F_OK) == -1)
+    {
+        g_exit_status = 127; //"command not found"
+        return (0);
+    }
+    
+    //check execute permission
+    if(access(cmd->arg[1], X_OK) == -1)
+    {
+        g_exit_status = 126;
+        return (0);
+    }
+
+    g_exit_status = 0;
+    return (1);
+}
+
 //new cd
 int ft_cd(t_command *cmd, t_env **env)
 {
@@ -113,22 +133,3 @@ int ft_cd(t_command *cmd, t_env **env)
     return (0);
 }
 
-int verify_permission(t_command *cmd)
-{
-    //check if file exists first
-    if(access(cmd->arg[1], F_OK) == -1)
-    {
-        g_exit_status = 127; //"command not found"
-        return (0);
-    }
-    
-    //check execute permission
-    if(access(cmd->arg[1], X_OK) == -1)
-    {
-        g_exit_status = 126;
-        return (0);
-    }
-
-    g_exit_status = 0;
-    return (1);
-}

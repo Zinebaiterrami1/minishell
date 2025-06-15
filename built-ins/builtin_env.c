@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/14 23:40:32 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/15 10:22:17 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,29 +346,36 @@ char *get_env_key(t_env *env_lst, const char *value)
 //     ft_lstadd_backk(&tmp, new_node);
 // }
 
-
 void ft_display_env(t_env *env, t_command *cmd)
 {
-    t_command *tmp;
+    // t_command *tmp;
     int fd;
     
-    fd = 0;
-    tmp = cmd;
-    if(tmp && tmp->redir && tmp->redir->name)
+    fd = 1;
+    // tmp = cmd;
+    // if(tmp && tmp->redir && tmp->redir->name)
+    // {
+    //     if(tmp->redir->type == T_RED_OUT) // >
+    //         fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    //     else if(tmp->redir->type == T_RED_OUT_APEND) // >>
+    //         fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+    //     if(fd < 0)
+    //         printf("error fd\n");
+    // }
+    if(cmd && cmd->redir && cmd->redir->name)
     {
-        if(tmp->redir->type == T_RED_OUT) // >
-            fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-        else if(tmp->redir->type == T_RED_OUT_APEND) // >>
-            fd = open(tmp->redir->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
-        if(fd < 0)
-            printf("error fd\n");
+        if(open_file(cmd) == -1)
+        {
+            g_exit_status = 1;
+            return ;
+        }
     }
     if(!env)
     {
         g_exit_status = 1;
         return ;
     }
-    while(env && tmp)
+    while(env)
     {
         if(env->env_value)
         {
