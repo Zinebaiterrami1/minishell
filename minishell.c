@@ -141,8 +141,6 @@ void signal_handler(int signal_num)
         rl_redisplay();
         free_all(getter());
     }
-    else if(signal_num == SIGQUIT)
-        free_all(getter());
 }
 
 int main(int argc, char **argv, char **envp)

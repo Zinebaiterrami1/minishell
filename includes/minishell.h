@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/15 16:31:38 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:19:08 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include <linux/limits.h>
 #include <signal.h>
+# include <sys/time.h>
+# include <sys/types.h>
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <readline/readline.h>
