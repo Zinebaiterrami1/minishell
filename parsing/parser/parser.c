@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/15 19:11:45 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:10:42 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,7 +378,7 @@ t_command *creat_comand_list(t_token *token, t_lexer *lexer)
                     return(NULL);
             }
             else
-                return(syntax_error(2));
+                return(syntax_error());
         }
         if((token->next == NULL || token->type == T_PIPE ) && cur_comd->arg)
         {
@@ -406,6 +406,6 @@ t_command *creat_comand_list(t_token *token, t_lexer *lexer)
 t_command *parser(t_lexer *lexer)
 {
     if(parser_check(lexer->head))
-    return(syntax_error());
+        return(syntax_error());
     return(creat_comand_list(lexer->reel_head, lexer));
 }

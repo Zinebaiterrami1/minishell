@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/16 12:16:02 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:05:48 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -778,7 +778,10 @@ char *is_exp(char **token_val, t_env **env)
                 s = NULL;
             }
             else if(**token_val == '?')
+            {
                 ret = ft_strjoin(ret, ft_itoa(g_exit_status));
+                    (*token_val)++;
+            }
         }
         else   
         {
@@ -787,6 +790,7 @@ char *is_exp(char **token_val, t_env **env)
         }
         
     }
+    printf("ret = __%s\n",ret);
     return(ret);
 
     
@@ -832,7 +836,7 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
                 || ft_lstlast(lexer->reel_head)->type == T_RED_IN))
                 {
                     lexer->error = 1;
-                    return(ft_putstr_fd("ambiguous redirect\n", 2), SUCCESS_PTR);
+                    return(ft_putstr_fd("ambiguous redirect\n", 2), FAILURE_PTR);
                 }
             printf("value_________________ ___ %s\n", val);
             if(val && has_space(val) && !token->d_quotes)
@@ -855,7 +859,7 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
             token->value++;
         }
     }
-    return(NULL);
+    return(SUCCESS_PTR);
 }
     //         while(val && (unsigned int)i < ft_strlen(val))
     //         {
@@ -900,7 +904,10 @@ int reel_list(t_lexer *lexer, t_env **env)
     while(token)
     {
         if(token->type == T_EXP)
-            creat_new_token_exp(lexer, token, env);
+        {
+            if(!creat_new_token_exp(lexer, token, env))
+                return(1);
+        }
         else
             append_token(token, NULL, lexer, 0);
         token = token->next;
@@ -952,7 +959,9 @@ t_command *parsing(char *line, t_env **env)
             return(NULL);
     }
     print_list(lexer->head);
-    reel_list(lexer, env);
+    
+    if(reel_list(lexer, env))
+        return(NULL);
     print_list2(lexer->reel_head);
     // free_all(getter());
     return( parser(lexer));
@@ -984,7 +993,7 @@ void *minishell(char *line, t_env **env_lst)
     
     list = parsing(line, env_lst);
     if(!list)
-        return(syntax_error());
+        return(NULL);
     // ft_display_env(*env_lst, list);
     if(is_buitins(list) && ft_lstsizee(list) == 1)
         execute_buitlins(env_lst, list);
