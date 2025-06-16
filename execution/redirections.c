@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/10 12:19:40 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:33:37 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int open_file(t_command *cmd)
             if(r->fd_out == -1 || r->fd_in == -1)
             {
                 printf("error in fd\n");
-                perror(r->name);
+                // perror(r->name);
                 return (-1);
             }
+            printf("file name: %s\n", r->name);
             if(r->fd_in != 0)
                 dup2(r->fd_in, 0);
             if(r->fd_out != 1)

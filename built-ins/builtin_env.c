@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/15 18:57:15 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:34:18 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ static void update_line(t_env *node)
         if(!tmp)
             return ;
         newline = ft_strjoin(tmp, node->env_value);
-        free(tmp);
         if(!newline)
             return ;
     }
@@ -242,8 +241,9 @@ void set_env_value(t_env **env_list, char *key, char *value)
                 new_value = ft_strdup(value);
                 if(!new_value)
                     return;
-                free(tmp->env_value);
+                // free(tmp->env_value);
                 tmp->env_value = new_value;
+                printf("%s\n", tmp->env_value);
             }   
             update_line(tmp);
             return ;
@@ -257,6 +257,7 @@ void set_env_value(t_env **env_list, char *key, char *value)
     update_line(new_node);
     ft_lstadd_backk(env_list, new_node);
     printf("node added\n");
+    // free(new_value);
 }
 
 void split_and_set(char *arg, t_env **splited_env_list)

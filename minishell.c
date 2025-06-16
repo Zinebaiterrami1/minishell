@@ -139,7 +139,10 @@ void signal_handler(int signal_num)
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
+        free_all(getter());
     }
+    else if(signal_num == SIGQUIT)
+        free_all(getter());
 }
 
 int main(int argc, char **argv, char **envp)
@@ -169,9 +172,12 @@ int main(int argc, char **argv, char **envp)
         if (!minishell(line, &env_lst))
         {
             free(line);
+            // free_all(getter());
             continue;
         }
         free(line);
+        free_all(getter());
+        
     }
-    free_all(getter());
+    free(env_lst);
 }

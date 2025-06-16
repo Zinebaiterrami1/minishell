@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/15 19:00:03 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:16:02 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_token *handel_pipe(t_lexer *lexer)
     
     token = gc_malloc(sizeof(t_token), getter());
     token->d_quotes = 0;
-    token->space = 0;
+    token->space = 1;
     lexer->i++;
     return(set_token(token, "|", T_PIPE));
 }
@@ -893,10 +893,10 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 int reel_list(t_lexer *lexer, t_env **env)
 {
     t_token *token;
-    t_token *last;
+    // t_token *last;
 
     token = lexer->head;
-    last = ft_lstlast(lexer->reel_head);
+    // last = ft_lstlast(lexer->reel_head);
     while(token)
     {
         if(token->type == T_EXP)
@@ -982,18 +982,17 @@ void *minishell(char *line, t_env **env_lst)
     stdout = dup(STDOUT_FILENO);
     t_command *list;
     
-    
     list = parsing(line, env_lst);
     if(!list)
         return(syntax_error());
     // ft_display_env(*env_lst, list);
-    // if(is_buitins(list) && ft_lstsizee(list) == 1)
-    //     execute_buitlins(env_lst, list);
-    // else if(!is_buitins(list) && ft_lstsizee(list) == 1)
-    //     execute_externals(list, *env_lst);
-    // else if (ft_lstsizee(list) > 1)
-    //     if(!multiple_pipes(env_lst, list))
-    //         return(NULL);
+    if(is_buitins(list) && ft_lstsizee(list) == 1)
+        execute_buitlins(env_lst, list);
+    else if(!is_buitins(list) && ft_lstsizee(list) == 1)
+        execute_externals(list, *env_lst);
+    else if (ft_lstsizee(list) > 1)
+        if(!multiple_pipes(env_lst, list))
+            return(NULL);
     dup2(stdin, STDIN_FILENO);
     dup2(stdout, STDOUT_FILENO);
     close(stdin);
