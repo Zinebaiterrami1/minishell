@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/16 22:10:42 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:44:02 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ int open_herd_file(t_herdoc *herdoc)
         i++;
     }
     herdoc->fd = open(path, O_CREAT | O_RDWR, 0644);
+    
     return(herdoc->fd);
 }
 
@@ -266,7 +267,6 @@ int exit_failure(char *msg)
 int handel_herdoc(t_env **env, t_token *token, t_redir *redir)
 {
     char *line;
-    // t_herdoc *herdoc;
 
     redir->herdoc = init_herdoc(env);
     if(!redir->herdoc)
@@ -276,7 +276,12 @@ int handel_herdoc(t_env **env, t_token *token, t_redir *redir)
     while(1)
     {
         line = readline("herdoc>");
-        if(!ft_strcmp(line, token->value) || !line)
+        if(!line)
+        {
+            ft_putstr_fd("warning: here-document at line delimited by end-of-file\n", 2);
+            break;
+        }
+        if(!ft_strcmp(line, token->value))
         {
             free(line);
             break;

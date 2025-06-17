@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/17 00:05:48 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:48:33 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -812,6 +812,31 @@ char *is_exp(char **token_val, t_env **env)
     // return(NULL); 
 }
 
+int is_export(t_token *last, t_token *token)
+{
+    char *s;
+    s = ft_strchr(token->value, '=');
+    if(!ft_strcmp(last->value, "export"))
+        return(1);
+    return(0);
+}
+
+char *creat_string2(char **spl)
+{
+    int i;
+    char *str;
+
+    i = 0;
+    while(spl[i])
+    {
+        str = ft_strjoin(str,spl[i]);
+        if(spl[i + 1])
+            str = ft_strjoin(str, " ");
+        i++;
+    }
+    return(str);
+}
+
 void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 {
     char *s;
@@ -826,7 +851,7 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
     // ft_display_env(*env, NULL);
     while(token && *token->value)
     {
-        if(token && *token->value && !ft_strncmp((const char *)(token->value), "$", 1))
+        if(*token->value && !ft_strncmp((const char *)(token->value), "$", 1))
         {
             printf("token->val ______________ %s\n",token->value);
             val = ft_strjoin(s, is_exp(&token->value, env));
@@ -842,11 +867,14 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
             if(val && has_space(val) && !token->d_quotes)
             {
                 splited = ft_split(val, ' ');
-                while(splited[i])
-                {
-                    append_token(token, splited[i], lexer, 1);
-                    i++;
-                }
+                if(is_export(ft_lstlast(lexer->reel_head), token))
+                    append_token(token, val, lexer, 1);
+                else
+                    while(splited[i])
+                    {
+                        append_token(token, splited[i], lexer, 1);
+                        i++;
+                    }
             }
             else
             {
