@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/16 13:34:18 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:12:26 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,6 @@ static void update_line(t_env *node)
     node->line = newline;
 }
 
-
 /* Update existing or add new environment variable */
 void set_env_value(t_env **env_list, char *key, char *value)
 {
@@ -365,7 +364,7 @@ void ft_display_env(t_env *env, t_command *cmd)
     //     if(fd < 0)
     //         printf("error fd\n");
     // }
-    if(cmd && cmd->redir && cmd->redir->name)
+    if((!cmd || !cmd->arg || !cmd->arg[0]) && cmd->redir)
     {
         if(open_file(cmd) == -1)
         {

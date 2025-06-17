@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/16 11:45:31 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:08:17 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,21 @@ char** get_envp(t_env *lst)
     envp[i] = NULL;
     return (envp);
 }
-// void signal_handler_child(int signal_num)
-// {
-//     if(signal_num == SIGINT)
-//     {
-//         printf("\n");
-//         rl_on_new_line();
-//         rl_replace_line("", 0);
-//         rl_redisplay();
-//     }
-//     else
-//     {
-//         printf("Quit (core dumped)\n");
-//         // rl_on_new_line();
-//         // rl_replace_line("", 0);
-//         // rl_redisplay();
-//     }
-// }
+
+void signal_handler_child(int signal_num)
+{
+    if(signal_num == SIGINT)
+    {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+    else
+    {
+        printf("Quit (core dumped)\n");
+    }
+}
 
 void execute_externals(t_command *cmd, t_env *env)
 {
@@ -118,26 +116,43 @@ void execute_externals(t_command *cmd, t_env *env)
     pid = fork();
     if(pid == 0)
     {
-    // signal(SIGINT, SIG_DFL);
-    // signal(SIGQUIT, SIG_DFL);
-        
-    envp = get_envp(env);
-    f = open_file(cmd);
-    if(f == -1)
-        return;
-    pathcmd = search_cmd(cmd, env);
-    if(!pathcmd)
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+        if ((!cmd || !cmd->arg || !cmd->arg[0]) && cmd->redir)
+        {
+            open_file(cmd);
+            return ; // or return NULL or handle properly
+        }
+        envp = get_envp(env);
+        f = open_file(cmd);
+        if(f == -1)
+            return;
+        pathcmd = search_cmd(cmd, env);
+        if(!pathcmd)
+        {
+            printf("minishell: %s command not found111\n", cmd->arg[0]);
+            g_exit_status = 127;
+            exit(g_exit_status);
+        }    
+        execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+        perror("minishell");
+        exit(EXIT_FAILURE);
+    }
+    int status;
+    waitpid(pid, &status, 0);
+
+    if (WIFSIGNALED(status))
     {
-        printf("minishell: %s command not found\n", cmd->arg[0]);
-        g_exit_status = 127;
+        int sig = WTERMSIG(status);
+        if (sig == SIGINT)
+            write(1, "\n", 1);
+        else if (sig == SIGQUIT)
+            write(1, "Quit (core dumped)\n", 20);
+        g_exit_status = 128 + sig;
     }
-    execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
-    perror("minishell");
-    exit(EXIT_FAILURE);
-    }
-    // signal(SIGINT, signal_handler_child);
-    // signal(SIGQUIT, signal_handler_child);
-    wait(NULL);
+    else
+        g_exit_status = WEXITSTATUS(status);
+    // wait(NULL);
     // int status;
     // waitpid(pid, &status, 0);
     // if (WIFSIGNALED(status))

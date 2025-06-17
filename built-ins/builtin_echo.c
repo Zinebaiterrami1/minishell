@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/14 23:30:51 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:16:00 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void ft_echo(t_command *cmd)
             i++;
         }
     }
-    if(cmd && cmd->redir && cmd->redir->name)
+    if(cmd && cmd->redir)
     {
         if(open_file(cmd) == -1)
         {

@@ -158,6 +158,7 @@ int main(int argc, char **argv, char **envp)
         line = readline("\001\033[1;36m\002$ \001\033[1;34m\002minishell V3 \001\033[0m\002 ");
         if(line == NULL)
         {
+            // free(env_lst);
             printf("exit with ctrl+d\n");//for ctrl+d, detect EOF
             break;
         }
@@ -175,7 +176,6 @@ int main(int argc, char **argv, char **envp)
         }
         free(line);
         free_all(getter());
-        
     }
     free(env_lst);
 }
