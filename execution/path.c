@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/17 01:08:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:19:14 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ char* search_cmd(t_command *cmd, t_env *lst)
     
     i = 0;
     // /command
+    if(ft_strcmp(cmd->arg[0], ".") == 0)
+    {
+        return (cmd->arg[0]);
+    }
     if(ft_strchr(cmd->arg[0], '/'))
     {
         if(access(cmd->arg[0], F_OK | X_OK) == 0)
@@ -62,8 +66,8 @@ char* search_cmd(t_command *cmd, t_env *lst)
     while(sp[i])
     {
         joinpath =  ft_strjoin(sp[i], join); // path/cmd;
-        if(access(joinpath, F_OK | X_OK) == 0)
-            return(joinpath);
+       if(access(joinpath, F_OK | X_OK) == 0)
+           return(joinpath);
         i++;        
     }
     return (NULL);
@@ -112,7 +116,8 @@ void execute_externals(t_command *cmd, t_env *env)
     char *pathcmd;
     pid_t pid;
     // int status;
-    
+    signal(SIGINT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
     pid = fork();
     if(pid == 0)
     {
@@ -128,9 +133,16 @@ void execute_externals(t_command *cmd, t_env *env)
         if(f == -1)
             return;
         pathcmd = search_cmd(cmd, env);
+        if(ft_strcmp(pathcmd, ".") == 0)
+        {
+            printf(".: filename argument required\n");
+            printf(".: usage: . filename [arguments]\n");
+            g_exit_status = 2;
+            exit(g_exit_status);
+        }
         if(!pathcmd)
         {
-            printf("minishell: %s command not found111\n", cmd->arg[0]);
+            printf("minishell: %s No such file or directory\n", cmd->arg[0]);
             g_exit_status = 127;
             exit(g_exit_status);
         }    

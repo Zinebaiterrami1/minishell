@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/16 11:33:37 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:26 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int open_file(t_command *cmd)
         if(r->name)
         {
             if(r->type == T_RED_IN) // if type here is redir in > 
+                r->fd_in = open(r->name, O_RDONLY);
+            else if(r->type == T_HERDOC)
                 r->fd_in = open(r->name, O_RDONLY);
             else if(r->type == T_RED_OUT)
                 r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
