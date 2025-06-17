@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/17 11:48:33 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:00:11 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -744,18 +744,10 @@ char *is_exp(char **token_val, t_env **env)
 {
     char *s;
     char *ret;
-    // char *get_val;
 
     s = ft_strdup("");
     ret = ft_strdup("");
     printf("is exp val____________ = %s\n", *token_val);
-    // if(should_not_be_expanded(token_val))
-    // {
-    //     printf("s_should not be exp_________________ %s\n", *token_val);
-    //     return(s);   
-    // }
-
-
     while(**token_val)
     {
         if(**token_val == '$')
@@ -848,7 +840,6 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
     s = NULL;
     if(!token || !token->value)
         return (NULL);
-    // ft_display_env(*env, NULL);
     while(token && *token->value)
     {
         if(*token->value && !ft_strncmp((const char *)(token->value), "$", 1))
@@ -889,46 +880,14 @@ void *creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
     }
     return(SUCCESS_PTR);
 }
-    //         while(val && (unsigned int)i < ft_strlen(val))
-    //         {
-    //             if(!has_space(val) || token->d_quotes)//has_space not numofword
-    //             {
-    //                 s = ft_strjoin(s, val);
-    //                 printf("_______ s __%s_______val __ %s\n",s, val);
-    //                 break;
-    //             }
-    //             else
-    //             {
-    //                 s = ft_strjoin(s, befor_space(val, &i));
-    //                 printf("i = _______ %d\n", i);
-    //                 append_token(token, s, lexer, 1);
-    //                 s = NULL;
-    //             }
-    //             // break;
-    //         }
-    //     }
-    //     else if(*token->value && ft_strncmp((const char *)(token->value), "$", 1))
-    //     {
-    //         printf("salamo3alikom\n");
-    //         s = ft_strjoin(s, create_string(*token->value));
-    //         token->value++;
-    //     }
-    //     // break;
-    // }
-    // if(s)
-    //     append_token(token, s, lexer, 0);
-    // return(NULL);
-// }
-
-
 
 int reel_list(t_lexer *lexer, t_env **env)
 {
     t_token *token;
-    // t_token *last;
+    int herd_num;
 
+    herd_num = 0;
     token = lexer->head;
-    // last = ft_lstlast(lexer->reel_head);
     while(token)
     {
         if(token->type == T_EXP)
@@ -938,7 +897,14 @@ int reel_list(t_lexer *lexer, t_env **env)
         }
         else
             append_token(token, NULL, lexer, 0);
+        if(token->type == T_HERDOC)
+            herd_num++;
         token = token->next;
+    }
+    if(herd_num >= 16)
+    {
+        ft_putstr_fd("maximum here-document count exceeded\n", 2);
+        return(1);
     }
     return(0);
 }
