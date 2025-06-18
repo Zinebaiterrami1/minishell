@@ -6,13 +6,12 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/17 14:19:14 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:29:36 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//fct get path
 char* ft_getpath(t_env *lst)
 {
     t_env *tmp;
@@ -29,7 +28,6 @@ char* ft_getpath(t_env *lst)
     return (NULL);
 }
 
-//fct split
 char** split_path(t_env *lst)
 {
     char *path;
@@ -40,17 +38,8 @@ char** split_path(t_env *lst)
     return (sp);
 }
 
-//search the command in each path to find it and pass it to access
-char* search_cmd(t_command *cmd, t_env *lst)
+static char *utils1(t_command *cmd)
 {
-    // t_command *tmp;
-    char *join;
-    char *joinpath;
-    int i;
-    char **sp;
-    
-    i = 0;
-    // /command
     if(ft_strcmp(cmd->arg[0], ".") == 0)
     {
         return (cmd->arg[0]);
@@ -61,11 +50,22 @@ char* search_cmd(t_command *cmd, t_env *lst)
             return (cmd->arg[0]);
         return (NULL);
     }
+}
+
+char* search_cmd(t_command *cmd, t_env *lst)
+{
+    char *join;
+    char *joinpath;
+    int i;
+    char **sp;
+    
+    i = 0;
+    utils1(cmd);
     sp = split_path(lst);
-    join = ft_strjoin("/", cmd->arg[0]); // /cat
+    join = ft_strjoin("/", cmd->arg[0]);
     while(sp[i])
     {
-        joinpath =  ft_strjoin(sp[i], join); // path/cmd;
+        joinpath =  ft_strjoin(sp[i], join);
        if(access(joinpath, F_OK | X_OK) == 0)
            return(joinpath);
         i++;        
@@ -115,7 +115,7 @@ void execute_externals(t_command *cmd, t_env *env)
     int f;
     char *pathcmd;
     pid_t pid;
-    // int status;
+
     signal(SIGINT, SIG_IGN);
     signal(SIGQUIT, SIG_IGN);
     pid = fork();
@@ -126,7 +126,7 @@ void execute_externals(t_command *cmd, t_env *env)
         if ((!cmd || !cmd->arg || !cmd->arg[0]) && cmd->redir)
         {
             open_file(cmd);
-            return ; // or return NULL or handle properly
+            return ;
         }
         envp = get_envp(env);
         f = open_file(cmd);
@@ -142,17 +142,17 @@ void execute_externals(t_command *cmd, t_env *env)
         }
         if(!pathcmd)
         {
-            printf("minishell: %s No such file or directory\n", cmd->arg[0]);
+            printf("minishell: %s command not found\n", cmd->arg[0]);
             g_exit_status = 127;
             exit(g_exit_status);
+            return ;
         }    
-        execve(pathcmd, cmd->arg, envp); //get envp from linked list t_env*;
+        execve(pathcmd, cmd->arg, envp);
         perror("minishell");
         exit(EXIT_FAILURE);
     }
     int status;
     waitpid(pid, &status, 0);
-
     if (WIFSIGNALED(status))
     {
         int sig = WTERMSIG(status);
@@ -164,13 +164,4 @@ void execute_externals(t_command *cmd, t_env *env)
     }
     else
         g_exit_status = WEXITSTATUS(status);
-    // wait(NULL);
-    // int status;
-    // waitpid(pid, &status, 0);
-    // if (WIFSIGNALED(status))
-    //     g_exit_status = 128 + WTERMSIG(status); // like bash: 130 for SIGINT, 131 for SIGQUIT
-    // else
-    //     g_exit_status = WEXITSTATUS(status);
-    // waitpid(pid, &status, 0);
-    // exit(WEXITSTATUS(status));
 }

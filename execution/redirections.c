@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:26 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:23:36 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int open_file(t_command *cmd)
 {
-    //fct that open file based on the type of redirections
     t_redir *r;
     
     r = cmd->redir;
@@ -23,7 +22,7 @@ int open_file(t_command *cmd)
         printf("open file desc\n");
         if(r->name)
         {
-            if(r->type == T_RED_IN) // if type here is redir in > 
+            if(r->type == T_RED_IN)
                 r->fd_in = open(r->name, O_RDONLY);
             else if(r->type == T_HERDOC)
                 r->fd_in = open(r->name, O_RDONLY);
@@ -50,24 +49,4 @@ int open_file(t_command *cmd)
         r = r->next;
     }
     return (0);
-}
-
-//dup stdin and stdout and save them in a variable, them rest them after exectution
-void restore_state(int stdin, int stdout)
-{
-    dup2(stdin, STDIN_FILENO);
-    close(stdin);
-    dup2(stdout, STDOUT_FILENO);
-    close(stdout);
-}
-
-void save_state(int *stdin, int *stdout)
-{
-    *stdin = dup(STDIN_FILENO);
-    *stdout = dup(STDOUT_FILENO);
-    if(*stdin == -1 || *stdout == -1)
-    {
-        perror("dup");
-        exit(EXIT_FAILURE);
-    }
 }
