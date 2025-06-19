@@ -6,13 +6,13 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:40 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/18 22:09:34 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:07:54 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static	remove_env_key(t_env **env, char *key)
+static void	remove_env_key(t_env **env, char *key)
 {
 	t_env	*current;
 	t_env	*previous;
