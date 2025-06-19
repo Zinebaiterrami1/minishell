@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 09:11:47 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/11 11:35:59 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:37:55 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_itoa(int nbr)
 
 	nb = nbr;
 	len = len_(nb);
-	s = (char *)malloc(sizeof(char) * (len + 1));
+	s = (char *)gc_malloc(sizeof(char) * (len + 1), getter());
 	if (!s)
 		return (NULL);
 	s = conv_str(nb, len, s);

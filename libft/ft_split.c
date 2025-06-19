@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:28:08 by nel-khad          #+#    #+#             */
-/*   Updated: 2024/11/06 13:00:48 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:36:24 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*alloc_cpy(const char *s, char c)
 	int		len;
 
 	len = word_len(s, c);
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	str = (char *)gc_malloc(sizeof(char) * (len + 1), getter());
 	if (!str)
 		return (NULL);
 	str = ft_memcpy(str, s, len);
@@ -79,7 +79,7 @@ char	**ft_split(const char *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1));
+	array = (char **)gc_malloc(sizeof(char *) * (count_word(s, c) + 1), getter());
 	if (!array)
 		return (NULL);
 	while (s[i])

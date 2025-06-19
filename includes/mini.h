@@ -98,6 +98,7 @@ t_env *init_env(char **envp);
 int is_word(t_token_type type);
 char *create_string(char c);
 char *get_exp(char *var, char **env);
+int is_red(t_token_type type);
 
 
 

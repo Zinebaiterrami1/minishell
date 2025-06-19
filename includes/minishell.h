@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/16 22:10:30 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:27:13 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,9 @@ typedef struct s_file
 void print_listt(t_garbage *token);
 int check(char *line);
 
-
 int is_word(t_token_type type);
 char *create_string(char c);
+int is_red(t_token_type type);
 char *get_exp(char *var, t_env **env);
 
 typedef struct s_garbage t_garbage;
