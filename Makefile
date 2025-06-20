@@ -1,8 +1,8 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined -g3
-SRC = built-ins/builtin_echo.c minishell.c built-ins/builtin_pwd.c built-ins/builtin_env.c built-ins/builtin_cd.c built-ins/builtin_exit.c parsing/lexer/lexer.c parsing/parser/parser.c parsing/garbage_collector/gc.c\
-		parsing/lexer/utils.c built-ins/builtin_export.c built-ins/builtin_unset.c \
-		execution/redirections.c execution/path.c execution/multi_pipes.c execution/exec_commands.c 
+SRC = built-ins/builtin_echo.c minishell.c built-ins/builtin_pwd.c built-ins/builtin_env.c built-ins/builtin_cd.c built-ins/builtin_exit.c parsing/lexer/lexer.c parsing/parser/parser.c parsing/garbage_collector/gc.c parsing/garbage_collector/gc_utils.c\
+		parsing/lexer/utils.c built-ins/builtin_export.c built-ins/builtin_unset.c built-ins/builtin_env1.c built-ins/builtin_export1.c\
+		execution/redirections.c execution/path.c execution/multi_pipes.c execution/exec_commands.c execution/path_utils.c execution/utils.c \
 		
 NAME= minishell
 

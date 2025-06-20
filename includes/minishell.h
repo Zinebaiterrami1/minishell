@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/16 22:10:30 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:17:10 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,16 @@
 #include <readline/history.h> 
 #include "structs.h"
 #include "../libft/libft.h"
-// #include "../parsing/garbage_collector/gc.h"
-
 
 #define SUCCESS_PTR ((void *)1)
 #define FAILURE_PTR ((void *)0)
 
 #define PINK "\001\033[1;95m\002"
 #define RESET "\001\033[0m\002"
-
 #define BUFFER_SIZE 1024
 
 extern int g_exit_status;
 
-
-
-
-/*from mimi header*/
 typedef enum s_token_type
 {
     T_D_COTS,
@@ -67,11 +60,10 @@ typedef struct s_token
 {
     char *value;
     int type;
-    int space;//i have a probleme that whene the words are not separated by space my tokenizer separate them and this shouldnt hapen 
+    int space;
     int d_quotes;
     struct s_token *next;
 }t_token;
-
 
 typedef struct s_lexer
 {
@@ -105,40 +97,25 @@ typedef struct s_file
     int expand;
 }t_file;
 
-// typedef struct t_env
-// {
-//     char *line;
-//     char *env_key;
-//     char *env_value;
-//     struct t_env *next;
-// } t_env;
-
-// typedef struct s_redir
-// {
-//     int type;
-//     char *name;
-//     struct s_redir *next;
-// }t_redir;
-
-// typedef struct s_command
-// {
-//     char **arg;
-//     t_redir *redir;
-//     struct s_command *next_com;
-// } t_command;
+typedef struct s_cmd
+{
+    char cmd;
+    char arg;
+    int type;
+    char *value;
+    int outfile;
+    int infile;
+    void *next;
+} t_cmd;
 
 
+/****************************builins****************************/
 void print_listt(t_garbage *token);
 int check(char *line);
-
-
 int is_word(t_token_type type);
 char *create_string(char c);
 char *get_exp(char *var, t_env **env);
-
 typedef struct s_garbage t_garbage;
-
-
 t_command *parser(t_lexer *lexer);
 // void print_listt(t_garbage *token);
 int check(char *line);
@@ -152,47 +129,6 @@ t_env *init_env(char **envp);
 void *minishell(char *line, t_env **env);
 /********************************************************* */
 
-/*from structs header*/
-
-extern int g_exit_status;
-
-// typedef struct t_env
-// {
-//     char *line;
-//     char *env_key;
-//     char *env_value;
-//     int is_printed;
-//     struct t_env *next;
-// } t_env;
-
-// typedef struct s_redir
-// {
-//     int type;
-//     char *name;
-//     int fd_in;
-//     int  fd_out;
-//     struct s_redir *next;
-// }t_redir;
-
-// typedef struct s_command
-// {
-//     char **arg;
-//     t_redir *redir;
-//     struct s_command *next_com;
-// } t_command;
-
-// typedef struct s_pipes
-// {
-//     int fd[2];
-//     int nb_cmd;
-//     pid_t pid;
-    
-// } t_pipes;
-/******************************************************* */
-
-/*from garbage colletctor header*/
-
-// t_garbage **gc;
 
 
 t_garbage **getter();
@@ -203,16 +139,7 @@ void *gc_malloc(size_t size, t_garbage **list);
 // static void add_node(t_garbage **list, t_garbage *new);
 
 /******************************************* */
-typedef struct s_cmd
-{
-    char cmd;
-    char arg;
-    int type;
-    char *value;
-    int outfile;
-    int infile;
-    void *next;
-} t_cmd;
+
 
 typedef struct s_pipes t_pipes;
 
@@ -220,7 +147,8 @@ extern int g_last_status;
 /*----builtin----*/
 
 void ft_echo(t_command *cmd);
-void ft_pwd();
+// void ft_pwd();
+void ft_pwd(t_command *cmd);
 t_env *init_env(char **envp);
 int is_buitins(t_command *list);
 void execute_buitlins(t_env **m_env, t_command *cmd);
@@ -252,6 +180,13 @@ void *multiple_pipes(t_env **env, t_command *list);
 int first_command(t_command *cmd, t_env **envp, t_pipes p);
 int last_command(t_command *cmd, t_env **envp, t_pipes p);
 int mid_command(t_command *cmd, t_env **envp, t_pipes p);
-
+void ft_new_value(t_env *tmp, char *key, char *value, char *new_value);
+void update_line(t_env *node);
 void	print_test(t_env *head);
+void	free_key_value(char *key, char *value);
+void print_export(t_env* export);
+void	dup2_close(t_redir *r);
+void	handle_cases(t_command *cmd, t_env *env);
+int	is_red(t_token_type type);
+
 #endif

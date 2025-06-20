@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/19 22:12:48 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/20 13:03:50 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_cd(t_command *cmd, t_env **env)
 
 	if (!cmd->arg[1])
 	{
-		printf("must be a relative or absolute path\n");
+		write(1, "must be a relative or absolute path\n", 36);
 		return (-1);
 	}
 	old_path = getcwd(NULL, 0);

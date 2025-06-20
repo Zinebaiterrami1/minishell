@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/19 23:42:17 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:00:43 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,41 @@ char	**get_envp(t_env *lst)
 	return (envp);
 }
 
-void	signal_handler_child(int signal_num)
+// void	signal_handler_child(int signal_num)
+// {
+// 	if (signal_num == SIGINT)
+// 	{
+// 		printf("\n");
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 	}
+// 	else
+// 	{
+// 		printf("Quit (core dumped)\n");
+// 	}
+// }
+
+void	wait_child(pid_t pid)
 {
-	if (signal_num == SIGINT)
+	int	status;
+	int	sig;
+
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else
-	{
-		printf("Quit (core dumped)\n");
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+			write(1, "\n", 1);
+		else if (sig == SIGQUIT)
+			write(1, "Quit (core dumped)\n", 20);
+		g_exit_status = 128 + sig;
 	}
 }
 
 void	execute_externals(t_command *cmd, t_env *env)
 {
 	int		f;
-	char	*pathcmd;
 	pid_t	pid;
 
 	signal(SIGINT, SIG_IGN);
@@ -73,23 +89,5 @@ void	execute_externals(t_command *cmd, t_env *env)
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
-}
-
-void	wait_child(pid_t pid)
-{
-	int	status;
-	int	sig;
-
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		if (sig == SIGINT)
-			write(1, "\n", 1);
-		else if (sig == SIGQUIT)
-			write(1, "Quit (core dumped)\n", 20);
-		g_exit_status = 128 + sig;
-	}
-	else
-		g_exit_status = WEXITSTATUS(status);
+	wait_child(pid);
 }

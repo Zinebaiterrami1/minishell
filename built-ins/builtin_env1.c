@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:59:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/19 22:13:13 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/20 13:17:14 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	write_env(t_env *env, int fd)
 	{
 		if (env->env_value)
 		{
-			write(fd, env->env_key, ft_strlen(env->env_key));
-			write(fd, "=\"", 2);
-			write(fd, env->env_value, ft_strlen(env->env_value));
-			write(fd, "\"", 1);
-			write(fd, "\n", 1);
+			ft_putstr_fd(env->env_key, fd);
+			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd(env->env_value, fd);
+			ft_putstr_fd("\"", fd);
+			ft_putstr_fd("\n", fd);
 		}
 		env = env->next;
 	}
