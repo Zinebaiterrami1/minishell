@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/19 12:53:07 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:31:27 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,7 @@ int	handel_herdoc(t_env **env, t_token *token, t_redir *redir)
 			free(line);
 		}
 	}
+	close(redir->herdoc->fd);
 	return (EXIT_SUCCESS);
 }
 
@@ -311,14 +312,14 @@ int	creat_red(t_redir **red_list, int type, t_token *token, t_lexer *lexer)
 	redir->next = NULL;
 	redir->herdoc = NULL;
 	redir->fd_in = 0;
-	redir->fd_out = 0;
+	redir->fd_out = 1;
 	if (type == T_HERDOC)
 	{
 		if (handel_herdoc(lexer->env, token, redir) || !redir)
 			return (EXIT_FAILURE);
 	}
-	if (lexer->error)
-		return (EXIT_FAILURE);
+	// if (lexer->error)
+	// 	return (EXIT_FAILURE);
 	add_redir(red_list, redir);
 	return (EXIT_SUCCESS);
 }
@@ -351,12 +352,12 @@ void	print_listtt(t_command *token)
 	}
 }
 
-// int is_invalid(t_token *token)
-// {
-//     if(!token)
-//         return(1);
-//     return(0);
-// }
+int is_invalid(t_token *token)
+{
+    if(!token)
+        return(1);
+    return(0);
+}
 
 void	*handle_redirection(t_command *cur_comd, t_token **token,
 		t_lexer *lexer)
@@ -440,10 +441,13 @@ t_command	*creat_comand_list(t_token *token, t_lexer *lexer)
 //             {
 //                 token = token->next;
 //                 if(creat_red(&cur_comd->redir, red_type, token, lexer))
+// 				{
+// 					printf("salam\n");
 //                     return(NULL);
+// 				}
 //             }
 //             else
-//                 return(syntax_error());
+//                 return(syntax_error(2));
 //         }
 //         if((token->next == NULL || token->type == T_PIPE ) && cur_comd->arg)
 //         {
@@ -462,6 +466,6 @@ t_command	*creat_comand_list(t_token *token, t_lexer *lexer)
 t_command	*parser(t_lexer *lexer)
 {
 	if (parser_check(lexer->head))
-		return (syntax_error());
+		return (syntax_error(1));
 	return (creat_comand_list(lexer->reel_head, lexer));
 }

@@ -6,28 +6,12 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/19 12:59:45 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:22:20 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// t_lexer *init_lexer(char *line)
-// {
-//     t_lexer *lexer;
-//     lexer = gc_malloc(sizeof(t_lexer), getter());
-//     lexer->line = line;
-//     lexer->head = NULL;
-//     lexer->reel_head = NULL;
-//     lexer->i = 0;
-//     lexer->c = line[lexer->i];
-//     lexer->line_size = ft_strlen(line);
-//     lexer->error = 0;
-//     lexer->status_d = 0;
-//     lexer->status_s = 0;
-//     // lexer->head->space = 0;
-//     return(lexer);
-// }
 t_lexer	*init_lexer(char *line, t_env **env)
 {
 	t_lexer	*lexer;
@@ -51,7 +35,6 @@ void	lexer_skip_white(t_lexer *lexer)
 {
 	while (lexer->line[lexer->i] == ' ' || lexer->line[lexer->i] == '\t')
 		lexer->i++;
-	// lexer->c = lexer->line[lexer->i];
 }
 
 t_token	*set_token(t_token *token, char *cmd, int type)
@@ -72,11 +55,13 @@ t_token	*set_new_token(t_token *token, char *s, t_token *old_token,
 		token->space = 1;
 	else
 		token->space = old_token->space;
-	if (old_token->type == T_WORD && old_token->next && !token->space)
+	if (old_token->type == T_WORD && old_token->next && !token->space 
+		&& !is_red(old_token->next->type) && old_token->next->type != T_PIPE)
 		token->type = old_token->next->type;
 	else
 		token->type = old_token->type;
 	token->next = NULL;
+	printf("token = %s, %d\n", token->value, token->type);
 	return (token);
 }
 t_token	*handel_pipe(t_lexer *lexer)
@@ -148,21 +133,8 @@ t_token	*handel_s_quotes(t_lexer *lexer)
 	ft_strlcpy(s, &lexer->line[++lexer->i], len + 1);
 	lexer->i = i + 1;
 	return (set_token(token, s, T_S_COTS));
-		/////////////////needs check with freind and create handel d
 }
 
-// int valid_exp(char *s)
-// {
-//     int i;
-
-//     i = 0;
-//     if(s[0] != '_' && !ft_isalpha(s[0]))
-//         return(0);
-//     while(s[i])
-//     {
-//         if(s[])
-//     }
-// }
 char	*create_string(char c)
 {
 	char	*tmp;
@@ -194,25 +166,6 @@ char	*get_string(char *s, int i)
 	return (str);
 }
 
-// char *get_next_word(char *str, int *i)
-// {
-//     char *s;
-//     int j;
-
-//     s = NULL;
-//     j = 0;
-//     while(str[*i] && str[*i + 1])
-//     {
-//         if (str[*i] == '$' && str[*i + 1] == '$')
-//             (*i) += 2;
-//     }
-//     while(str[*i] && str[*i] != ' ' && str[*i] != '\t')
-//     {
-//         s = ft_strjoin(s, create_string(str[*i]));
-//         (*i)++;
-//     }
-//     return(s);
-// }
 
 int	has_dollar(char **s)
 {
@@ -270,7 +223,6 @@ t_token	*handel_d_quotes(t_lexer *lexer)
 	if (has_dollar(&s))
 		return (set_token(token, s, T_EXP));
 	return (set_token(token, s, T_D_COTS));
-		/////////////////needs check with freind and create handel d
 }
 
 int	is_special(char c)
@@ -729,6 +681,7 @@ int	num_of_word(char *str)
 	return (count);
 }
 
+
 char	*is_exp(char **token_val, t_env **env)
 {
 	char	*s;
@@ -736,7 +689,7 @@ char	*is_exp(char **token_val, t_env **env)
 
 	s = gc_strdup("");
 	ret = gc_strdup("");
-	printf("is exp val____________ = %s\n", *token_val);
+	// printf("is exp val____________ = %s\n", *token_val);
 	while (**token_val)
 	{
 		if (**token_val == '$')
@@ -753,7 +706,7 @@ char	*is_exp(char **token_val, t_env **env)
 					s = ft_strjoin(s, create_string(**token_val));
 					(*token_val)++;
 				}
-				printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%s\n", *token_val);
+				// printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%s\n", *token_val);
 				ret = ft_strjoin(ret, get_exp(s, env));
 				s = NULL;
 			}
@@ -769,23 +722,8 @@ char	*is_exp(char **token_val, t_env **env)
 			(*token_val)++;
 		}
 	}
-	printf("ret = __%s\n", ret);
+	// printf("ret = __%s\n", ret);
 	return (ret);
-	// printf("is exp val____________ = %s\n", *token_val);
-	// if(ft_isalpha(**token_val) || **token_val == '_')
-	// {
-	//     while(**token_val == '_' || ft_isalnum(**token_val))
-	//     {
-	//         s = ft_strjoin(s, create_string(**token_val));
-	//         (*token_val)++;
-	//     }
-	//     ret = get_exp(s, env);
-	//     printf("is exp return____________ = %s\n", ret);
-	//     if(ret)
-	//         return(ret);
-	//     return(NULL);
-	// }
-	// return(NULL);
 }
 
 int	is_export(t_token *last, t_token *token)
@@ -889,7 +827,7 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 //     while(token && *token->value)
 //     {
 //         if(*token->value && !ft_strncmp((const char *)(token->value), "$",
-		// 1))
+// 		1))
 //         {
 //             val = ft_strjoin(s, is_exp(&token->value, env));
 //             if(val && num_of_word(val) > 1 &&(ft_lstlast(lexer->reel_head))
@@ -898,18 +836,17 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 //                 || ft_lstlast(lexer->reel_head)->type == T_RED_IN))
 //                 {
 //                     lexer->error = 1;
-//                     return(ft_putstr_fd("ambiguous redirect\n", 2),
-	// FAILURE_PTR);
+//                     return(ft_putstr_fd("ambiguous redirect\n", 2),FAILURE_PTR);
 //                 }
 //             if(val && has_space(val) && !token->d_quotes)
 //             {
 //                 splited = ft_split(val, ' ');
 //                 if(is_export(ft_lstlast(lexer->reel_head), token))
-//                     append_token(token, val, lexer, 1);
+//                     append_token(token, val, lexer, 0);
 //                 else
 //                     while(splited[i])
 //                     {
-//                         append_token(token, splited[i], lexer, 1);
+//                         append_token(token, splited[i], lexer, 0);
 //                         i++;
 //                     }
 //             }
@@ -984,7 +921,7 @@ t_command	*parsing(char *line, t_env **env)
 
 	(void)env;
 	if (check(line))
-		return (syntax_error());
+		return (syntax_error(0));
 	lexer = init_lexer(line, env);
 	while (lexer->i < lexer->line_size)
 	{
