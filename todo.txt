@@ -1,0 +1,4 @@
+fix export norm
+export a="slam labas"
+export b="bikhir hmdll"
+export $a=$b

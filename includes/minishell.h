@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/18 13:27:13 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/23 01:57:11 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ typedef struct s_file
 
 void print_listt(t_garbage *token);
 int check(char *line);
-
 int is_word(t_token_type type);
 char *create_string(char c);
 int is_red(t_token_type type);
+int	is_special(char c);
 char *get_exp(char *var, t_env **env);
 
 typedef struct s_garbage t_garbage;
@@ -150,44 +150,57 @@ char *get_env_value(t_env *env_list, const char *key);
 t_env *split_env(t_env *lst);
 t_env *init_env(char **envp);
 void *minishell(char *line, t_env **env);
+char	*is_exp(char **token_val, t_env **env);
+void	split_value(char *val, t_lexer *lexer, t_token *token);
+
+
 /********************************************************* */
+int	is_word(t_token_type type);
+int	is_red(t_token_type type);
+t_command	*new_comd(t_command **list, t_token *token);
+void	fill_arg(t_command *comd, int f, t_token *token);
+void	*handle_redirection(t_command *cur_comd, t_token **token,t_lexer *lexer);
+int	is_space(char c);
+
+
+
 
 /*from structs header*/
 
 extern int g_exit_status;
 
-// typedef struct t_env
-// {
-//     char *line;
-//     char *env_key;
-//     char *env_value;
-//     int is_printed;
-//     struct t_env *next;
-// } t_env;
+t_token	*handel_d_quotes(t_lexer *lexer);
+t_token	*handel_s_quotes(t_lexer *lexer);
+void *herdoc_check(t_herdoc **herdoc, t_env **env);
+char	*herdoc_expand(char *line, t_herdoc *herdoc);
+int	handel_herdoc(t_env **env, t_token *token, t_redir *redir);
+t_token	*handel_pipe(t_lexer *lexer);
+t_token	*handel_dilim(t_lexer *lexer);
+t_token	*handel_else(t_lexer *lexer);
+t_token	*handel_word(t_lexer *lexer);
+t_token	*handel_redir(t_lexer *lexer);
+t_token	*handel_dollar(t_lexer *lexer);
+int	has_dollar(char **s);
+t_lexer	*init_lexer(char *line, t_env **env);
+t_token	*set_token(t_token *token, char *cmd, int type);
+t_token	*get_next_token(t_lexer *lexer);
+void	append_token(t_token *old_token, char *s, t_lexer *lexer, int separ_red);
+void	lexer_skip_white(t_lexer *lexer);
+void	*adding_token(t_lexer *lexer, t_token *token);
+int	reel_list(t_lexer *lexer, t_env **env);
+void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env);
 
-// typedef struct s_redir
-// {
-//     int type;
-//     char *name;
-//     int fd_in;
-//     int  fd_out;
-//     struct s_redir *next;
-// }t_redir;
 
-// typedef struct s_command
-// {
-//     char **arg;
-//     t_redir *redir;
-//     struct s_command *next_com;
-// } t_command;
+/******************************************************** */
 
-// typedef struct s_pipes
-// {
-//     int fd[2];
-//     int nb_cmd;
-//     pid_t pid;
-    
-// } t_pipes;
+
+
+
+
+
+
+
+
 /******************************************************* */
 
 /*from garbage colletctor header*/
