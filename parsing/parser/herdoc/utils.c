@@ -46,16 +46,15 @@ static int	exit_failure(char *msg)
 	return (EXIT_FAILURE);
 }
 
-
-void *herdoc_check(t_herdoc **herdoc, t_env **env)
+void	*herdoc_check(t_herdoc **herdoc, t_env **env)
 {
 	*herdoc = init_herdoc(env);
-	if(!*herdoc)
-		return(NULL);
-	if(open_herd_file(*herdoc) < 0)
+	if (!*herdoc)
+		return (NULL);
+	if (open_herd_file(*herdoc) < 0)
 	{
 		exit_failure("open failed");
-		return(NULL);
+		return (NULL);
 	}
-	return(herdoc);
+	return (herdoc);
 }

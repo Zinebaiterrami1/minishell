@@ -6,68 +6,51 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/17 15:47:55 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 02:16:45 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int open_file(t_command *cmd)
+int	open_file(t_command *cmd)
 {
-    //fct that open file based on the type of redirections
-    t_redir *r;
-    
-    r = cmd->redir;
-    while(r)
-    {
-        printf("open file desc\n");
-        if(r->name)
-        {
-            if(r->type == T_RED_IN) // if type here is redir in > 
-                r->fd_in = open(r->name, O_RDONLY);
-            else if(r->type == T_HERDOC)
-                r->fd_in = r->herdoc->fd;
-            else if(r->type == T_RED_OUT)
-                r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-            else if(r->type == T_RED_OUT_APEND)
-                r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
-            if(r->fd_out == -1 || r->fd_in == -1)
-            {
-                printf("error in fd\n");
-                // perror(r->name);
-                return (-1);
-            }
-            printf("file name: %s\n", r->name);
-            if(r->fd_in != 0)
-                dup2(r->fd_in, 0);
-            if(r->fd_out != 1)
-                dup2(r->fd_out, 1);
-            if(r->fd_in > 2)
-                close(r->fd_in);
-            if(r->fd_out > 2)
-                close(r->fd_out);
-        }
-        r = r->next;
-    }
-    return (0);
+	t_redir	*r;
+
+	r = cmd->redir;
+	// if(!r->name || !cmd->redir)
+	// 	return (-1);
+	while (r)
+	{
+		if (r->name)
+		{
+			if (r->type == T_RED_IN)
+				r->fd_in = open(r->name, O_RDONLY);
+			else if (r->type == T_HERDOC)
+				r->fd_in = open(r->herdoc->file_name, O_RDONLY);
+			else if (r->type == T_RED_OUT)
+				r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			else if (r->type == T_RED_OUT_APEND)
+				r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			if (r->fd_out == -1 || r->fd_in == -1)
+			{
+				printf("error in fd\n");
+				return (-1);
+			}
+			dup2_close(r);
+		}
+		r = r->next;
+	}
+	return (0);
 }
 
-//dup stdin and stdout and save them in a variable, them rest them after exectution
-void restore_state(int stdin, int stdout)
+void	dup2_close(t_redir *r)
 {
-    dup2(stdin, STDIN_FILENO);
-    close(stdin);
-    dup2(stdout, STDOUT_FILENO);
-    close(stdout);
-}
-
-void save_state(int *stdin, int *stdout)
-{
-    *stdin = dup(STDIN_FILENO);
-    *stdout = dup(STDOUT_FILENO);
-    if(*stdin == -1 || *stdout == -1)
-    {
-        perror("dup");
-        exit(EXIT_FAILURE);
-    }
+	if (r->fd_in != 0)
+		dup2(r->fd_in, 0);
+	if (r->fd_out != 1)
+		dup2(r->fd_out, 1);
+	if (r->fd_in > 2)
+		close(r->fd_in);
+	if (r->fd_out > 2)
+		close(r->fd_out);
 }

@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 00:11:51 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 02:05:56 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ char	*herdoc_expand(char *line, t_herdoc *herdoc)
 				s = ft_strjoin(s, get_expand(line, &i, herdoc));
 		}
 		else
+		{
 			while (line[i] && line[i] != '$')
 			{
 				s = ft_strjoin(s, create_string(line[i]));
 				i++;
 			}
+		}
 	}
 	return (s);
 }

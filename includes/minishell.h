@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/23 01:57:11 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 02:20:48 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@
 #include <readline/history.h> 
 #include "structs.h"
 #include "../libft/libft.h"
-// #include "../parsing/garbage_collector/gc.h"
-
+#include <sys/stat.h>
 
 #define SUCCESS_PTR ((void *)1)
 #define FAILURE_PTR ((void *)0)
 
 #define PINK "\001\033[1;95m\002"
 #define RESET "\001\033[0m\002"
-
 #define BUFFER_SIZE 1024
 
 extern int g_exit_status;
@@ -126,6 +124,9 @@ typedef struct s_file
 //     t_redir *redir;
 //     struct s_command *next_com;
 // } t_command;
+
+
+
 
 
 void print_listt(t_garbage *token);
@@ -227,13 +228,46 @@ typedef struct s_cmd
     void *next;
 } t_cmd;
 
+/****************************builins****************************/
+void print_listt(t_garbage *token);
+int check(char *line);
+int is_word(t_token_type type);
+char *create_string(char c);
+char *get_exp(char *var, t_env **env);
+typedef struct s_garbage t_garbage;
+t_command *parser(t_lexer *lexer);
+// void print_listt(t_garbage *token);
+int check(char *line);
+void *syntax_error();
+t_command *lexer(char *line);
+// int *lexer(char *line);
+// int syntax_error();
+char *get_env_value(t_env *env_list, const char *key);
+t_env *split_env(t_env *lst);
+t_env *init_env(char **envp);
+void *minishell(char *line, t_env **env);
+/********************************************************* */
+
+
+
+t_garbage **getter();
+char	*gc_strdup(const char *s1);
+void free_all(t_garbage **list);
+void *gc_malloc(size_t size, t_garbage **list);
+// static t_garbage *get_last_node(t_garbage *list);
+// static void add_node(t_garbage **list, t_garbage *new);
+
+/******************************************* */
+
+
 typedef struct s_pipes t_pipes;
 
 extern int g_last_status;
 /*----builtin----*/
 
 void ft_echo(t_command *cmd);
-void ft_pwd();
+// void ft_pwd();
+void ft_pwd(t_command *cmd);
 t_env *init_env(char **envp);
 int is_buitins(t_command *list);
 void execute_buitlins(t_env **m_env, t_command *cmd);
@@ -265,6 +299,21 @@ void *multiple_pipes(t_env **env, t_command *list);
 int first_command(t_command *cmd, t_env **envp, t_pipes p);
 int last_command(t_command *cmd, t_env **envp, t_pipes p);
 int mid_command(t_command *cmd, t_env **envp, t_pipes p);
-
+void ft_new_value(t_env *tmp, char *key, char *value, char *new_value);
+void update_line(t_env *node);
 void	print_test(t_env *head);
+void	free_key_value(char *key, char *value);
+void print_export(t_env* export);
+void	dup2_close(t_redir *r);
+void	handle_cases(t_command *cmd, t_env *env);
+int	is_red(t_token_type type);
+int	wait_children(t_pipes *p);
+
+/*********signals*******/
+void	            signal_handler(int signal_num);
+void                setup_signals_parent(void);
+void                setup_signals_child(void);
+void                ignore_signals(void);
+void                setup_signals_heredoc(void);
+void                sig_handler_heredoc(int signal);
 #endif
