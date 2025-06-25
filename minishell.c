@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:03:05 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:34:10 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:20:05 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ static void	setup_minishell(char *line, t_env *env_lst)
 	while (1)
 	{
 		line = readline(PINK "$ \001\033[1;34m\002minishell V3 " RESET);
-		printf("exit status 1 = %d\n",g_exit_status);
 		if (line == NULL)
 		{
 			ft_putstr_fd("exit\n", 1);
+			ft_clean(&env_lst);
 			break ;
 		}
 		if (line[0] == '\0')
@@ -64,6 +64,7 @@ static void	setup_minishell(char *line, t_env *env_lst)
 			free(line);
 			continue ;
 		}
+		setup_signals_parent();
 		free(line);
 		free_all(getter());
 	}
@@ -81,5 +82,5 @@ int	main(int argc, char **argv, char **envp)
 	env_lst = split_env(env_lst);
 	setup_signals_parent();
 	setup_minishell(line, env_lst);
-	free(env_lst);
+	// free(env_lst);
 }

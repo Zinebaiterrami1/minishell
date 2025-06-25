@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:20:48 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:22:24 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ void *multiple_pipes(t_env **env, t_command *list);
 int first_command(t_command *cmd, t_env **envp, t_pipes p);
 int last_command(t_command *cmd, t_env **envp, t_pipes p);
 int mid_command(t_command *cmd, t_env **envp, t_pipes p);
-void ft_new_value(t_env *tmp, char *key, char *value, char *new_value);
+int ft_new_value(t_env *tmp, char *key, char *value, char *new_value);
 void update_line(t_env *node);
 void	print_test(t_env *head);
 void	free_key_value(char *key, char *value);
@@ -308,7 +308,8 @@ void	dup2_close(t_redir *r);
 void	handle_cases(t_command *cmd, t_env *env);
 int	is_red(t_token_type type);
 int	wait_children(t_pipes *p);
-
+void ft_clean(t_env **env);
+// int	handel_herdoc(t_env **env, t_token *token, t_redir *redir);
 /*********signals*******/
 void	            signal_handler(int signal_num);
 void                setup_signals_parent(void);

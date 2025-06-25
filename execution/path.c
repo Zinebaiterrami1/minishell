@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:15:54 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:10:13 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ char	**split_path(t_env *lst)
 	return (sp);
 }
 
-// static char	*utils1(t_command *cmd)
-// {
-// 	if (ft_strchr(cmd->arg[0], '/'))
-// 	{
-// 		if (access(cmd->arg[0], F_OK | X_OK) == 0)
-// 			return (cmd->arg[0]);
-// 	}
-// 	return (NULL);
-// }
-
 char	*search_cmd(t_command *cmd, t_env *lst)
 {
 	char	*join;
@@ -60,16 +50,9 @@ char	*search_cmd(t_command *cmd, t_env *lst)
 	char	**sp;
 
 	i = 0;
-	//utils1(cmd);
 	sp = split_path(lst);
 	if(!sp)
 	{
-		// if(access(cmd->arg[0], F_OK) != 0)
-		// {
-			printf("command not found\n");
-			g_exit_status = 127;
-			exit(g_exit_status);
-		// }	
 		joinpath = ft_strjoin("./", cmd->arg[0]);
 		printf("joinpath; %s\n", cmd->arg[0]);
 		return (joinpath);
@@ -84,9 +67,3 @@ char	*search_cmd(t_command *cmd, t_env *lst)
 	}
 	return (NULL);
 }
-
-
-
-
-
-//wax cmd fiha / --> eayt l stat xf wax directory else check wax acces = 0 

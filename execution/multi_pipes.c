@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:15:36 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:52:29 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static pid_t	close_fd(t_pipes *p)
 {
-	dup2(p->fd[0], 0);
+	dup2(p->fd[0], STDIN_FILENO);
 	close(p->fd[0]);
 	close(p->fd[1]);
 	return (p->pid);
@@ -25,6 +25,7 @@ pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 	int	error;
 
 	error = 1;
+	(void)curr_cmd;
 	p->pid = fork();
 	if (p->pid == -1)
 	{
@@ -35,14 +36,13 @@ pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 	{
 		if (curr_cmd == 0)
 			error = first_command(cmd, envp, *p);
-		if (curr_cmd == p->nb_cmd - 1)
+		else if (curr_cmd == p->nb_cmd - 1)
 			error = last_command(cmd, envp, *p);
 		else
 			error = mid_command(cmd, envp, *p);
 	}
 	if (error == -1)
 	{
-			printf("8\n");
 		g_exit_status = 1;
 		return (error);
 	}
@@ -64,8 +64,6 @@ int	wait_children(t_pipes *p)
 		wait(NULL);
 		i++;
 	}
-	printf("--------%d\n", g_exit_status);
-	printf("--ilias--%d\n", status);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
@@ -100,6 +98,8 @@ void	*multiple_pipes(t_env **env, t_command *list)
 		list = list->next_com;
 		curr_cmd++;
 	}
+	ft_putstr_fd(ft_itoa(curr_cmd), 2);
+	ft_putstr_fd("\n", 2);
 	wait_children(&p);
 	return ("success\n");
 }

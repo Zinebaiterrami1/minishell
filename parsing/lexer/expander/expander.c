@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 12:03:46 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:19:36 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 {
 	char	*s;
 	char	*val;
-	int		i;
 
-	i = 0;
 	s = NULL;
 	if (!token->value)
 		return (NULL);

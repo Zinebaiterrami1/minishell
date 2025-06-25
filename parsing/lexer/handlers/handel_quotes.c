@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handel_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 14:15:28 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:12:23 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	has_dollar(char **s)
 		if (str[i])
 			i++;
 	}
-	printf("count exp = %d\n", count);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/24 02:27:44 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:37:06 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	handel_herdoc(t_env **env, t_token *token, t_redir *redir)
 		setup_signals_heredoc();
 		read_fill(redir->herdoc, token);
 		close(redir->herdoc->fd);
+		ft_clean(env);
+		free_all(getter());
 		exit(g_exit_status);
 	}
 	waitpid(pid, &status, 0);

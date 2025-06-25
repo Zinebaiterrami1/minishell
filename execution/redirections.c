@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:16:45 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:30:57 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ int	open_file(t_command *cmd)
 			if (r->type == T_RED_IN)
 				r->fd_in = open(r->name, O_RDONLY);
 			else if (r->type == T_HERDOC)
+			{
+				printf("heredoc--%s--", r->herdoc->file_name);
 				r->fd_in = open(r->herdoc->file_name, O_RDONLY);
+			}
 			else if (r->type == T_RED_OUT)
 				r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			else if (r->type == T_RED_OUT_APEND)
 				r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (r->fd_out == -1 || r->fd_in == -1)
 			{
-				printf("error in fd\n");
+				perror("");
 				return (-1);
 			}
 			dup2_close(r);

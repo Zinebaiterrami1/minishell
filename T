@@ -1,2 +1,0 @@
-open file desc
-file name: F

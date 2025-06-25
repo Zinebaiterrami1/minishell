@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:25:02 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:21:47 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:25:33 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,12 @@
 void sig_handler_heredoc(int signal)
 {
     (void)signal;
-    write(1, "\n", 1);
-    rl_on_new_line();
-    rl_redisplay();                                                                                                                                                                                                                                                                                                                                                                                             
+	write(1, "\n", 1); 
+	g_exit_status = 130;
+	exit(g_exit_status);                                                                                                                                                                                                                                                                                                                                                                                      
 }
 
 void setup_signals_heredoc(void)
 {
-    struct sigaction sa;
-
-	sa.sa_handler = signal_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
+	signal(SIGINT, sig_handler_heredoc);
 }

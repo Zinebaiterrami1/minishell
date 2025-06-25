@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 14:24:38 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:07:18 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	append_token(t_token *old_token, char *s, t_lexer *lexer, int separ_red)
 
 	token = gc_malloc(sizeof(t_token), getter());
 	set_new_token(token, s, old_token, separ_red);
-	printf("append_token->val ____________________ %s\n", token->value);
 	adding_new_token(lexer, token);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 20:33:47 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:59:23 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	print_list(t_token *token)
 	printf("token list : ");
 	while (token)
 	{
-		printf("%s (%d) [%d] --> ", token->value, token->type, token->space);
 		token = token->next;
 	}
 	printf("\n");
@@ -86,12 +85,12 @@ void	*minishell(char *line, t_env **env_lst)
 		execute_externals(list, *env_lst);
 	else if (ft_lstsizee(list) > 1)
 		if (!multiple_pipes(env_lst, list))
-			return (NULL);
+			return (SUCCESS_PTR);
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdin);
 	close(stdout);
-	return (list);
+	return (NULL);
 }
 
 // int lexer(char *line)

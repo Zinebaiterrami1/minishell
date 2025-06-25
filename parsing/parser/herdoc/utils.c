@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 00:08:58 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:32:56 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	open_herd_file(t_herdoc *herdoc)
 	int		i;
 
 	i = 0;
-	path = ft_strdup("/tmp/herdoc_");
+	path = gc_strdup("/tmp/herdoc_");
 	while (1)
 	{
 		if (access(path, F_OK) != 0)
@@ -37,6 +37,7 @@ static int	open_herd_file(t_herdoc *herdoc)
 		i++;
 	}
 	herdoc->fd = open(path, O_CREAT | O_RDWR, 0644);
+	herdoc->file_name = path;
 	return (herdoc->fd);
 }
 

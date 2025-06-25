@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:38:54 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:17:06 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:38:48 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,14 @@ void	handle_cases(t_command *cmd, t_env *env)
 		// g_exit_status = 127;
 		// exit(g_exit_status);
 			fprintf(stderr, "[DEBUG] exiting with 127\n");
-		exit(127);
+					g_exit_status = 127;
+		exit(g_exit_status);
+		// exit(127);
 	}
 	execve(pathcmd, cmd->arg, get_envp(env));
-	perror("minishell");
+	perror(cmd->arg[0]);
 	fprintf(stderr, "DEBUG: execve failed, exiting with 126\n");
-	exit(126);
+	ft_clean(&env);
+	g_exit_status = 127;
+	exit(g_exit_status);
 }
