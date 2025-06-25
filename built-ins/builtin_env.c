@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:14 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 21:24:14 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:21:19 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,23 @@ void	update_line(t_env *node)
 	node->line = newline;
 }
 
-void    set_env_value(t_env **env_list, char *key, char *value)
+void	set_env_value(t_env **env_list, char *key, char *value)
 {
-    t_env    *tmp;
-    t_env    *new_node;
-    char    *new_value;
+	t_env	*tmp;
+	t_env	*new_node;
+	char	*new_value;
 
-    new_value = NULL;
-    if (!*env_list || !env_list)
-        return ;
-    tmp = *env_list;
-    if(ft_new_value(tmp, key, value, new_value))
-        return ; //updated, dont add new node
-    new_node = ft_lstnew(key, value);
-    if (!new_node)
-        return ;
-    update_line(new_node);
-    ft_lstadd_backk(env_list, new_node);
+	new_value = NULL;
+	if (!*env_list || !env_list)
+		return ;
+	tmp = *env_list;
+	if (ft_new_value(tmp, key, value, new_value))
+		return ;
+	new_node = ft_lstnew(key, value);
+	if (!new_node)
+		return ;
+	update_line(new_node);
+	ft_lstadd_backk(env_list, new_node);
 }
 
 t_env	*split_env(t_env *lst)

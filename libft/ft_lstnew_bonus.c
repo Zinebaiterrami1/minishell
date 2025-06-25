@@ -15,8 +15,8 @@
 t_env	*ft_lstnew(char *key, char *value)
 {
 	t_env	*list;
-	char *join;
-	
+	char	*join;
+
 	list = malloc(sizeof(t_env));
 	if (!list)
 		return (NULL);
@@ -25,6 +25,6 @@ t_env	*ft_lstnew(char *key, char *value)
 	join = ft_strjoin(list->env_key, "=");
 	join = ft_strjoin(join, list->env_value);
 	list->line = join;
-    list->next = NULL;
+	list->next = NULL;
 	return (list);
 }

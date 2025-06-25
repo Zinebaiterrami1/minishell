@@ -34,7 +34,7 @@ char	**split_path(t_env *lst)
 	char	**sp;
 
 	path = ft_getpath(lst);
-	if(!path)
+	if (!path)
 	{
 		return (NULL);
 	}
@@ -51,7 +51,7 @@ char	*search_cmd(t_command *cmd, t_env *lst)
 
 	i = 0;
 	sp = split_path(lst);
-	if(!sp)
+	if (!sp)
 	{
 		joinpath = ft_strjoin("./", cmd->arg[0]);
 		printf("joinpath; %s\n", cmd->arg[0]);

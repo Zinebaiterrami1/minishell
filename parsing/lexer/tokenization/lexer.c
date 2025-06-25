@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/24 22:59:23 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/26 00:03:10 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	*minishell(char *line, t_env **env_lst)
 	else if (ft_lstsizee(list) > 1)
 		if (!multiple_pipes(env_lst, list))
 			return (SUCCESS_PTR);
+	ft_clean(env_lst);
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdin);

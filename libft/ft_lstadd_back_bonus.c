@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:07:51 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/04/24 17:00:39 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:11:55 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ void	ft_lstadd_back(t_token **token, t_token *new)
 	ptr = ft_lstlast(*token);
 	if (ptr)
 		ptr->next = new;
-	return;
-	// printf("node aded -> %s\n", ptr->value);
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 15:52:29 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:43:56 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 	int	error;
 
 	error = 1;
-	(void)curr_cmd;
 	p->pid = fork();
 	if (p->pid == -1)
 	{
@@ -54,8 +53,8 @@ int	wait_children(t_pipes *p)
 {
 	int	status;
 	int	i;
-	int sig;
-	
+	int	sig;
+
 	i = 0;
 	status = 0;
 	waitpid(p->pid, &status, 0);
@@ -98,8 +97,6 @@ void	*multiple_pipes(t_env **env, t_command *list)
 		list = list->next_com;
 		curr_cmd++;
 	}
-	ft_putstr_fd(ft_itoa(curr_cmd), 2);
-	ft_putstr_fd("\n", 2);
 	wait_children(&p);
 	return ("success\n");
 }

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:59:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 16:42:39 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:20:33 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_display_env(t_env *env, t_command *cmd)
 	}
 	if (!env)
 	{
-			printf("3\n");
+		printf("3\n");
 		g_exit_status = 1;
 		return ;
 	}
@@ -66,42 +66,42 @@ char	*get_env_value(t_env *env_list, const char *key)
 	return (NULL);
 }
 
-int    ft_new_value(t_env *tmp, char *key, char *value, char *new_value)
+int	ft_new_value(t_env *tmp, char *key, char *value, char *new_value)
 {
-    while (tmp)
-    {
-        if (ft_strcmp(tmp->env_key, key) == 0)
-        {
-            if (value)
-            {
-                new_value = ft_strdup(value);
-                if (!new_value)
-                    return (1);
-                free(tmp->env_value);//free old value
-                tmp->env_value = new_value;
-            }
-            update_line(tmp);
-            return (1); //found and updated
-        }
-        tmp = tmp->next;
-    }
-    return (0); //not found
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->env_key, key) == 0)
+		{
+			if (value)
+			{
+				new_value = ft_strdup(value);
+				if (!new_value)
+					return (1);
+				free(tmp->env_value);
+				tmp->env_value = new_value;
+			}
+			update_line(tmp);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
-void ft_clean(t_env **env)
+void	ft_clean(t_env **env)
 {
-	t_env *tmp;
-	t_env *next;
+	t_env	*tmp;
+	t_env	*next;
+
 	printf("hello here\n");
-	if(!env || !*env)
+	if (!env || !*env)
 		return ;
 	tmp = *env;
-	while(tmp)
+	while (tmp)
 	{
 		next = tmp->next;
 		free(tmp->env_key);
 		free(tmp->env_value);
-		// free(tmp->is_printed);
 		free(tmp);
 		tmp = next;
 	}

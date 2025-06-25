@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:13:57 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:21:32 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_exit(t_command *cmd)
 	if (cmd->arg[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-			printf("4\n");
+		printf("4\n");
 		g_exit_status = 1;
 		return ;
 	}

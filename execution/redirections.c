@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:16:07 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 22:30:57 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:52:21 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	open_file(t_command *cmd)
 	t_redir	*r;
 
 	r = cmd->redir;
-	// if(!r->name || !cmd->redir)
-	// 	return (-1);
 	while (r)
 	{
 		if (r->name)
@@ -26,10 +24,7 @@ int	open_file(t_command *cmd)
 			if (r->type == T_RED_IN)
 				r->fd_in = open(r->name, O_RDONLY);
 			else if (r->type == T_HERDOC)
-			{
-				printf("heredoc--%s--", r->herdoc->file_name);
 				r->fd_in = open(r->herdoc->file_name, O_RDONLY);
-			}
 			else if (r->type == T_RED_OUT)
 				r->fd_out = open(r->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			else if (r->type == T_RED_OUT_APEND)
@@ -57,3 +52,6 @@ void	dup2_close(t_redir *r)
 	if (r->fd_out > 2)
 		close(r->fd_out);
 }
+
+	// if(!r->name || !cmd->redir)
+	// 	return (-1);

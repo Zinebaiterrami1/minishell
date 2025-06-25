@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:36 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:14:23 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:22:14 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_pwd(t_command *cmd)
 	{
 		write(2, "Cannot get the current directory ... !\n",
 			ft_strlen("Cannot get the current directory ... !\n"));
-			printf("6\n");
+		printf("6\n");
 		g_exit_status = 1;
 	}
 	if (cmd && cmd->arg[1])

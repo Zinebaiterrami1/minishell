@@ -1,42 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 16:52:14 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/16 13:36:49 by zait-err         ###   ########.fr       */
+/*   Created: 2025/06/25 23:30:52 by zait-err          #+#    #+#             */
+/*   Updated: 2025/06/25 23:57:16 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-char	*ft_strdup(const char *s1)
+char **helper4(const char *s, char **array, char c)
 {
-	int		l;
-	int		i;
-	char	*c;
+	int	i;
+	int	j;
 
-	l = 0;
+	j = 0;
 	i = 0;
-	if (!s1)
-		return (NULL);
-	while (s1[l] != '\0')
+	while (s[i])
 	{
-		l++;
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] != c && s[i] != '\0')
+		{
+			array[j] = alloc_cpy(s + i, c);
+			if (array[j++] == NULL)
+				return (ft_free(array, j));
+		}
+		while (s[i] && s[i] != c)
+			i++;
 	}
-	c = (char *)malloc((l + 1) * sizeof(char));
-	if (!c)
-		return (NULL);
-	while (s1[i])
-	{
-		c[i] = s1[i];
-		i++;
-	}
-	c[i] = '\0';
-	return (c);
+    return (array[j] = NULL, array);
 }

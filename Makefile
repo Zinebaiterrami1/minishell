@@ -61,7 +61,6 @@ clean :
 	@echo "🧹 Cleaning up..."
 	@rm -rf $(OBJ)
 	@make -s clean -C libft
-	@make -s clean -C libft
 	@echo "🗑️  Cleanup done!"
 
 re : fclean all

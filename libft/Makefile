@@ -50,7 +50,8 @@ SRC_B = ft_lstnew_bonus.c \
         ft_lstmap_bonus.c \
         ft_lstadd_backk.c\
         ft_lstlastt.c \
-        ft_lstsizee_bonus.c 
+        ft_lstsizee_bonus.c \
+		util.c
 OBJ = $(SRC:%.c=%.o)
 OBJ_B = $(SRC_B:%.c=%.o)
 

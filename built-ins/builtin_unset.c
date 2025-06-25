@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:40 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/24 02:14:41 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:22:38 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_unset(t_command **cmd, t_env **env)
 	i = 1;
 	if (!tmp->arg[1])
 	{
-			printf("7\n");
+		printf("7\n");
 		g_exit_status = 1;
 		return ;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:28:08 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/18 13:36:24 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:57:36 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	word_len(const char *str, char c)
 	return (len);
 }
 
-static char	*alloc_cpy(const char *s, char c)
+char	*alloc_cpy(const char *s, char c)
 {
 	char	*str;
 	int		len;
@@ -61,7 +61,7 @@ static char	*alloc_cpy(const char *s, char c)
 	return (str);
 }
 
-static char	**ft_free(char **s, int i)
+char	**ft_free(char **s, int i)
 {
 	while (--i >= 0)
 		free(s[i]);
@@ -79,21 +79,9 @@ char	**ft_split(const char *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	array = (char **)gc_malloc(sizeof(char *) * (count_word(s, c) + 1), getter());
+	array = (char **)gc_malloc(sizeof(char *) * (count_word(s, c) + 1),
+			getter());
 	if (!array)
 		return (NULL);
-	while (s[i])
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i] != c && s[i] != '\0')
-		{
-			array[j] = alloc_cpy(s + i, c);
-			if (array[j++] == NULL)
-				return (ft_free(array, j));
-		}
-		while (s[i] && s[i] != c)
-			i++;
-	}
-	return (array[j] = NULL, array);
+	return (helper4(s, array, c));
 }
