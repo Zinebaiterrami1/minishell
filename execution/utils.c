@@ -6,20 +6,24 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:38:54 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/26 00:02:09 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:10:21 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	ft_free_env(char **envp)
-{
-	while (*envp)
-	{
-		free(*envp);
-		(*envp)++;
-	}
-}
+// static void	ft_free_env(char **envp)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		free(envp[i]);
+// 		i++;
+// 	}
+// 	free(envp);
+// }
 
 static char	*helper2(t_command *cmd, t_env *env)
 {
@@ -61,8 +65,9 @@ void	handle_cases(t_command *cmd, t_env *env)
 	}
 	envp = get_envp(env);
 	execve(pathcmd, cmd->arg, envp);
+	printf("clean7\n");
+	free(envp);
 	ft_clean(&env);
-	ft_free_env(envp);
 	perror(cmd->arg[0]);
 	g_exit_status = 127;
 	exit(g_exit_status);

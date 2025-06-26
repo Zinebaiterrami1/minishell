@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:03:05 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/26 00:02:20 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/26 10:28:32 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ static void	setup_minishell(char *line, t_env *env_lst)
 		if (line == NULL)
 		{
 			ft_putstr_fd("exit\n", 1);
+			printf("clean1\n");
 			ft_clean(&env_lst);
+			free_all(getter());
 			break ;
 		}
 		if (line[0] == '\0')
@@ -66,6 +68,7 @@ static void	setup_minishell(char *line, t_env *env_lst)
 		}
 		setup_signals_parent();
 		free(line);
+		printf("clean2\n");
 		ft_clean(&env_lst);
 		free_all(getter());
 	}		

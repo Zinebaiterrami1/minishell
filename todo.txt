@@ -9,3 +9,6 @@ export $a=$b
 //ls > a > b | ls
 a : chmod 000
 
+export | grep e | ls
+exit | exit
+yes | yes | wc

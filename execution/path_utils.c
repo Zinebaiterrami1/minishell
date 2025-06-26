@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/26 00:39:25 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:10:44 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ static void	helper(t_command *cmd, t_env *env)
 		setup_signals_child();
 		if (open_file(cmd) == -1)
 		{
+			printf("clean5\n");
 			ft_clean(&env);
 			exit(g_exit_status = 1);
 		}
 		handle_cases(cmd, env);
+			printf("clean6\n");
 		ft_clean(&env);
 		perror("minishell");
 		exit(EXIT_FAILURE);
@@ -57,6 +59,7 @@ static void	helper(t_command *cmd, t_env *env)
 
 void	execute_externals(t_command *cmd, t_env *env)
 {
+	ignore_signals();
 	if ((!cmd || !cmd->arg || !cmd->arg[0]) && cmd->redir)
 	{
 		if (open_file(cmd) == -1)
@@ -71,6 +74,6 @@ void	execute_externals(t_command *cmd, t_env *env)
 			return ;
 		}
 	}
-	ignore_signals();
-	helper(cmd, env);
+	else if(cmd && cmd->arg && cmd->arg[0] && ft_strlen(cmd->arg[0]) > 1)
+		helper(cmd, env);
 }

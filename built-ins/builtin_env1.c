@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:59:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:20:33 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/26 10:28:08 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,4 @@ void	ft_clean(t_env **env)
 		tmp = next;
 	}
 	*env = NULL;
-	free_all(getter());
 }
