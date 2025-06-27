@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 23:30:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 23:57:16 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:45:18 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ char **helper4(const char *s, char **array, char c)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && (s[i] == c || s[i] == '\t' || s[i] == '\n'))
 			i++;
-		if (s[i] != c && s[i] != '\0')
+		if (s[i] != c && s[i] != '\t' && s[i] != '\n' && s[i] != '\0')
 		{
 			array[j] = alloc_cpy(s + i, c);
 			if (array[j++] == NULL)
 				return (ft_free(array, j));
 		}
-		while (s[i] && s[i] != c)
+		while (s[i] && s[i] != c && s[i] != '\t' && s[i] != '\n')
 			i++;
 	}
-    return (array[j] = NULL, array);
+	array[j] = NULL;
+    return (array);
 }

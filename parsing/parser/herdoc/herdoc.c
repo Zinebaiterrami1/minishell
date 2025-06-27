@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/26 09:54:40 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:04:23 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ static int	has_quotes(t_token *token)
 
 static void	helper(char **line, t_token *token)
 {
+	(void)token;
 	if (!*line)
 		ft_putstr_fd("warning: here-document at "
 			"line delimited by end-of-file\n", 2);
-	else if (!ft_strcmp(*line, token->value))
-		free(*line);
+	// else if (!ft_strcmp(*line, token->value))
+	// 	free(*line);
 }
 
 static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
@@ -38,7 +39,7 @@ static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
 	else
 	{
 		ft_putstr_fd(ft_strjoin(*line, "\n"), herdoc->fd);
-		free(*line);
+		// free(*line);
 	}
 }
 
@@ -52,9 +53,14 @@ static void	read_fill(t_herdoc *herdoc, t_token *token)
 		if (!line || !ft_strcmp(line, token->value))
 		{
 			helper(&line, token);
+			free(line);
 			break ;
 		}
-		helper_2(herdoc, &line, token);
+		else
+		{
+			helper_2(herdoc, &line, token);
+			free(line);
+		}
 	}
 }
 

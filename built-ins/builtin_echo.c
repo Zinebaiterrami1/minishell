@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:20:08 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:28:03 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,29 @@ static int	check_option(t_command *cmd)
 	}
 	return (0);
 }
+
+static int check_option(t_command *cmd)
+{
+    int i = 1;
+    int j;
+
+    while (cmd->arg[i])
+    {
+        if (cmd->arg[i][0] == '-' && cmd->arg[i][1] == 'n')
+        {
+            j = 2;
+            while (cmd->arg[i][j] == 'n')
+                j++;
+            if (cmd->arg[i][j] != '\0')
+                break;
+            i++;
+        }
+        else
+            break;
+    }
+    return (i); // Returns the index where non-option args start
+}
+
 
 static void	write_echo(t_command *cmd, int start)
 {
@@ -47,10 +70,7 @@ void	ft_echo(t_command *cmd)
 {
 	int	newline;
 	int	i;
-	int	fd;
 
-	fd = 1;
-	i = 1;
 	newline = 1;
 	if (cmd && cmd->redir)
 	{
@@ -61,13 +81,13 @@ void	ft_echo(t_command *cmd)
 			return ;
 		}
 	}
-	if (check_option(cmd))
+	if (cmd->arg[1][0] == '-')
 	{
 		newline = 0;
-		i++;
 	}
+	i = check_option(cmd);
 	write_echo(cmd, i);
 	if (newline)
-		write(fd, "\n", 1);
+		write(1, "\n", 1);
 	g_exit_status = 0;
 }

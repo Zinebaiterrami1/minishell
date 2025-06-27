@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/24 02:00:27 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:11:57 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ static void	helper(char **token_val, t_env **env, char **ret)
 
 char	*is_exp(char **token_val, t_env **env) //.h
 {
-	char	*s;
+	// char	*s;
 	char	*ret;
 
-	s = gc_strdup("");
+	// s = gc_strdup("");
 	ret = gc_strdup("");
 	while (**token_val)
 	{
@@ -85,6 +85,12 @@ void	split_value(char *val, t_lexer *lexer, t_token *token)
 
 	i = 0;
 	splited = ft_split(val, ' ');
+	while(splited[i])
+	{
+		printf("[%s]\n", splited[i]);
+		i++;
+	}
+	i = 0;
 	if (is_export(ft_lstlast(lexer->reel_head), val))
 		append_token(token, val, lexer, 0);
 	else

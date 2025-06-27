@@ -12,3 +12,15 @@ a : chmod 000
 export | grep e | ls
 exit | exit
 yes | yes | wc
+
+
+export fnf | export jsdgf
+lst doesnt add the new nodes why ?
+
+
+leaks f herdoc ma3reftch mnach kayjiw line kanfreyih
+ctrl d ou ctrl c makaykhdmoch mzn
+mra kaykhdmo mra la
+9bila mabghach ga3 ikhrej l b ctrl dla b exit
+
+echo -nnnnnnnnnn -nnnnnnnnnnn sljfd

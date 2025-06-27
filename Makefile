@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -fsanitize=undefined -g3
 SRC = built-ins/builtin_cd.c \
 built-ins/builtin_echo.c \
 built-ins/builtin_env.c \

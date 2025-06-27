@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:43:56 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/27 00:08:22 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,19 @@ pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 	}
 	if (p->pid == 0)
 	{
-		if (curr_cmd == 0)
+		if(is_buitins(cmd))
+		{
+			execute_buitlins(envp, cmd);
+			exit(g_exit_status);
+		}
+		else if (curr_cmd == 0)
 			error = first_command(cmd, envp, *p);
 		else if (curr_cmd == p->nb_cmd - 1)
 			error = last_command(cmd, envp, *p);
 		else
 			error = mid_command(cmd, envp, *p);
 	}
-	if (error == -1)
+	if (error == 0)
 	{
 		g_exit_status = 1;
 		return (error);

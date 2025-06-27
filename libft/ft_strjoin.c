@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:39:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/25 23:48:02 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:12:28 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,7 @@ static char	*helper2(char const *s1, char const *s2)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*c;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
 	if (!s1 && !s2)
 		return (NULL);
 	if (!s1 || !s2)
