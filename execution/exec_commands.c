@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:13:59 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/27 00:55:34 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:24:47 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	first_command(t_command *cmd, t_env **envp, t_pipes p)
 		// No redir at all → normal pipe
 		dup2(p.fd[1], STDOUT_FILENO);
 	}
+	close(p.fd[0]);
+close(p.fd[1]); 
 	if (!res)
 	{
 		printf("command not found!!!!!!\n");
@@ -127,6 +129,8 @@ int	mid_command(t_command *cmd, t_env **envp, t_pipes p)
 		// No redir at all → normal pipe
 		dup2(p.fd[1], STDOUT_FILENO);
 	}
+	close(p.fd[0]);
+	close(p.fd[1]); 
 	if (!res)
 	{
 		printf("command not found!\n");

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:03:05 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/26 10:28:32 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 00:30:00 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void	setup_minishell(char *line, t_env *env_lst)
 			free(line);
 			continue ;
 		}
-		setup_signals_parent();
 		free(line);
 		printf("clean2\n");
 		ft_clean(&env_lst);

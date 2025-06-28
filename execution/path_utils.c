@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/26 11:10:44 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 00:43:09 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	helper(t_command *cmd, t_env *env)
 	t_pipes p;
 	
 	p.nb_cmd = 1;
+	ignore_signals();
 	p.pid = fork();
 	if (p.pid == 0)
 	{
@@ -54,12 +55,12 @@ static void	helper(t_command *cmd, t_env *env)
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
+	setup_signals_parent();
 	wait_children(&p);
 }
 
 void	execute_externals(t_command *cmd, t_env *env)
 {
-	ignore_signals();
 	if ((!cmd || !cmd->arg || !cmd->arg[0]) && cmd->redir)
 	{
 		if (open_file(cmd) == -1)
