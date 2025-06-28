@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 01:13:58 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 11:57:57 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	**get_envp(t_env *lst)
 
 static void	helper(t_command *cmd, t_env *env)
 {
-	t_pipes p;
-	
+	t_pipes	p;
+
 	p.nb_cmd = 1;
 	ignore_signals();
 	p.pid = fork();
@@ -50,7 +50,6 @@ static void	helper(t_command *cmd, t_env *env)
 			exit(g_exit_status = 1);
 		}
 		handle_cases(cmd, env);
-			printf("clean6\n");
 		ft_clean(&env);
 		perror("minishell");
 		exit(EXIT_FAILURE);
@@ -74,6 +73,6 @@ void	execute_externals(t_command *cmd, t_env *env)
 			return ;
 		}
 	}
-	else if(cmd && cmd->arg && cmd->arg[0] && ft_strlen(cmd->arg[0]) > 1)
+	else if (cmd && cmd->arg && cmd->arg[0] && ft_strlen(cmd->arg[0]) > 1)
 		helper(cmd, env);
 }

@@ -6,47 +6,33 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 00:04:25 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 11:11:28 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// static int	check_option(t_command *cmd)
-// {
-// 	int	j;
-
-// 	if (cmd->arg[1] && cmd->arg[1][0] == '-' && cmd->arg[1][1] == 'n')
-// 	{
-// 		j = 2;
-// 		while (cmd->arg[1][j] == 'n')
-// 			j++;
-// 		if (cmd->arg[1][j] == '\0')
-// 			return (1);
-// 	}
-// 	return (0);
-// }
-
-static int check_option(t_command *cmd)
+static int	check_option(t_command *cmd)
 {
-    int i = 1;
-    int j;
+	int	i;
+	int	j;
 
-    while (cmd->arg[i])
-    {
-        if (cmd->arg[i][0] == '-' && cmd->arg[i][1] == 'n')
-        {
-            j = 2;
-            while (cmd->arg[i][j] == 'n')
-                j++;
-            if (cmd->arg[i][j] != '\0')
-                break;
-            i++;
-        }
-        else
-            break;
-    }
-    return (i); // Returns the index where non-option args start
+	i = 1;
+	while (cmd->arg[i])
+	{
+		if (cmd->arg[i][0] == '-' && cmd->arg[i][1] == 'n')
+		{
+			j = 2;
+			while (cmd->arg[i][j] == 'n')
+				j++;
+			if (cmd->arg[i][j] != '\0')
+				break ;
+			i++;
+		}
+		else
+			break ;
+	}
+	return (i);
 }
 
 static void	write_echo(t_command *cmd, int start)

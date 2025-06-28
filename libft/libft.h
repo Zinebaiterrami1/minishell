@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:39:46 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/25 23:59:20 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 13:52:10 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include "../includes/minishell.h"
+# include <unistd.h>
 // typedef struct s_command t_command;
 // typedef struct s_redir t_redir;
 

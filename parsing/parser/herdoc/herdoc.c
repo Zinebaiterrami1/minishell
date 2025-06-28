@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/27 15:04:23 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:21:59 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static void	helper(char **line, t_token *token)
 	if (!*line)
 		ft_putstr_fd("warning: here-document at "
 			"line delimited by end-of-file\n", 2);
-	// else if (!ft_strcmp(*line, token->value))
-	// 	free(*line);
 }
 
 static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
@@ -39,7 +37,6 @@ static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
 	else
 	{
 		ft_putstr_fd(ft_strjoin(*line, "\n"), herdoc->fd);
-		// free(*line);
 	}
 }
 

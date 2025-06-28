@@ -35,6 +35,7 @@ parsing/parser/herdoc/herdoc.c \
 parsing/parser/herdoc/herdoc_exp.c \
 parsing/parser/herdoc/utils.c \
 parsing/parser/parser.c \
+parsing/parser/parser_util.c \
 signals/sig_heredoc.c \
 signals/signals.c
 

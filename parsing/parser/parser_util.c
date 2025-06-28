@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_heredoc.c                                      :+:      :+:    :+:   */
+/*   parser_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/22 12:25:02 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 12:13:49 by zait-err         ###   ########.fr       */
+/*   Created: 2025/06/28 12:20:10 by zait-err          #+#    #+#             */
+/*   Updated: 2025/06/28 14:11:34 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	sig_handler_heredoc(int signal)
+t_command	*parser(t_lexer *lexer)
 {
-	(void)signal;
-	write(1, "\n", 1);
-	g_exit_status = 130;
-	exit(g_exit_status);
-}
-
-void	setup_signals_heredoc(void)
-{
-	signal(SIGINT, sig_handler_heredoc);
+	if (parser_check(lexer->head))
+		return (syntax_error(1));
+	return (creat_comand_list(lexer->reel_head, lexer));
 }

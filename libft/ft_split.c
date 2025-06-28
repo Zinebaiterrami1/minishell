@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:28:08 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/27 16:14:20 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 13:06:01 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ static int	count_word(const char *s, char c)
 	}
 	printf("cout word split = %d\n", count);
 	return (count);
-}
+}size_t
 
 static int	word_len(const char *str, char c)
 {
 	int	len;
 
 	len = 0;
-	while (str[len] && str[len] != c && str[len] != '\t' && str[len] != '\n' && str[len] != '\0')
+	while (str[len] && str[len] != c && str[len] != '\t'
+		&& str[len] != '\n' && str[len] != '\0')
 	{
 		len++;
 	}

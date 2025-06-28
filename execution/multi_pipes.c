@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 01:13:49 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 11:54:56 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@ static pid_t	close_fd(t_pipes *p)
 	close(p->fd[0]);
 	close(p->fd[1]);
 	return (p->pid);
+}
+
+static int	helper6(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
+{
+	int	error;
+
+	if (is_buitins(cmd))
+	{
+		execute_buitlins(envp, cmd);
+		exit(g_exit_status);
+	}
+	else if (curr_cmd == 0)
+		error = first_command(cmd, envp, *p);
+	else if (curr_cmd == p->nb_cmd - 1)
+		error = last_command(cmd, envp, *p);
+	else
+		error = mid_command(cmd, envp, *p);
+	return (error);
 }
 
 pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
@@ -33,24 +51,14 @@ pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 		return (-1);
 	}
 	if (p->pid == 0)
-	{	
+	{
 		setup_signals_child();
-		if(is_buitins(cmd))
-		{
-			execute_buitlins(envp, cmd);
-			exit(g_exit_status);
-		}
-		else if (curr_cmd == 0)
-			error = first_command(cmd, envp, *p);
-		else if (curr_cmd == p->nb_cmd - 1)
-			error = last_command(cmd, envp, *p);
-		else
-			error = mid_command(cmd, envp, *p);
+		error = helper6(cmd, envp, curr_cmd, p);
 	}
 	if (error == 0)
 	{
 		g_exit_status = 1;
-		return (error);
+		return (g_exit_status);
 	}
 	close_fd(p);
 	return (p->pid);

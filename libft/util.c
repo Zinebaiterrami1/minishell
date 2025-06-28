@@ -6,13 +6,13 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 23:30:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/27 14:45:18 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:09:43 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char **helper4(const char *s, char **array, char c)
+char	**helper4(const char *s, char **array, char c)
 {
 	int	i;
 	int	j;
@@ -33,5 +33,5 @@ char **helper4(const char *s, char **array, char c)
 			i++;
 	}
 	array[j] = NULL;
-    return (array);
+	return (array);
 }
