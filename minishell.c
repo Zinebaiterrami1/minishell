@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:03:05 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 00:30:00 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:10:50 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	setup_minishell(char *line, t_env *env_lst)
 {
 	while (1)
 	{
+		setup_signals_parent();
 		line = readline(PINK "$ \001\033[1;34m\002minishell V3 " RESET);
 		if (line == NULL)
 		{
@@ -83,6 +84,6 @@ int	main(int argc, char **argv, char **envp)
 	line = NULL;
 	env_lst = init_env(envp);
 	env_lst = split_env(env_lst);
-	setup_signals_parent();
+	// setup_signals_parent();
 	setup_minishell(line, env_lst);
 }

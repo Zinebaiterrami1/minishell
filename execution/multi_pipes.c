@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 00:54:07 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:13:49 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	*multiple_pipes(t_env **env, t_command *list)
 		list = list->next_com;
 		curr_cmd++;
 	}
-	setup_signals_parent();
 	wait_children(&p);
 	return ("success\n");
 }

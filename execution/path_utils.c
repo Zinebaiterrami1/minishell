@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 00:43:09 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:13:58 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	helper(t_command *cmd, t_env *env)
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
-	setup_signals_parent();
 	wait_children(&p);
 }
 
