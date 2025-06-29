@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:17:53 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/19 11:53:25 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:28:18 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ void	free_all(t_garbage **list)
 
 	while ((*list))
 	{
-		free((*list)->adress);
+		if((*list)->adress)
+			free((*list)->adress);
 		next = (*list)->next;
-		free((*list));
+		if((*list))
+			free((*list));
 		(*list) = next;
 	}
 	*list = NULL;

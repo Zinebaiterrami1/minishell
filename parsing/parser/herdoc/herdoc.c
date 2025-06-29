@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/28 12:21:59 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:26:54 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,23 @@ static void	helper(char **line, t_token *token)
 
 static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
 {
+	char *str;
+
+	str = NULL;
 	if (!has_quotes(token))
 	{
 		*line = herdoc_expand(*line, herdoc);
-		ft_putstr_fd(ft_strjoin(*line, "\n"), herdoc->fd);
+		str = ft_strjoin(*line, "\n");
+		ft_putstr_fd(str, herdoc->fd);
+		free(str);
+		str = NULL;
 	}
 	else
 	{
-		ft_putstr_fd(ft_strjoin(*line, "\n"), herdoc->fd);
+		str = ft_strjoin(*line, "\n");
+		ft_putstr_fd(str , herdoc->fd);
+		free(str);
+		str = NULL;
 	}
 }
 
