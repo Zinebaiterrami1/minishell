@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 19:47:37 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:21:38 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:45:40 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,19 @@
 static void	write_export(t_env *min)
 {
 	if (!min->env_value)
-		printf("declare -x %s\n", min->env_key);
+	{
+		ft_putstr_fd("declare -x", 1);
+		ft_putstr_fd(min->env_key, 1);
+		ft_putstr_fd("\n", 1);
+	}
 	else
-		printf("declare -x %s=\"%s\"\n", min->env_key, min->env_value);
+	{
+		ft_putstr_fd("declare -x", 1);
+		ft_putstr_fd(min->env_key, 1);
+		ft_putstr_fd("=\"", 1);
+		ft_putstr_fd(min->env_value, 1);
+		ft_putstr_fd("\"\n", 1);
+	}
 }
 
 void	print_export(t_env *export)

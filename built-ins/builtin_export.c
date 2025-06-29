@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 12:34:56 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:22:06 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:21:50 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static void	add_export_var(t_env **env, char *arg)
 		value = ft_strdup(equal + 1);
 		if (!*key)
 		{
-			printf("export: `%s`: not a valid identifier\n", arg);
+			ft_putstr_fd("export: ", 1);
+			ft_putstr_fd(arg, 1);
+			ft_putstr_fd(": not a valid identifier\n", 1);
 			free_key_value(key, value);
 			return ;
 		}
@@ -54,13 +56,11 @@ int	is_valid_identifier(char *str)
 			return (1);
 		else if (str[i] == '+' && str[i + 1] == '=')
 		{
-			printf("am here inside is_valid_identifier\n");
 			g_exit_status = 0;
 			return (0);
 		}
 		break ;
 	}
-	printf("5\n");
 	g_exit_status = 1;
 	return (0);
 }
@@ -74,7 +74,9 @@ void	handle_export_args(t_env **env, t_command *cmd)
 	{
 		if (!is_valid_identifier(cmd->arg[i]))
 		{
-			printf("export: `%s`: not a valid identifier\n", cmd->arg[i]);
+			ft_putstr_fd("export: ", 1);
+			ft_putstr_fd(cmd->arg[i], 1);
+			ft_putstr_fd(": not a valid identifier\n", 1);
 		}
 		else
 			add_export_var(env, cmd->arg[i]);

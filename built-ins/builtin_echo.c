@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 11:11:28 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:16:56 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	ft_echo(t_command *cmd)
 	{
 		if (open_file(cmd) == -1)
 		{
-			printf("1\n");
 			g_exit_status = 1;
 			return ;
 		}

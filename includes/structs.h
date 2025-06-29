@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:20:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 16:08:10 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 05:05:23 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minishell.h"
 # include <unistd.h>
+
 extern int				g_exit_status;
 
 typedef struct t_env

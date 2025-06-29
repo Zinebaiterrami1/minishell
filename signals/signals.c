@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:13:17 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 12:15:27 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:45:23 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	signal_handler(int signal_num)
 {
 	(void)signal_num;
-	printf("\n");
+	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

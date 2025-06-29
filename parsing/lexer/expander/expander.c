@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:21:46 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:44:02 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,85 +89,3 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 	}
 	return (lexer);
 }
-
-// char	*is_exp(char **token_val, t_env **env)
-// {
-// 	char	*s;
-// 	char	*ret;
-
-// 	s = gc_strdup("");
-// 	ret = gc_strdup("");
-// 	while (**token_val)
-// 	{
-// 		if (**token_val == '$' && *((* token_val) + 1) != '\0'
-// && !is_special(*((* token_val) + 1)))
-// 		{
-// 			(*token_val)++;
-// 			while (**token_val == '$')
-// 				(*token_val)++;
-// 			if (ft_isalpha(**token_val) || **token_val == '_')
-// 			{
-// 				while (**token_val == '_' || ft_isalnum(**token_val))
-// 				{
-// 					s = ft_strjoin(s, create_string(**token_val));
-// 					(*token_val)++;
-// 				}
-// 				ret = ft_strjoin(ret, get_exp(s, env));
-// 				s = NULL;
-// 			}
-// 			else if (**token_val == '?')
-// 			{
-// 				ret = ft_strjoin(ret, ft_itoa(g_exit_status));
-// 				(*token_val)++;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			ret = ft_strjoin(ret, create_string(**token_val));
-// 			printf("__________%s\n",ret);
-// 			(*token_val)++;
-// 		}
-// 	}
-// 	return (ret);
-// }
-
-/*void creat_new_token_exp(t_lexer *lexer, t_token *token,char **env)
-{
-	char	*s;
-	char	*val;
-	int		count;
-	int		in_word;
-
-	s = NULL;
-	if(!token || !token->value)
-		return ;
-	while(token && *token->value)
-	{
-		if(token && *token->value && !ft_strncmp((const char *)(token->value),
-				"$", 1))
-		{
-			printf("---   token   %s\n",token->value);
-			val = is_exp(&token->value, env);
-			printf("---  val  %s\n", val);
-			if(!has_space(val))
-			{
-				s = ft_strjoin(s, val);
-				printf("---   s    %s\n", s);
-				// append_token(token, s, lexer);
-			}
-			else
-			{
-				s = ft_strjoin(s, befor_space(val));
-				append_token(token, s, lexer);
-				s = ft_strdup(after_space(val, token));
-			}
-		}
-		else if(*token->value)
-		{
-			s = ft_strjoin(s, create_string(*token->value));
-			if(*token->value)
-				token->value++;
-		}
-	}
-	append_token(token, s, lexer);
-}*/

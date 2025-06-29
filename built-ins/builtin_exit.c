@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:21:32 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:17:01 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_exit(t_command *cmd)
 	if (cmd->arg[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		printf("4\n");
 		g_exit_status = 1;
 		return ;
 	}

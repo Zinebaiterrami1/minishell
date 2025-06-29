@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 02:29:24 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 05:05:08 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,10 @@ void						handle_cases(t_command *cmd, t_env *env);
 int							is_red(t_token_type type);
 int							wait_children(t_pipes *p);
 void						ft_clean(t_env **env);
+void						helper_pipes(t_command *cmd, t_env **envp,
+								t_pipes p);
+void						helper_pipes1(t_command *cmd, t_env **envp);
+int							check_file_status(t_command *file, t_env **env);
 // int	handel_herdoc(t_env **env, t_token *token, t_redir *redir);
 /*********signals*******/
 void						signal_handler(int signal_num);

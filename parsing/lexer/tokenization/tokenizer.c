@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:33:17 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:45:04 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ void	lexer_skip_white(t_lexer *lexer)
 		lexer->i++;
 }
 
-void	print_listt(t_garbage *token)
-{
-	while (token)
-	{
-		printf("%p === ", token->adress);
-		token = token->next;
-	}
-	printf("\n");
-}
-
 int	check(char *line)
 {
 	int	i;
@@ -71,6 +61,7 @@ int	check(char *line)
 
 void	*syntax_error(char *s)
 {
-	printf("%s\n", s);
+	ft_putstr_fd(s, 1);
+	write(1, "\n", 1);
 	return (NULL);
 }

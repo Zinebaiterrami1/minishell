@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:03:05 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 16:09:14 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 05:12:25 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,19 @@ void	execute_buitlins(t_env **m_env, t_command *cmd)
 	else if (ft_strcmp(cmd->arg[0], "unset") == 0)
 		ft_unset(&cmd, m_env);
 }
-
+void helper_minishell(char *line)
+{
+	setup_signals_parent();
+	line = readline(PINK "$ \001\033[1;34m\002minishell V3 " RESET);
+}
 static void	setup_minishell(char *line, t_env *env_lst)
 {
 	while (1)
 	{
-		setup_signals_parent();
-		line = readline(PINK "$ \001\033[1;34m\002minishell V3 " RESET);
+		helper_minishell(line);
 		if (line == NULL)
 		{
 			ft_putstr_fd("exit\n", 1);
-			printf("clean1\n");
 			ft_clean(&env_lst);
 			free_all(getter());
 			break ;
@@ -68,16 +70,14 @@ static void	setup_minishell(char *line, t_env *env_lst)
 			continue ;
 		}
 		free(line);
-		printf("clean2\n");
 		ft_clean(&env_lst);
 		free_all(getter());
 	}		
 }
 
-
 void	luna_nouss(void)
 {
-	printf("\033[1;35m"); // Bold magenta
+	printf("\033[1;35m");
 	printf("🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸🌼🌷🌸\n");
 	printf("██╗     ██╗   ██╗███╗   ██╗ █████╗     ███╗   ██╗ ██████╗ ██╗   ██╗███████╗███████╗\n");
 	printf("██║     ██║   ██║████╗  ██║██╔══██╗    ████╗  ██║██╔═══██╗██║   ██║██╔════╝██╔════╝\n");
@@ -101,6 +101,5 @@ int	main(int argc, char **argv, char **envp)
 	luna_nouss();
 	env_lst = init_env(envp);
 	env_lst = split_env(env_lst);
-	// setup_signals_parent();
 	setup_minishell(line, env_lst);
 }

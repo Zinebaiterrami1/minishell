@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 11:57:57 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:42:40 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	helper(t_command *cmd, t_env *env)
 		setup_signals_child();
 		if (open_file(cmd) == -1)
 		{
-			printf("clean5\n");
 			ft_clean(&env);
 			exit(g_exit_status = 1);
 		}

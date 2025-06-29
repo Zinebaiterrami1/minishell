@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:40 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 22:22:38 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:40:00 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	ft_unset(t_command **cmd, t_env **env)
 	i = 1;
 	if (!tmp->arg[1])
 	{
-		printf("7\n");
 		g_exit_status = 1;
 		return ;
 	}

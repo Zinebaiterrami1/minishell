@@ -6,13 +6,13 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:13:59 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 11:34:58 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:41:40 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	check_file_status(t_command *file, t_env **env)
+int	check_file_status(t_command *file, t_env **env)
 {
 	(void)env;
 	if (!file)
@@ -29,7 +29,7 @@ static int	check_file_status(t_command *file, t_env **env)
 	return (1);
 }
 
-static void	helper5(t_command *cmd)
+static void	check_redir(t_command *cmd)
 {
 	if (cmd->redir->type == T_RED_IN)
 	{
@@ -52,7 +52,7 @@ int	first_command(t_command *cmd, t_env **envp, t_pipes p)
 	if (check_file_status(cmd, envp))
 	{
 		if (cmd->redir)
-			helper5(cmd);
+			check_redir(cmd);
 		else
 			dup2(p.fd[1], STDOUT_FILENO);
 	}
@@ -62,7 +62,7 @@ int	first_command(t_command *cmd, t_env **envp, t_pipes p)
 	close(p.fd[1]);
 	if (!res)
 	{
-		printf("command not found\n");
+		write(1, "command not found\n", 18);
 		g_exit_status = 127;
 		exit(g_exit_status);
 	}
@@ -76,12 +76,12 @@ int	last_command(t_command *cmd, t_env **envp, t_pipes p)
 
 	res = search_cmd(cmd, *envp);
 	if (check_file_status(cmd, envp) && cmd->redir)
-		helper5(cmd);
+		check_redir(cmd);
 	close(p.fd[0]);
 	close(p.fd[1]);
 	if (!res)
 	{
-		printf("command not found\n");
+		write(1, "command not found\n", 18);
 		g_exit_status = 127;
 		exit(g_exit_status);
 	}
@@ -97,7 +97,7 @@ int	mid_command(t_command *cmd, t_env **envp, t_pipes p)
 	if (check_file_status(cmd, envp))
 	{
 		if (cmd->redir)
-			helper5(cmd);
+			check_redir(cmd);
 		else
 			dup2(p.fd[1], STDOUT_FILENO);
 	}
@@ -107,7 +107,7 @@ int	mid_command(t_command *cmd, t_env **envp, t_pipes p)
 	close(p.fd[1]);
 	if (!res)
 	{
-		printf("command not found\n");
+		write(1, "command not found\n", 18);
 		g_exit_status = 127;
 		exit(g_exit_status);
 	}

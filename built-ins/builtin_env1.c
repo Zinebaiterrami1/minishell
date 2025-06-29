@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:59:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/26 10:28:08 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:17:34 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ void	ft_display_env(t_env *env, t_command *cmd)
 	{
 		if (open_file(cmd) == -1)
 		{
-			printf("2\n");
 			g_exit_status = 1;
 			return ;
 		}
 	}
 	if (!env)
 	{
-		printf("3\n");
 		g_exit_status = 1;
 		return ;
 	}
@@ -93,7 +91,6 @@ void	ft_clean(t_env **env)
 	t_env	*tmp;
 	t_env	*next;
 
-	printf("hello here\n");
 	if (!env || !*env)
 		return ;
 	tmp = *env;

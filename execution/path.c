@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:24:16 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/25 16:10:13 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:42:48 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	*search_cmd(t_command *cmd, t_env *lst)
 	if (!sp)
 	{
 		joinpath = ft_strjoin("./", cmd->arg[0]);
-		printf("joinpath; %s\n", cmd->arg[0]);
 		return (joinpath);
 	}
 	join = ft_strjoin("/", cmd->arg[0]);

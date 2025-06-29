@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:48:45 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:45:12 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,6 @@ int	parser_check(t_token *token)
 		token = token->next;
 	}
 	return (EXIT_SUCCESS);
-}
-
-void	print_listtt(t_command *token)
-{
-	int	i;
-
-	while (token)
-	{
-		i = 0;
-		printf("cmd: ");
-		if (token->arg)
-		{
-			while (token->arg[i])
-			{
-				if (token->arg[i])
-					printf("[%s] ", token->arg[i]);
-				else
-					printf("(null) ");
-				i++;
-			}
-		}
-		else
-		{
-			printf("(no args) ");
-		}
-		printf("\n");
-		token = token->next_com;
-	}
 }
 
 static void	end_of_command(t_command **cur_comd, int *f)

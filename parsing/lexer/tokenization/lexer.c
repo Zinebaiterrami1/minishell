@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:47:53 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 04:44:15 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,6 @@ char	*get_exp(char *var, t_env **env)
 
 	s = get_env_value(*env, var);
 	return (s);
-}
-
-void	print_list(t_token *token)
-{
-	printf("token list : ");
-	while (token)
-	{
-		token = token->next;
-	}
-	printf("\n");
-}
-
-void	print_list2(t_token *token)
-{
-	printf("token list222 : ");
-	while (token)
-	{
-		printf("%s (%d) [%d] --> ", token->value, token->type, token->space);
-		token = token->next;
-	}
-	printf("\n");
 }
 
 t_command	*parsing(char *line, t_env **env)
