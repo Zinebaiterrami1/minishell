@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:38:54 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 05:03:54 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 21:58:51 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ static char	*helper2(t_command *cmd, t_env *env)
 			ft_putstr_fd(cmd->arg[0], 1);
 			ft_putstr_fd(" :Is a directory\n", 1);
 			g_exit_status = 126;
+			exit(g_exit_status);
+		}
+		else if(access(cmd->arg[0], F_OK | X_OK) != 0)
+		{
+			ft_putstr_fd(cmd->arg[0], 1);
+			ft_putstr_fd(" : No such file or directory\n", 1);
+			g_exit_status = 127;
 			exit(g_exit_status);
 		}
 		else if (access(cmd->arg[0], F_OK | X_OK) == 0)

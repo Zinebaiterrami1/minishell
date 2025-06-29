@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 04:42:40 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 22:05:20 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ void	execute_externals(t_command *cmd, t_env *env)
 		if (open_file(cmd) == -1)
 		{
 			g_exit_status = 1;
-			exit(g_exit_status);
+			return ;
 		}
 		else
 		{
+			printf("lhhiiiiih\n");
+
 			open_file(cmd);
 			g_exit_status = 1;
 			return ;

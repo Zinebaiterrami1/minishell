@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:36 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 05:00:47 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 22:17:08 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_pwd(t_command *cmd)
 	if (getcwd(buffer, BUFFER_SIZE) == NULL)
 	{
 		write(2, "Cannot get the current directory ... !\n",
-			ft_strlen("Cannot get the current directory ... !\n"));
+			ft_strlen("Cannot get the current directory ... !"));
 		g_exit_status = 1;
 	}
 	if (cmd && cmd->arg[1])
