@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:38:46 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:48:45 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,5 @@ t_command	*creat_comand_list(t_token *token, t_lexer *lexer)
 	}
 	if (lexer->error)
 		return (NULL);
-	// print_listtt(list);
 	return (list);
 }

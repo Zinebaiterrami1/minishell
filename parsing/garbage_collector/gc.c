@@ -57,10 +57,10 @@ void	free_all(t_garbage **list)
 
 	while ((*list))
 	{
-		if((*list)->adress)
+		if ((*list)->adress)
 			free((*list)->adress);
 		next = (*list)->next;
-		if((*list))
+		if ((*list))
 			free((*list));
 		(*list) = next;
 	}

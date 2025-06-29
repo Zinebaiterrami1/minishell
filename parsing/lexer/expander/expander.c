@@ -100,7 +100,7 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 // 	while (**token_val)
 // 	{
 // 		if (**token_val == '$' && *((* token_val) + 1) != '\0'
-			// && !is_special(*((* token_val) + 1)))
+// && !is_special(*((* token_val) + 1)))
 // 		{
 // 			(*token_val)++;
 // 			while (**token_val == '$')

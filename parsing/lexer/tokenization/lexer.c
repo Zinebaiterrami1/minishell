@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:39:23 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:47:53 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ t_command	*parsing(char *line, t_env **env)
 		if (lexer->error)
 			return (NULL);
 	}
-	// print_list(lexer->head);
 	if (reel_list(lexer, env))
 		return (NULL);
-	// print_list2(lexer->reel_head);
 	return (parser(lexer));
 }
 
@@ -78,7 +76,6 @@ void	*minishell(char *line, t_env **env_lst)
 	list = parsing(line, env_lst);
 	if (!list)
 		return (NULL);
-	// printf("------------------------------------------\n");
 	if (is_buitins(list) && ft_lstsizee(list) == 1)
 		execute_buitlins(env_lst, list);
 	else if (!is_buitins(list) && ft_lstsizee(list) == 1)
@@ -92,57 +89,3 @@ void	*minishell(char *line, t_env **env_lst)
 	close(stdout);
 	return (NULL);
 }
-
-// int lexer(char *line)
-// {
-//     t_lexer *lexer;
-//     t_token *token;
-
-//     if(check(line))
-//         return(syntax_error());
-//     lexer = init_lexer(line);
-//     while(lexer->i < lexer->line_size)
-//     {
-//         lexer_skip_white(lexer);
-//         if(lexer->line[lexer->i] == '\n' || lexer->line[lexer->i] == '\0')
-//             return(1);
-//         token = get_next_token(lexer);
-//         if(token)
-//             adding_token(lexer, token);
-//         if(lexer->error)
-//             return(1);
-//     }
-//     print_list(lexer->head);
-//     parser(lexer);
-//     free_all(getter());
-//     return(0);
-// }
-
-// int main(int argc, char **argv, char **env)
-// {
-//     char *line;
-
-//     (void) argc;
-//     (void) argv;
-//     while(1)
-//     {
-//         line = readline("$minishell V2 ");
-//         if (!line)
-//             break ;
-//         if (line[0] == '\0')
-//             continue ;
-//         add_history(line);
-//         if(minishell(line, env))
-//         {
-//             free(line);
-//             continue ;
-//         }
-//         free(line);
-//         // if(lexer(line) == 1)
-//         // {
-//         //     free(line);
-//         //     syntax_error();
-//         //     continue ;
-//         // }
-//     }
-// }

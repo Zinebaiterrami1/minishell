@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:36:31 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:49:19 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	helper(char **line, t_token *token)
 
 static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	if (!has_quotes(token))
@@ -43,7 +43,7 @@ static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
 	else
 	{
 		str = ft_strjoin(*line, "\n");
-		ft_putstr_fd(str , herdoc->fd);
+		ft_putstr_fd(str, herdoc->fd);
 		free(str);
 		str = NULL;
 	}
