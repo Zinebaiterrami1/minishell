@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/28 13:52:47 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:39:23 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_command	*parsing(char *line, t_env **env)
 
 	(void)env;
 	if (check(line))
-		return (syntax_error(0));
+		return (syntax_error("minishel: syntax error near unexpected token"));
 	lexer = init_lexer(line, env);
 	while (lexer->i < lexer->line_size)
 	{
@@ -61,10 +61,10 @@ t_command	*parsing(char *line, t_env **env)
 		if (lexer->error)
 			return (NULL);
 	}
-	print_list(lexer->head);
+	// print_list(lexer->head);
 	if (reel_list(lexer, env))
 		return (NULL);
-	print_list2(lexer->reel_head);
+	// print_list2(lexer->reel_head);
 	return (parser(lexer));
 }
 
@@ -78,14 +78,14 @@ void	*minishell(char *line, t_env **env_lst)
 	list = parsing(line, env_lst);
 	if (!list)
 		return (NULL);
-	printf("------------------------------------------\n");
+	// printf("------------------------------------------\n");
 	if (is_buitins(list) && ft_lstsizee(list) == 1)
 		execute_buitlins(env_lst, list);
 	else if (!is_buitins(list) && ft_lstsizee(list) == 1)
 		execute_externals(list, *env_lst);
 	else if (ft_lstsizee(list) > 1)
 		if (!multiple_pipes(env_lst, list))
-			return (SUCCESS_PTR);
+			return (list);
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdin);

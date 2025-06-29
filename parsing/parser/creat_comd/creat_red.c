@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_red.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/28 14:11:43 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:31:05 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void	*handle_redirection(t_command *cur_comd, t_token **token
 			return (NULL);
 	}
 	else
-		return (syntax_error(1));
-	return (SUCCESS_PTR);
+		return (syntax_error("minishel: syntax error near unexpected token"));
+	return (lexer);
 }

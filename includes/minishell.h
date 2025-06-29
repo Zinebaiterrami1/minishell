@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 16:07:11 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:29:24 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# define SUCCESS_PTR ((void *)1)
-# define FAILURE_PTR ((void *)0)
+// # define SUCCESS_PTR ((void *)1)
+// # define FAILURE_PTR ((void *)0)
 # define PINK "\001\033[1;95m\002"
 # define RESET "\001\033[0m\002"
 # define BUFFER_SIZE 1024
@@ -131,7 +131,7 @@ typedef struct s_garbage	t_garbage;
 t_command					*parser(t_lexer *lexer);
 // void print_listt(t_garbage *token);
 int							check(char *line);
-void						*syntax_error(int);
+void						*syntax_error(char *s);
 t_command					*lexer(char *line);
 // int *lexer(char *line);
 // int syntax_error();

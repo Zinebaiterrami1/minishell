@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 01:26:54 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:36:31 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	handel_herdoc(t_env **env, t_token *token, t_redir *redir)
 		setup_signals_heredoc();
 		read_fill(redir->herdoc, token);
 		close(redir->herdoc->fd);
-		printf("clean9\n");
 		ft_clean(env);
 		exit(g_exit_status);
 	}

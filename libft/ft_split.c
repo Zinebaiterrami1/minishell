@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:28:08 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 01:12:02 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:34:32 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	count_word(const char *s, char c)
 		}
 		i++;
 	}
-	printf("cout word split = %d\n", count);
 	return (count);
 }
 

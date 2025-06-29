@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/24 18:19:36 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:21:46 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 		{
 			val = ft_strjoin(s, is_exp(&token->value, env));
 			if (exp_helper(val, lexer, token))
-				return (FAILURE_PTR);
+				return (NULL);
 		}
 		else
 		{
@@ -87,7 +87,7 @@ void	*creat_new_token_exp(t_lexer *lexer, t_token *token, t_env **env)
 			token->value++;
 		}
 	}
-	return (SUCCESS_PTR);
+	return (lexer);
 }
 
 // char	*is_exp(char **token_val, t_env **env)

@@ -9,8 +9,8 @@
 #include "libft/libft.h"
 #include "garbage_collector/gc.h"
 
-#define SUCCESS_PTR ((void *)1)
-#define FAILURE_PTR ((void *)0)
+// #define SUCCESS_PTR ((void *)1)
+// #define FAILURE_PTR ((void *)0)
 
 #define PINK "\001\033[1;95m\002"
 #define RESET "\001\033[0m\002"

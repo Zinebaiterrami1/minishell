@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/28 12:20:40 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:38:46 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ t_command	*creat_comand_list(t_token *token, t_lexer *lexer)
 	}
 	if (lexer->error)
 		return (NULL);
-	print_listtt(list);
+	// print_listtt(list);
 	return (list);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/24 18:07:18 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:35:49 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_token	*set_new_token(t_token *token, char *s, t_token *old_token,
 	else
 		token->type = old_token->type;
 	token->next = NULL;
-	printf("token = %s, %d\n", token->value, token->type);
 	return (token);
 }
 

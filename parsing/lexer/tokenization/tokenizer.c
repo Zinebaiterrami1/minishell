@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/23 14:22:52 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:33:17 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	check(char *line)
 	return (0);
 }
 
-void	*syntax_error(int i)
+void	*syntax_error(char *s)
 {
-	printf("syntax error %d \n", i);
+	printf("%s\n", s);
 	return (NULL);
 }

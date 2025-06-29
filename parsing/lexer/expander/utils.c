@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/28 12:19:10 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:35:16 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	helper(char **token_val, t_env **env, char **ret)
 	char	*s;
 
 	s = NULL;
-	printf("    000    %s\n",*token_val);
 	(*token_val)++;
 	while (**token_val == '$')
 		(*token_val)++;
@@ -28,7 +27,6 @@ static void	helper(char **token_val, t_env **env, char **ret)
 			s = ft_strjoin(s, create_string(**token_val));
 			(*token_val)++;
 		}
-		printf("    000->    %s\n", s);
 		(*ret) = ft_strjoin((*ret), get_exp(s, env));
 		s = NULL;
 	}
@@ -83,12 +81,6 @@ void	split_value(char *val, t_lexer *lexer, t_token *token)
 
 	i = 0;
 	splited = ft_split(val, ' ');
-	while (splited[i])
-	{
-		printf("[%s]\n", splited[i]);
-		i++;
-	}
-	i = 0;
 	if (is_export(ft_lstlast(lexer->reel_head), val))
 		append_token(token, val, lexer, 0);
 	else
