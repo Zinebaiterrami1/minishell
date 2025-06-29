@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/28 11:54:56 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/30 00:36:21 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,8 @@ static pid_t	close_fd(t_pipes *p)
 static int	helper6(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 {
 	int	error;
-
-	if (is_buitins(cmd))
-	{
-		execute_buitlins(envp, cmd);
-		exit(g_exit_status);
-	}
-	else if (curr_cmd == 0)
+	
+	if (curr_cmd == 0)
 		error = first_command(cmd, envp, *p);
 	else if (curr_cmd == p->nb_cmd - 1)
 		error = last_command(cmd, envp, *p);

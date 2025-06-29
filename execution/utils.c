@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:38:54 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 21:58:51 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:50:03 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*helper2(t_command *cmd, t_env *env)
 {
 	struct stat	file_stat;
-
+	printf("hdfhgdg\n");
 	if (ft_strchr(cmd->arg[0], '/'))
 	{
 		if (stat(cmd->arg[0], &file_stat) == 0 && S_ISDIR(file_stat.st_mode))
@@ -37,8 +37,8 @@ static char	*helper2(t_command *cmd, t_env *env)
 	}
 	else if (ft_strcmp(".", cmd->arg[0]) == 0)
 	{
-		write(1, ".: filename argument required\n", 1);
-		write(1, ".: usage: . filename [arguments]\n", 1);
+		ft_putstr_fd(".: filename argument required\n", 1);
+		ft_putstr_fd(".: usage: . filename [arguments]\n", 1);
 		g_exit_status = 2;
 		exit(g_exit_status);
 	}
