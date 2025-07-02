@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:59:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 08:36:30 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/07/02 10:48:42 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ static void	write_env(t_env *env, int fd)
 		if (env->env_value)
 		{
 			ft_putstr_fd(env->env_key, fd);
-			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd("=", fd);
 			ft_putstr_fd(env->env_value, fd);
-			ft_putstr_fd("\"", fd);
 			ft_putstr_fd("\n", fd);
 		}
 		env = env->next;
@@ -44,6 +43,13 @@ void	ft_display_env(t_env *env, t_command *cmd)
 	if (!env)
 	{
 		g_exit_status = 1;
+		return ;
+	}
+	if (cmd->arg[1])
+	{
+		ft_putstr_fd(cmd->arg[1], 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
+		g_exit_status = 127;
 		return ;
 	}
 	write_env(env, fd);

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:45 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 05:05:08 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:31:58 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_cmd
 }							t_cmd;
 
 /****************************builins****************************/
-void						print_listt(t_garbage *token);
+// void						print_listt(t_garbage *token);
 int							check(char *line);
 int							is_word(t_token_type type);
 char						*create_string(char c);
@@ -185,6 +185,7 @@ char						**get_envp(t_env *lst);
 // multiple_pipes
 pid_t						global_pipes(t_command *cmd, t_env **envp,
 								int curr_cmd, t_pipes *p);
+int							open_file_pipes(t_command *cmd);
 char						*search_cmd(t_command *cmd, t_env *lst);
 void						*multiple_pipes(t_env **env, t_command *list);
 int							first_command(t_command *cmd, t_env **envp,
@@ -204,6 +205,7 @@ void						handle_cases(t_command *cmd, t_env *env);
 int							is_red(t_token_type type);
 int							wait_children(t_pipes *p);
 void						ft_clean(t_env **env);
+char						*helper_check_path(t_command *cmd, t_env *env);
 void						helper_pipes(t_command *cmd, t_env **envp,
 								t_pipes p);
 void						helper_pipes1(t_command *cmd, t_env **envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:49:19 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:47:31 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,25 @@ static void	helper(char **line, t_token *token)
 	(void)token;
 	if (!*line)
 		ft_putstr_fd("warning: here-document at "
-			"line delimited by end-of-file\n", 2);
+			"line delimited by end-of-file\n",
+			2);
 }
 
 static void	helper_2(t_herdoc *herdoc, char **line, t_token *token)
 {
 	char	*str;
+	char	*tmp;
 
 	str = NULL;
 	if (!has_quotes(token))
 	{
-		*line = herdoc_expand(*line, herdoc);
+		tmp = herdoc_expand(*line, herdoc);
+		free(*line);
+		*line = tmp;
 		str = ft_strjoin(*line, "\n");
 		ft_putstr_fd(str, herdoc->fd);
+		free(tmp);
+		tmp = NULL;
 		free(str);
 		str = NULL;
 	}
@@ -60,11 +66,13 @@ static void	read_fill(t_herdoc *herdoc, t_token *token)
 		{
 			helper(&line, token);
 			free(line);
+			line = NULL;
 			break ;
 		}
 		else
 		{
 			helper_2(herdoc, &line, token);
+			line = NULL;
 			free(line);
 		}
 	}
@@ -86,7 +94,6 @@ int	handel_herdoc(t_env **env, t_token *token, t_redir *redir)
 		setup_signals_heredoc();
 		read_fill(redir->herdoc, token);
 		close(redir->herdoc->fd);
-		ft_clean(env);
 		exit(g_exit_status);
 	}
 	waitpid(pid, &status, 0);

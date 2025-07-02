@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:23:55 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/30 00:36:21 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:53:43 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static pid_t	close_fd(t_pipes *p)
 static int	helper6(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 {
 	int	error;
-	
+
 	if (curr_cmd == 0)
 		error = first_command(cmd, envp, *p);
 	else if (curr_cmd == p->nb_cmd - 1)
@@ -52,7 +52,7 @@ pid_t	global_pipes(t_command *cmd, t_env **envp, int curr_cmd, t_pipes *p)
 	}
 	if (error == 0)
 	{
-		g_exit_status = 1;
+		g_exit_status = 127;
 		return (g_exit_status);
 	}
 	close_fd(p);

@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:52 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/27 00:02:02 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:00:28 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int	ft_cd(t_command *cmd, t_env **env)
 		write(1, "must be a relative or absolute path\n", 36);
 		return (-1);
 	}
+	if(cmd->arg[2])
+	{
+		write(1, " cd: too many arguments\n", 24);
+		return (-1);
+	}
 	old_path = getcwd(NULL, 0);
 	if (chdir(cmd->arg[1]) != 0)
 	{
@@ -50,3 +55,5 @@ int	ft_cd(t_command *cmd, t_env **env)
 	free(old_path);
 	return (0);
 }
+
+

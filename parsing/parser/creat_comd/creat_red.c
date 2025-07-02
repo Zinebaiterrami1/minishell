@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 02:31:05 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:40:49 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	*handle_redirection(t_command *cur_comd, t_token **token
 			return (NULL);
 	}
 	else
+	{
+		g_exit_status = 2;
 		return (syntax_error("minishel: syntax error near unexpected token"));
+	}
 	return (lexer);
 }

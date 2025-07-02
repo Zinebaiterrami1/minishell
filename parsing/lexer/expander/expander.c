@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 12:35:56 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 04:44:02 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:41:27 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	exp_helper(char *val, t_lexer *lexer, t_token *token)
 	if (val && num_of_word(val) > 1 && last && is_red(last->type))
 	{
 		lexer->error = 1;
+		g_exit_status = 1;
 		return (ft_putstr_fd("ambiguous redirect\n", 2), 1);
 	}
 	if (val && has_space(val) && !token->d_quotes)

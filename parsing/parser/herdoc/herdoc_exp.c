@@ -6,7 +6,7 @@
 /*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:47:30 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/24 02:05:56 by nel-khad         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:35:11 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ static char	*get_expand(char *line, int *i, t_herdoc *herdoc)
 	(*i)++;
 	if (ft_isdigit(line[*i]))
 		return ((*i)++, NULL);
-	while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+	else if (line[*i] == '?')
+		return ((*i)++, ft_itoa(g_exit_status));
+	else
 	{
-		val = ft_strjoin(val, create_string(line[*i]));
-		(*i)++;
+		while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+		{
+			val = ft_strjoin(val, create_string(line[*i]));
+			(*i)++;
+		}
 	}
 	return (get_exp(val, herdoc->env));
 }

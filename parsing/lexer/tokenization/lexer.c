@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:40:59 by nel-khad          #+#    #+#             */
-/*   Updated: 2025/06/29 22:00:20 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:39:57 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_command	*parsing(char *line, t_env **env)
 
 	(void)env;
 	if (check(line))
+	{
+		g_exit_status = 2;
 		return (syntax_error("minishel: syntax error near unexpected token"));
+	}
 	lexer = init_lexer(line, env);
 	while (lexer->i < lexer->line_size)
 	{

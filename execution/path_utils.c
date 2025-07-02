@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:13:35 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 23:47:23 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:57:21 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	helper(t_command *cmd, t_env *env)
 			ft_clean(&env);
 			exit(g_exit_status = 1);
 		}
-		printf("dfddssdfsdfds\n");
 		handle_cases(cmd, env);
 		ft_clean(&env);
 		perror("minishell");
@@ -68,8 +67,6 @@ void	execute_externals(t_command *cmd, t_env *env)
 		}
 		else
 		{
-			printf("lhhiiiiih\n");
-
 			open_file(cmd);
 			g_exit_status = 1;
 			return ;

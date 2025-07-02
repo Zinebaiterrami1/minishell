@@ -6,7 +6,7 @@
 /*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:08:22 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 04:17:01 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:09:25 by zait-err         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_exit(t_command *cmd)
 {
 	int	status;
 
-	write(1, "exit\n", 5);
 	if (!cmd->arg[1])
 		exit(g_exit_status);
 	if (!ft_is_numeric(cmd->arg[1]))
@@ -52,6 +51,7 @@ void	ft_exit(t_command *cmd)
 		return ;
 	}
 	status = ft_atoi(cmd->arg[1]);
-	g_exit_status = status % 256;
+	g_exit_status = status;
+	write(1, "exit\n", 5);
 	exit(g_exit_status);
 }

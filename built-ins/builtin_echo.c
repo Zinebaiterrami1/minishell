@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zait-err <zait-err@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nel-khad <nel-khad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:07:42 by zait-err          #+#    #+#             */
-/*   Updated: 2025/06/29 04:16:56 by zait-err         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:19:14 by nel-khad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_echo(t_command *cmd)
 			return ;
 		}
 	}
-	if (cmd->arg[1][0] == '-')
+	if (cmd->arg[1] && cmd->arg[1][0] == '-')
 	{
 		newline = 0;
 	}
